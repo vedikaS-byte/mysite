@@ -15,6 +15,7 @@ website:
 format:
   html:
     theme: yeti
+    backgroundcolor: "#FFFFF0"
     css: styles.css
     toc: true
     page-layout: full
