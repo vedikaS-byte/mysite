@@ -1,0 +1,55 @@
+/*-- scss:defaults  --*/
+
+// import google fonts
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
+// fonts
+$libre: "Libre Baskerville", serif;
+
+
+// colors 
+$deeptealgrey: #5A6E6E;
+$stormyblue: #8BA0A5;
+$bluegray: #B8C6C8;
+$mistgray: #E5ECEC;
+$purewhite: #FFFFFF;
+
+// define quarto variables
+$body-bg: $mistgray;
+$navbar-bg: $stormyblue;
+$navbar-fg: $mistgray;
+//$navbar-hl: $stormyblue;
+$link-color: $deeptealgrey;
+
+/*-- scss:rules --*/
+
+h3, h4, p {
+  font-family: $libre;
+}
+
+h1, h2 {
+  letter-spacing: 3px;
+  font-weight: 600;
+  
+}
+
+.title {
+  color: $deeptealgrey;
+}
+
+.center-text {
+  text-align: center;
+}
+
+.navbar-brand img{
+  max-height: 100px;
+  //width: auto;
+}
+
+.grey-text {
+  color: $deeptealgrey;
+}
+
+
+
+

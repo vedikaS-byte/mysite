@@ -2,8 +2,8 @@
 title: "About"
 ---
 
-About this site
+## Experience
+Here's my experience
 
-```{r}
-1 + 1
-```
+## Hobbies
+I like to read and sing.

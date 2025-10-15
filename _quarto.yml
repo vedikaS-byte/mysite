@@ -4,21 +4,33 @@ project:
 
 website:
   title: "Vedika Shirtekar"
+  favicon: images/Professional Logo with Oceanic Theme.png
   navbar:
+    title: False
+    logo: images/Professional Logo with Oceanic Theme.png
+    logo-alt: the name vedika shirtekar with an ocean tech generated icon
     right:
       - href: index.qmd
         text: Home
-      # - about.qmd
-      # - href: resources.qmd
-      #   text: Resources
+      - about.qmd
+      - href: resources.qmd
+        text: Resources
+      - icon: github
+        href: https://github.com/vedikaS-byte/mysite
+  page-footer: 
+    left: Copyright 2025, Vedika Shirtekar
+    # right: 
+    #   - icon: github
+    #     href: github
 
 format:
   html:
-    theme: yeti
-    backgroundcolor: "#FFFFF0"
+    theme: styles.scss
+    #backgroundcolor: "#FFFFF0"
     css: styles.css
     toc: true
     page-layout: full
+    mainfont: Raleway
 
 editor: visual
 

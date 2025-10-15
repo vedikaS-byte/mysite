@@ -4,20 +4,34 @@
     "href": "resources.html",
     "title": "resources",
     "section": "",
-    "text": "Here are some resources"
+    "text": "Here are some resources\n\nthis is an h1 element\n\n\nthis is an h1 element with the title class\n\n\nthis is a paragraph\n\n\nthis is centered and grey\n\n\nHere’s where I describe something fun I enjoy.\n\nHere is a full line.\nHere is another line."
   },
   {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Vedika Shirtekar",
     "section": "",
-    "text": "hello world\nI am an aspiring data scientist looking to pursue a career in climate tech and sustainability consulting. Having recently graduated with a B.S. in Environmental Science and an Applied Statistical Modeling Credential from UT Austin, I’m eager to integrate environmental and data science to develop data driven solutions for addressing climate change.\nI am passionate about protecting the planet for future generations by using data science applications to address climate change. I want to help guide other like-minded climate enthusiasts with understanding their emissions and potential reduction solutions."
+    "text": "hello world\nI am an aspiring data scientist looking to pursue a career in climate tech and sustainability consulting. Having recently graduated with a B.S. in Environmental Science and an Applied Statistical Modeling Credential from UT Austin, I’m eager to integrate environmental and data science to develop data driven solutions for addressing climate change.\nI am passionate about protecting the planet for future generations by using data science applications to address climate change. I want to help guide other like-minded climate enthusiasts with understanding their emissions and potential reduction solutions.\n[Here is a link]"
   },
   {
     "objectID": "about.html",
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "About this site\n\n1 + 1\n\n[1] 2"
+    "text": "Here’s my experience"
+  },
+  {
+    "objectID": "about.html#experience",
+    "href": "about.html#experience",
+    "title": "About",
+    "section": "",
+    "text": "Here’s my experience"
+  },
+  {
+    "objectID": "about.html#hobbies",
+    "href": "about.html#hobbies",
+    "title": "About",
+    "section": "Hobbies",
+    "text": "Hobbies\nI like to read and sing."
   }
 ]

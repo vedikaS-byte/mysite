@@ -5,15 +5,21 @@ about:
   template: jolla 
   image-shape: round
   image-width: 17em
+  #image-height: 19em
   links: 
     - text: LinkedIn
+      icon: linkedin
       href: www.linkedin.com/in/vedika-shirtekar-b2814b201
       target: _blank
     - text: GitHub
+      icon: github 
       href: https://github.com/vedikaS-byte
 ---
-### hello world
-I am an aspiring data scientist looking to pursue a career in climate tech and sustainability consulting. Having recently graduated with a B.S. in Environmental Science and an Applied Statistical Modeling Credential from UT Austin, I’m eager to integrate environmental and data science to develop data driven solutions for addressing climate change. 
 
+### hello world
+
+I am an aspiring data scientist looking to pursue a career in climate tech and sustainability consulting. Having recently graduated with a B.S. in Environmental Science and an Applied Statistical Modeling Credential from UT Austin, I’m eager to integrate environmental and data science to develop data driven solutions for addressing climate change.
 
 I am passionate about protecting the planet for future generations by using data science applications to address climate change. I want to help guide other like-minded climate enthusiasts with understanding their emissions and potential reduction solutions.
+
+\[[Here is a link](https://github.com/vedikaS-byte/mysite)\]
