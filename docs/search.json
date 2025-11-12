@@ -1,17 +1,31 @@
 [
   {
-    "objectID": "resources.html",
-    "href": "resources.html",
-    "title": "resources",
-    "section": "",
-    "text": "Here are some resources\n\nthis is an h1 element\n\n\nthis is an h1 element with the title class\n\n\nthis is a paragraph\n\n\nthis is centered and grey\n\n\nHere’s where I describe something fun I enjoy.\n\nHere is a full line.\nHere is another line."
-  },
-  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Vedika Shirtekar",
     "section": "",
     "text": "hello world\nI am an aspiring data scientist looking to pursue a career in climate tech and sustainability consulting. Having recently graduated with a B.S. in Environmental Science and an Applied Statistical Modeling Credential from UT Austin, I’m eager to integrate environmental and data science to develop data driven solutions for addressing climate change.\nI am passionate about protecting the planet for future generations by using data science applications to address climate change. I want to help guide other like-minded climate enthusiasts with understanding their emissions and potential reduction solutions.\n[Here is a link]"
+  },
+  {
+    "objectID": "posts/my-first-blog-post/index.html",
+    "href": "posts/my-first-blog-post/index.html",
+    "title": "My first blog post",
+    "section": "",
+    "text": "Welcome to my first blog! This is just a quick introduction into what to expect from my entries1. Here is an inline footnote2.\nLet’s practice citing a paper on the vaquita using a DOI."
+  },
+  {
+    "objectID": "posts/my-first-blog-post/index.html#footnotes",
+    "href": "posts/my-first-blog-post/index.html#footnotes",
+    "title": "My first blog post",
+    "section": "Footnotes",
+    "text": "Footnotes\n\n\nThis is a practice test for creating footnotes.↩︎\nhere’s my inline note↩︎"
+  },
+  {
+    "objectID": "post.html",
+    "href": "post.html",
+    "title": "Blogs",
+    "section": "",
+    "text": "My first blog post\n\n\n\nMEDS\n\n\ndata-viz\n\n\n\nIntroduction to website blogs\n\n\n\nVedika Shirtekar\n\n\nNov 12, 2025\n\n\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "about.html",
@@ -33,26 +47,5 @@
     "title": "About",
     "section": "Hobbies",
     "text": "Hobbies\nI like to read and sing."
-  },
-  {
-    "objectID": "post.html",
-    "href": "post.html",
-    "title": "Blogs",
-    "section": "",
-    "text": "My first blog post\n\n\n\nMEDS\n\n\ndata-viz\n\n\n\nIntroduction to website blogs\n\n\n\nVedika Shirtekar\n\n\nNov 12, 2025\n\n\n\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "posts/my-first-blog-post/index.html",
-    "href": "posts/my-first-blog-post/index.html",
-    "title": "My first blog post",
-    "section": "",
-    "text": "Welcome to my first blog! This is just a quick introduction into what to expect from my entries1. Here is an inline footnote2.\nLet’s practice citing a paper on the vaquita using a DOI."
-  },
-  {
-    "objectID": "posts/my-first-blog-post/index.html#footnotes",
-    "href": "posts/my-first-blog-post/index.html#footnotes",
-    "title": "My first blog post",
-    "section": "Footnotes",
-    "text": "Footnotes\n\n\nThis is a practice test for creating footnotes.↩︎\nhere’s my inline note↩︎"
   }
 ]
