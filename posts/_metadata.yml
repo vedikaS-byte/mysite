@@ -1,0 +1,17 @@
+# any options specified here will apply to all posts 
+
+author: 
+  - name: Vedika Shirtekar
+    url: https://github.com/vedikaS-byte 
+    affiliation: The Bren School of Environmental Science and Management
+    affiliation-url: https://bren.ucsb.edu/
+    
+title-block-banner: true
+
+freeze: auto
+
+
+
+
+
+

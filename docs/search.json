@@ -33,5 +33,26 @@
     "title": "About",
     "section": "Hobbies",
     "text": "Hobbies\nI like to read and sing."
+  },
+  {
+    "objectID": "post.html",
+    "href": "post.html",
+    "title": "Blogs",
+    "section": "",
+    "text": "My first blog post\n\n\n\nMEDS\n\n\ndata-viz\n\n\n\nIntroduction to website blogs\n\n\n\nVedika Shirtekar\n\n\nNov 12, 2025\n\n\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "posts/my-first-blog-post/index.html",
+    "href": "posts/my-first-blog-post/index.html",
+    "title": "My first blog post",
+    "section": "",
+    "text": "Welcome to my first blog! This is just a quick introduction into what to expect from my entries1. Here is an inline footnote2.\nLet’s practice citing a paper on the vaquita using a DOI."
+  },
+  {
+    "objectID": "posts/my-first-blog-post/index.html#footnotes",
+    "href": "posts/my-first-blog-post/index.html#footnotes",
+    "title": "My first blog post",
+    "section": "Footnotes",
+    "text": "Footnotes\n\n\nThis is a practice test for creating footnotes.↩︎\nhere’s my inline note↩︎"
   }
 ]

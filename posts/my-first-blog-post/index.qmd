@@ -1,0 +1,28 @@
+---
+title: "My first blog post"
+description: "Introduction to website blogs"
+date: 2025-11-12
+categories: [MEDS, data-viz]
+image: hello-world.jpg
+citation: 
+  url: https://github.com/vedikaS-byte
+#draft: true
+draft-mode: linked
+bibliography: bibliography.bib
+---
+
+Welcome to my first blog! This is just a quick introduction into what to expect from my entries[^1]. Here is an inline footnote^[here's my inline note].
+
+Let's practice citing a paper on the vaquita using a DOI.
+
+
+
+
+
+
+
+
+
+[^1]: This is a practice test for creating footnotes.
+
+
