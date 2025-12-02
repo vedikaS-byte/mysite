@@ -11,18 +11,10 @@ draft-mode: linked
 bibliography: bibliography.bib
 ---
 
-Welcome to my first blog! This is just a quick introduction into what to expect from my entries[^1]. Here is an inline footnote^[here's my inline note].
-
-Let's practice citing a paper on the vaquita using a DOI.
-
-
-
-
-
-
-
-
+Welcome to my first blog! This is just a quick introduction into what to expect from my entries[^1]. Here is an inline footnote[^2].
 
 [^1]: This is a practice test for creating footnotes.
 
+[^2]: here's my inline note
 
+Let's practice citing a paper on the vaquita using a DOI.
