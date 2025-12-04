@@ -18,7 +18,7 @@ $purewhite: #FFFFFF;
 $body-bg: $mistgray;
 $navbar-bg: $stormyblue;
 $navbar-fg: $mistgray;
-//$navbar-hl: $stormyblue;
+$navbar-hl: $stormyblue;
 $link-color: $deeptealgrey;
 
 /*-- scss:rules --*/
@@ -30,7 +30,7 @@ h3, h4, p {
 h1, h2 {
   letter-spacing: 3px;
   font-weight: 600;
-  
+
 }
 
 .title {
