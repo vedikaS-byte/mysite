@@ -13,13 +13,27 @@ This blog post aims to present and discuss the results of a statistical regressi
 
 **How does prey categorization and dive depth predict the proportion of prey not eaten?**
 
-The mean proportion not eaten was modeled using a Beta regression with a logit link, while a precision parameter (φ) captured the variability in proportions around the mean.
+The mean proportion not eaten was modeled using a Beta regression with a logit link, while a precision parameter (ϕ) captured the variability in proportions around the mean.
+
+$$
+\text{PropNotEaten} \sim \text{Beta}(\alpha, \beta)
+$$
+
+$$
+logit(\mu_i)
+= \beta_{0}
++ \beta_{diveTime} 
++ \beta_{PreyCat\_urchin} 
++ \beta_{PreyCat\_crab} 
++ \beta_{PreCat\_cucumber} 
++ \beta_{PreCat\_star}  
+$$
 
 -   **Hypothesis 1:**
 
-    -   H~0~: β~prey_cat_urchins~ = 0. Sea otters leave the same proportin of urchins uneaten as they do clams; prey category does not influence the proportion of prey eaten.
+    -   H~0~: β~PreyCat_urchins~ = 0. Sea otters leave the same proportion of urchins uneaten as they do clams; prey category does not influence the proportion of prey eaten.
 
-    -   HA: β~prey_cat_urchins~ ≠ 0. Sea otters leave a significantly different proportion of urchins uneaten compared to clams; prey category has a significant effect on the proportion of prey not eaten.
+    -   HA: β~PreyCat_urchins~ ≠ 0. Sea otters leave a significantly different proportion of urchins uneaten compared to clams; prey category has a significant effect on the proportion of prey not eaten.
 
 -   **Hypothesis 2**:
 
@@ -27,19 +41,9 @@ The mean proportion not eaten was modeled using a Beta regression with a logit l
 
     -   HA: β~dive_time~ ≠ 0. Dive time does significantly affect the proportion of prey not eaten; longer or shorter dives are associated with a higher or lower proportion of prey left uneaten.
 
--   The blog post provides context and background for the question
-
--   The data are explained using text and figures
-
 -   The relationships and causal relationships are described with a DAG
 
 ### Data Importation, Exploration, and Cleaning
-
-This project uses \[VARIABLES\]:
-
--   
-
--   
 
 ```{r}
 #| output: false
@@ -47,7 +51,7 @@ library(here)
 library(tidyverse)
 library(betareg) # https://cran.r-project.org/web/packages/betareg/vignettes/betareg.html#sec-model
 library(broom)         
-library(broom.mixed)   # tidy() for glmmTMB
+library(broom.mixed) # for glmmTMB mixed model
 library(kableExtra)
 ```
 
@@ -58,20 +62,14 @@ forage <- read_csv("forage_final (1).csv")
 ```
 
 ```{r}
-# Structure
-str(forage)
+# Inspect first few rows
+head(forage)
 ```
 
 ```{r}
-## drop NAs
-colSums(is.na(forage))
-```
-
-```{r}
-# Select for just prey category, diving time, and prey handling time 
-# table(forage$age)
-# table(forage$sex)
-forage <- forage %>% select(BoutID, PreyCat, PreyItem, DT, HT,PropNotEat, age)
+# Drop NAs 
+# Select for just prey category, diving time, and age
+forage <- forage %>% select(PreyCat, PropNotEat, age)
 forage <- forage %>% filter(age != "U") 
 forage <- forage %>% drop_na()
 
@@ -95,13 +93,9 @@ labs(x = "Diving Time (seconds)", y = "Proportion of Prey Not Eaten",
 forage %>% ggplot(aes(x = PreyCat, y = PropNotEat, fill = PreyCat)) + geom_boxplot() + theme_bw()
 ```
 
-### **Statistical model**
+### Data Simulation Procedure  
 
-\[stat notation\]
-
-Here, simulated data was generated to
-
-`betareg(formula, data, subset, na.action, weights, offset, link = "logit", link.phi = NULL, control = betareg.control(...), model = TRUE, y = TRUE, x = FALSE, ...)`
+Here, simulated data was generated to evaluate model performance, explore parameter recovery, and verify that the fitted model behaves as expected. As cited in the `betareg` CRAN project, the
 
 ```{r}
 # Beta does not take direct 0 and 1! need to do adjustment to offset before 1 and after 0 ()
@@ -111,7 +105,7 @@ forage <- forage %>%
 ```
 
 ```{r}
-# Model with interaction
+# Original model
 forage_beta <- glmmTMB(
   PropNotEat_adj ~ DT + PreyCat,
   data = forage,
@@ -125,10 +119,15 @@ forage_interaction_with_age <- forage_org <- glmmTMB(
   family = beta_family(link = "logit")
 )
 
-# Model with interaction
-forage_interaction <- betareg(PropNotEat_adj ~ PreyCat * DT, data = forage)
+# Model with interaction between PreyCat and DT
+forage_interaction <- forage_org <- glmmTMB(
+  PropNotEat_adj ~ PropNotEat_adj ~ PreyCat * DT,
+  data = forage,
+  family = beta_family(link = "logit")
+)
 
-# Model with interaction
+# Model with interaction between dive time and age
+
 forage_interaction_age <- betareg(PropNotEat_adj ~ PreyCat + DT*age, data = forage)
 summary(forage_interaction_age)
 
@@ -138,21 +137,10 @@ summary(forage_beta)
 forage$PropNotEat_adj
 forage_org <- betareg(PropNotEat_adj ~ PreyCat + DT, data = forage)
 
-
-#summary(forage_interaction)
-
 # Compare models (lowest AIC) (Akaike's An Information Criterion for log-link)
 
 AIC(forage_interaction_added, forage_interaction, forage_interaction_age, forage_beta, forage_org)
 ```
-
--   The statistical model is explained conceptually and using formal statistical notation
-
--   The blog post demonstrates how to simulate data according to model assumptions
-
-<!-- -->
-
--   The blog post demonstrates that a model fit to the simulated data recovers the parameters
 
 ```{r}
 # Build prediction grid
@@ -246,47 +234,12 @@ summary(forage_org)
 
 ### **Inference**
 
-```{r}
-# # Load necessary packages
-# 
-# ?tidy()
-# # Tidy original model 
-# orig_coefs <- broom::tidy(forage_org) %>%
-#   select(term, estimate) %>%
-#   rename(Estimate_Original = estimate)
-# 
-# # 2. Tidy the simulated model (glmmTMB)
-# sim_coefs <- broom.mixed::tidy(sim_model) %>%
-#   filter(effect == "fixed") %>%      # only fixed effects
-#   select(term, estimate) %>%
-#   rename(Estimate_Simulated = estimate)
-# 
-# # 3. Combine by term
-# coef_table <- full_join(orig_coefs, sim_coefs, by = "term")
-# 
-# # 4. Display table
-# coef_table %>%
-#   kable(format = "html", digits = 3, caption = "Comparison of Coefficients: Original vs Simulated") %>%
-#   kable_styling(full_width = F, position = "center", bootstrap_options = c("striped", "hover"))
-
-```
-
--   Hypotheses are stated in plain language and with visualizations
-
 -   Model estimates are presented with appropriate uncertainty (e.g., confidence intervals)
 
-```{r}
-## bootstrapping
+\[Extracting CIs via bootstrapping: Accompanying uncertainty estimates coming soon...\]
 
+\[Further interpretation coming soon...\]
+
+```{r}
 
 ```
-
--   A hypothesis is tested and the evidence is interpreted
-
-### **Professionalism**
-
--   The overall appearance of the blog post (e.g., figures, code outputs) is portfolio-quality
-
--   The writing is comprehensible to a technical audience
-
--   The code is well-organized and appropriately documented
