@@ -9,12 +9,13 @@ format: html
 
 ### **Purpose**
 
-The sea otter (*Enhydra lutris*) is a highly social marine mammal that plays a vital role as a keystone species in maintaining the health of kelp forest ecosystems by controlling sea urchin populations. Although sea otters are primary predators of sea urchins, their diet is diverse and includes a wide variety of prey types. For example, sea otters in Alaska are known to consume a wide range of prey, including clams, crabs, sea urchins, sea cucumbers, and snails (LaRoche et al., 2018). In recolonized areas of Southeast Alaska, clams are strongly selected despite their relatively low abundance, reflecting their high quality value. Similarly, sea urchins dominate diets primarily in rocky reef habitats where they are more abundant (LaRoche et al., 2018). 
+The sea otter (*Enhydra lutris*) is a highly social marine mammal that plays a vital role as a keystone species in maintaining the health of kelp forest ecosystems by controlling sea urchin populations. Although sea otters are primary predators of sea urchins, their diet is diverse and includes a wide variety of prey types. For example, sea otters in Alaska are known to consume a wide range of prey, including clams, crabs, sea urchins, sea cucumbers, and snails (LaRoche et al., 2018). In recolonized areas of Southeast Alaska, clams are strongly selected despite their relatively low abundance, reflecting their high quality value. Similarly, sea urchins dominate diets primarily in rocky reef habitats where they are more abundant (LaRoche et al., 2018).
 
+![](images/clipboard-1982355787.png)
 
 The proportion of prey not eaten provides a measure of foraging efficiency and prey handling success, reflecting both biological constraints and behavioral choices during feeding. Because of their important role as a keystone species, understanding their diet and foraging patterns is essential for assessing feeding preferences and food availability in conservation.
 
-This blog post aims to present and discuss the results of a statistical regression analysis conducted on sea otter foraging data collected from visual observations in Prince of Wales, Alaska, by LaRoche et al. (2018). A beta regression using `betareg` with a zero-adjustment was selected for the analysis in order to assess the proportion of prey not consumed by sea otters during summer 2018. The following question was utilized to guide the analysis:
+This blog post aims to present and discuss the results of a statistical regression analysis conducted on sea otter foraging data collected from visual observations in Prince of Wales, Alaska, by LaRoche et al. (2018). A beta regression using `glmmTMB` with a zero-adjustment was selected for the analysis in order to assess the proportion of prey not consumed by sea otters during summer 2018. The following question was utilized to guide the analysis:
 
 **How does prey categorization and dive depth predict the proportion of prey not eaten?**
 
@@ -36,7 +37,7 @@ $$
 
 -   **Hypothesis 1:**
 
-    -   H~0~: β~PreyCat_urchins~ = 0. Sea otters leave the same proportion of urchins uneaten as they do clams; prey category does not influence the proportion of prey eaten.
+    -   H~0~: β~PreyCat_urchins~ = 0. Sea otters leave the same proportion of urchins uneaten as they do with clams; prey category does not influence the proportion of prey eaten.
 
     -   HA: β~PreyCat_urchins~ ≠ 0. Sea otters leave a significantly different proportion of urchins uneaten compared to clams; prey category has a significant effect on the proportion of prey not eaten.
 
@@ -53,7 +54,9 @@ Additionally, prey category may influence dive duration because hunting, handlin
 ```{r}
 #| code-fold: true
 #| code-summary: "Show code"
+#| message: false
 # Create a DAG using dagitty package... relate to each variable 
+library(dagitty)
 dag <- dagitty("dag { 
   PreyCat -> DT 
   DT -> PropNotEat
@@ -77,7 +80,6 @@ library(glmmTMB)
 library(broom)         
 library(broom.mixed) # for glmmTMB mixed model
 library(kableExtra)
-library(dagitty)
 ```
 
 ```{r}
@@ -105,6 +107,8 @@ colSums(is.na(forage))
 ```
 
 ```{r}
+#| code-fold: true
+#| code-summary: "Show code"
 # Create a scatterplot of dive time related to the proportion of prey not eaten based on prey category
 forage %>% ggplot(aes(x = DT, y = PropNotEat))+ geom_jitter() + theme_bw() +  #+ scale_color_discrete(palette = "Set2") + 
 #   #facet_wrap(~PreyCat, scale = "free") + 
@@ -152,7 +156,6 @@ forage_interaction <- forage_org <- glmmTMB(
 # Compare models (lowest AIC) (Akaike's An Information Criterion for log-link)
 AIC(forage_beta, forage_interaction)
 ```
-
 
 ```{r}
 # Reset seed (redefined)
@@ -217,8 +220,6 @@ summary(sim_model)
 summary(forage_beta)
 ```
 
-
-
 ### **Inference**
 
 -   Model estimates are presented with appropriate uncertainty (e.g., confidence intervals)
@@ -247,6 +248,9 @@ predicted_data$predicted_PropNotEaten <- predict(
 ```
 
 ```{r}
+#| code-fold: true
+#| code-summary: "Show code"
+#| warning: false
 # Plot fitted lines per prey category
 predicted_data %>% 
   ggplot(aes(x = DT, y = predicted_PropNotEaten, color = PreyCat)) +

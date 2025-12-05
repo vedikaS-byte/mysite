@@ -96,6 +96,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
@@ -158,9 +160,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#purpose" id="toc-purpose" class="nav-link" data-scroll-target="#purpose"><strong>Purpose</strong></a></li>
   <li><a href="#data-importation-exploration-and-cleaning" id="toc-data-importation-exploration-and-cleaning" class="nav-link" data-scroll-target="#data-importation-exploration-and-cleaning">Data Importation, Exploration, and Cleaning</a></li>
-  <li><a href="#statistical-model" id="toc-statistical-model" class="nav-link" data-scroll-target="#statistical-model"><strong>Statistical model</strong></a></li>
+  <li><a href="#data-simulation-procedure" id="toc-data-simulation-procedure" class="nav-link" data-scroll-target="#data-simulation-procedure">Data Simulation Procedure</a></li>
   <li><a href="#inference" id="toc-inference" class="nav-link" data-scroll-target="#inference"><strong>Inference</strong></a></li>
-  <li><a href="#professionalism" id="toc-professionalism" class="nav-link" data-scroll-target="#professionalism"><strong>Professionalism</strong></a></li>
   </ul></li>
   </ul>
 </nav>
@@ -172,508 +173,323 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="assessing-sea-otter-feeding-habitats-based-on-prey-type-and-dive-depth" class="level1">
 <h1>Assessing Sea Otter Feeding Habitats Based on Prey Type and Dive Depth</h1>
+<p><em>Currently under construction: Some sections do not have descriptions and will be updated by this Saturday.</em></p>
 <section id="purpose" class="level3">
 <h3 class="anchored" data-anchor-id="purpose"><strong>Purpose</strong></h3>
-<p>The sea otter (<em>Enhydra lutris)</em> is a highly social marine mammal that plays a vital role as a keystone species in maintaining the health of kelp forest ecosystems by keeping sea urchin populations in check. While sea otters are primary predators of sea urchins, their diets are shown to be varied. For example, sea otters are known to eat (SOURCE). Sea urchins. Because of their important role as a keystone species, understanding their diet and foraging patterns is essential for assessing feeding preferences and food availability in conservation. [ADD DISTRIBUTION].</p>
-<p>This blog post aims to present and discuss the results of a statistical regression analysis conducted on sea otter foraging data collected from visual observations in Prince of Wales, Alaska, by LaRoche et al.&nbsp;(2018). A beta regression using <code>betareg</code> with a zero-adjustment was selected for the analysis in order to assess the proportion of prey not consumed by sea otters during summer 2018. Both the age and sex of observed sea otters were considered as potential confounding variables impacting diving time. The following question was utilized to guide the analysis:</p>
+<p>The sea otter (<em>Enhydra lutris</em>) is a highly social marine mammal that plays a vital role as a keystone species in maintaining the health of kelp forest ecosystems by controlling sea urchin populations. Although sea otters are primary predators of sea urchins, their diet is diverse and includes a wide variety of prey types. For example, sea otters in Alaska are known to consume a wide range of prey, including clams, crabs, sea urchins, sea cucumbers, and snails (LaRoche et al., 2018). In recolonized areas of Southeast Alaska, clams are strongly selected despite their relatively low abundance, reflecting their high quality value. Similarly, sea urchins dominate diets primarily in rocky reef habitats where they are more abundant (LaRoche et al., 2018).</p>
+<p><img src="images/clipboard-1982355787.png" class="img-fluid"></p>
+<p>The proportion of prey not eaten provides a measure of foraging efficiency and prey handling success, reflecting both biological constraints and behavioral choices during feeding. Because of their important role as a keystone species, understanding their diet and foraging patterns is essential for assessing feeding preferences and food availability in conservation.</p>
+<p>This blog post aims to present and discuss the results of a statistical regression analysis conducted on sea otter foraging data collected from visual observations in Prince of Wales, Alaska, by LaRoche et al.&nbsp;(2018). A beta regression using <code>glmmTMB</code> with a zero-adjustment was selected for the analysis in order to assess the proportion of prey not consumed by sea otters during summer 2018. The following question was utilized to guide the analysis:</p>
 <p><strong>How does prey categorization and dive depth predict the proportion of prey not eaten?</strong></p>
-<p>The mean proportion not eaten was modeled using a Beta regression with a logit link, while a precision parameter (φ) captured the variability in proportions around the mean.</p>
+<p>The mean proportion not eaten was modeled using a Beta regression with a logit link, while a precision parameter (ϕ) captured the variability in proportions around the mean.</p>
+<p><span class="math display">\[
+\text{PropNotEaten} \sim \text{Beta}(\alpha, \beta)
+\]</span></p>
+<p><span class="math display">\[
+logit(\mu_i)
+= \beta_{0}
++ \beta_{diveTime}
++ \beta_{PreyCat\_urchin}
++ \beta_{PreyCat\_crab}
++ \beta_{PreCat\_cucumber}
++ \beta_{PreCat\_star}  
+\]</span></p>
 <ul>
-<li><p>Hypothesis 1:</p>
+<li><p><strong>Hypothesis 1:</strong></p>
 <ul>
-<li><p>H<sub>0</sub>: β<sub>prey_cat_urchins</sub> = 0. There is no difference in the proportion of prey not eaten between</p></li>
-<li><p>HA: β<sub>prey_cat_urchins</sub> ≠ 0.</p></li>
+<li><p>H<sub>0</sub>: β<sub>PreyCat_urchins</sub> = 0. Sea otters leave the same proportion of urchins uneaten as they do with clams; prey category does not influence the proportion of prey eaten.</p></li>
+<li><p>HA: β<sub>PreyCat_urchins</sub> ≠ 0. Sea otters leave a significantly different proportion of urchins uneaten compared to clams; prey category has a significant effect on the proportion of prey not eaten.</p></li>
 </ul></li>
-<li><p>Hypothesis 2:</p>
+<li><p><strong>Hypothesis 2</strong>:</p>
 <ul>
-<li><p>H0: β<sub>dive_time</sub> = 0</p></li>
-<li><p>HA: β<sub>dive_time</sub> ≠ 0</p></li>
+<li><p>H0: β<sub>dive_time</sub> = 0. Dive time has no significant effect on the proportion of prey not eaten; the duration of a dive does not influence how much prey is not eaten.</p></li>
+<li><p>HA: β<sub>dive_time</sub> ≠ 0. Dive time does significantly affect the proportion of prey not eaten; longer or shorter dives are associated with a higher or lower proportion of prey left uneaten.</p></li>
 </ul></li>
-<li></li>
-<li><p>The blog post provides context and background for the question</p></li>
-<li><p>The data are explained using text and figures</p></li>
-<li><p>The relationships and causal relationships are described with a DAG</p></li>
 </ul>
+<p>The categorical variable <code>PreyCat</code> represents the general prey categorization of a prey type. In particular, clams and urchins differ biologically in handling difficulty and energetic return. Urchins may require more processing and include defensive structures (spines), whereas clams require shell-breaking but offer concentrated soft tissue. These differences potentially influence the proportion of prey successfully consumed, indicating a direct causal effect of prey category on the proportion of prey not consumed</p>
+<p>Additionally, prey category may influence dive duration because hunting, handling, and extracting different prey may require different levels of effort and time. Thus, prey category potentially influences dive time, which in turn affects the proportion of prey not eaten.</p>
+<div class="cell">
+<details>
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a DAG using dagitty package... relate to each variable </span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dagitty)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>dag <span class="ot">&lt;-</span> <span class="fu">dagitty</span>(<span class="st">"dag { </span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="st">  PreyCat -&gt; DT </span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="st">  DT -&gt; PropNotEat</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="st">  PreyCat -&gt; PropNotEat</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="st">}"</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dag) <span class="co"># Visualize DAG</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="blog_post_draft_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 </section>
 <section id="data-importation-exploration-and-cleaning" class="level3">
 <h3 class="anchored" data-anchor-id="data-importation-exploration-and-cleaning">Data Importation, Exploration, and Cleaning</h3>
-<p>This project uses [VARIABLES]:</p>
-<ul>
-<li></li>
-<li></li>
-</ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(betareg) <span class="co"># https://cran.r-project.org/web/packages/betareg/vignettes/betareg.html#sec-model</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details>
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(betareg) <span class="co"># https://cran.r-project.org/web/packages/betareg/vignettes/betareg.html#sec-model</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glmmTMB)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)         </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom.mixed) <span class="co"># for glmmTMB mixed model</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>forage <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"forage_final (1).csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>forage <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"forage_final (1).csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Structure</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(forage)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Inspect first few rows</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(forage)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>spc_tbl_ [4,457 × 36] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
- $ BoutID                 : chr [1:4457] "2018-001" "2018-001" "2018-001" "2018-001" ...
- $ Study                  : chr [1:4457] "POW" "POW" "POW" "POW" ...
- $ Date                   : chr [1:4457] "5/6/18" "5/6/18" "5/6/18" "5/6/18" ...
- $ BoutStart              : 'hms' num [1:4457] 11:24:00 11:24:00 11:24:00 11:24:00 ...
-  ..- attr(*, "units")= chr "secs"
- $ BoutEnd                : 'hms' num [1:4457] 11:51:00 11:51:00 11:51:00 11:51:00 ...
-  ..- attr(*, "units")= chr "secs"
- $ DiveNo                 : num [1:4457] 1 2 3 4 5 6 7 8 9 10 ...
- $ DT                     : num [1:4457] 76 135 55 52 40 81 58 46 42 12 ...
- $ ST                     : num [1:4457] 33 26 12 21 17 22 60 9 13 30 ...
- $ Suc                    : chr [1:4457] "N" "Y" "Y" "Y" ...
- $ HT                     : num [1:4457] NA 24 12 21 17 NA 60 9 NA 12 ...
- $ PreyItem               : chr [1:4457] NA "SAG" "CLA" "CLA" ...
- $ PreyQty                : num [1:4457] NA 1 1 2 1 NA 1 1 NA 1 ...
- $ PreySz                 : chr [1:4457] NA "2A" "1C" "1C" ...
- $ PropNotEat             : num [1:4457] NA NA NA NA NA NA 0.3 NA NA NA ...
- $ Why....Notes...Tool.Use: chr [1:4457] NA NA NA NA ...
- $ Region                 : chr [1:4457] "SHINAKU INLET" "SHINAKU INLET" "SHINAKU INLET" "SHINAKU INLET" ...
- $ YEAR                   : num [1:4457] 2003 2003 2003 2003 2003 ...
- $ ObsLatDeg              : num [1:4457] 55.6 55.6 55.6 55.6 55.6 ...
- $ ObsLongDeg             : num [1:4457] -133 -133 -133 -133 -133 ...
- $ OtterLatDeg            : num [1:4457] 55.6 55.6 55.6 55.6 55.6 ...
- $ OtterLongDeg           : num [1:4457] -133 -133 -133 -133 -133 ...
- $ age                    : chr [1:4457] "A" "A" "A" "A" ...
- $ sex                    : chr [1:4457] "U" "U" "U" "U" ...
- $ pup                    : chr [1:4457] NA NA NA NA ...
- $ where                  : chr [1:4457] "OW" "OW" "OW" "OW" ...
- $ obscond                : chr [1:4457] "VG" "VG" "VG" "VG" ...
- $ Rain                   : chr [1:4457] "NONE" "NONE" "NONE" "NONE" ...
- $ Sky                    : num [1:4457] 0 0 0 0 0 0 0 0 0 0 ...
- $ observer               : chr [1:4457] "NLL" "NLL" "NLL" "NLL" ...
- $ recorder               : chr [1:4457] "CLD/YBB" "CLD/YBB" "CLD/YBB" "CLD/YBB" ...
- $ EnteredBy              : chr [1:4457] "NLL" "NLL" "NLL" "NLL" ...
- $ checked.by             : chr [1:4457] "SLK" "SLK" "SLK" "SLK" ...
- $ PreyCat                : chr [1:4457] NA "Clam" "Clam" "Clam" ...
- $ Occupation             : chr [1:4457] "15 years" "15 years" "15 years" "15 years" ...
- $ julian                 : num [1:4457] 126 126 126 126 126 126 126 126 126 126 ...
- $ Season                 : chr [1:4457] "Spring" "Spring" "Spring" "Spring" ...
- - attr(*, "spec")=
-  .. cols(
-  ..   BoutID = col_character(),
-  ..   Study = col_character(),
-  ..   Date = col_character(),
-  ..   BoutStart = col_time(format = ""),
-  ..   BoutEnd = col_time(format = ""),
-  ..   DiveNo = col_double(),
-  ..   DT = col_double(),
-  ..   ST = col_double(),
-  ..   Suc = col_character(),
-  ..   HT = col_double(),
-  ..   PreyItem = col_character(),
-  ..   PreyQty = col_double(),
-  ..   PreySz = col_character(),
-  ..   PropNotEat = col_double(),
-  ..   Why....Notes...Tool.Use = col_character(),
-  ..   Region = col_character(),
-  ..   YEAR = col_double(),
-  ..   ObsLatDeg = col_double(),
-  ..   ObsLongDeg = col_double(),
-  ..   OtterLatDeg = col_double(),
-  ..   OtterLongDeg = col_double(),
-  ..   age = col_character(),
-  ..   sex = col_character(),
-  ..   pup = col_character(),
-  ..   where = col_character(),
-  ..   obscond = col_character(),
-  ..   Rain = col_character(),
-  ..   Sky = col_double(),
-  ..   observer = col_character(),
-  ..   recorder = col_character(),
-  ..   EnteredBy = col_character(),
-  ..   checked.by = col_character(),
-  ..   PreyCat = col_character(),
-  ..   Occupation = col_character(),
-  ..   julian = col_double(),
-  ..   Season = col_character()
-  .. )
- - attr(*, "problems")=&lt;externalptr&gt; </code></pre>
+<pre><code># A tibble: 6 × 36
+  BoutID   Study Date  BoutStart BoutEnd DiveNo    DT    ST Suc      HT PreyItem
+  &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt; &lt;time&gt;    &lt;time&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;   
+1 2018-001 POW   5/6/… 11:24     11:51        1    76    33 N        NA &lt;NA&gt;    
+2 2018-001 POW   5/6/… 11:24     11:51        2   135    26 Y        24 SAG     
+3 2018-001 POW   5/6/… 11:24     11:51        3    55    12 Y        12 CLA     
+4 2018-001 POW   5/6/… 11:24     11:51        4    52    21 Y        21 CLA     
+5 2018-001 POW   5/6/… 11:24     11:51        5    40    17 Y        17 SAG     
+6 2018-001 POW   5/6/… 11:24     11:51        6    81    22 N        NA &lt;NA&gt;    
+# ℹ 25 more variables: PreyQty &lt;dbl&gt;, PreySz &lt;chr&gt;, PropNotEat &lt;dbl&gt;,
+#   Why....Notes...Tool.Use &lt;chr&gt;, Region &lt;chr&gt;, YEAR &lt;dbl&gt;, ObsLatDeg &lt;dbl&gt;,
+#   ObsLongDeg &lt;dbl&gt;, OtterLatDeg &lt;dbl&gt;, OtterLongDeg &lt;dbl&gt;, age &lt;chr&gt;,
+#   sex &lt;chr&gt;, pup &lt;chr&gt;, where &lt;chr&gt;, obscond &lt;chr&gt;, Rain &lt;chr&gt;, Sky &lt;dbl&gt;,
+#   observer &lt;chr&gt;, recorder &lt;chr&gt;, EnteredBy &lt;chr&gt;, checked.by &lt;chr&gt;,
+#   PreyCat &lt;chr&gt;, Occupation &lt;chr&gt;, julian &lt;dbl&gt;, Season &lt;chr&gt;</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">## drop NAs</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colSums</span>(<span class="fu">is.na</span>(forage))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop NAs </span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Select for just prey category, diving time, and age</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>forage <span class="ot">&lt;-</span> forage <span class="sc">%&gt;%</span> <span class="fu">select</span>(PreyCat, PropNotEat, DT, age)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>forage <span class="ot">&lt;-</span> forage <span class="sc">%&gt;%</span> <span class="fu">filter</span>(age <span class="sc">!=</span> <span class="st">"U"</span>) </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>forage <span class="ot">&lt;-</span> forage <span class="sc">%&gt;%</span> <span class="fu">drop_na</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the colSums... were they all dropped?</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colSums</span>(<span class="fu">is.na</span>(forage)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>                 BoutID                   Study                    Date 
-                      0                       0                       0 
-              BoutStart                 BoutEnd                  DiveNo 
-                      0                       0                       0 
-                     DT                      ST                     Suc 
-                      7                     118                       4 
-                     HT                PreyItem                 PreyQty 
-                    641                     480                     484 
-                 PreySz              PropNotEat Why....Notes...Tool.Use 
-                    484                    4033                    3049 
-                 Region                    YEAR               ObsLatDeg 
-                      0                       0                       0 
-             ObsLongDeg             OtterLatDeg            OtterLongDeg 
-                      0                       0                       0 
-                    age                     sex                     pup 
-                      0                       0                    3343 
-                  where                 obscond                    Rain 
-                     19                       0                       0 
-                    Sky                observer                recorder 
-                      0                       0                       0 
-              EnteredBy              checked.by                 PreyCat 
-                      0                      28                    1541 
-             Occupation                  julian                  Season 
-                      0                       0                       0 </code></pre>
+<pre><code>   PreyCat PropNotEat         DT        age 
+         0          0          0          0 </code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select for just prey category, diving time, and prey handling time </span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># table(forage$age)</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># table(forage$sex)</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>forage <span class="ot">&lt;-</span> forage <span class="sc">%&gt;%</span> <span class="fu">select</span>(BoutID, PreyCat, PreyItem, DT, HT,PropNotEat, age)</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>forage <span class="ot">&lt;-</span> forage <span class="sc">%&gt;%</span> <span class="fu">filter</span>(age <span class="sc">!=</span> <span class="st">"U"</span>) </span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>forage <span class="ot">&lt;-</span> forage <span class="sc">%&gt;%</span> <span class="fu">drop_na</span>()</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(forage)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 304   7</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the colSums... were they all dropped?</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colSums</span>(<span class="fu">is.na</span>(forage)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>    BoutID    PreyCat   PreyItem         DT         HT PropNotEat        age 
-         0          0          0          0          0          0          0 </code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a scatterplot of dive time related to the proportion of prey not eaten based on prey category</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>forage <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> DT, <span class="at">y =</span> PropNotEat))<span class="sc">+</span> <span class="fu">geom_jitter</span>() <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span>  <span class="co">#+ scale_color_discrete(palette = "Set2") + </span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   #facet_wrap(~PreyCat, scale = "free") + </span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="co">#theme(legend.position = "none") + </span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Diving Time (seconds)"</span>, <span class="at">y =</span> <span class="st">"Proportion of Prey Not Eaten"</span>, </span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>                                               <span class="at">title =</span> <span class="st">"Proportion of Prey Not Consumed By Sea Otters Based on Diving Time"</span>) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">11</span>, <span class="at">face =</span> <span class="st">"bold"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details>
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a scatterplot of dive time related to the proportion of prey not eaten based on prey category</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>forage <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> DT, <span class="at">y =</span> PropNotEat))<span class="sc">+</span> <span class="fu">geom_jitter</span>() <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span>  <span class="co">#+ scale_color_discrete(palette = "Set2") + </span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   #facet_wrap(~PreyCat, scale = "free") + </span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="co">#theme(legend.position = "none") + </span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Diving Time (seconds)"</span>, <span class="at">y =</span> <span class="st">"Proportion of Prey Not Eaten"</span>, </span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>                                               <span class="at">title =</span> <span class="st">"Proportion of Prey Not Consumed By Sea Otters Based on Diving Time"</span>) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">11</span>, <span class="at">face =</span> <span class="st">"bold"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <p><img src="blog_post_draft_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create boxplots to visualize the distribution of prey categories and proportion of prey not eaten</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>forage <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> PreyCat, <span class="at">y =</span> PropNotEat, <span class="at">fill =</span> PreyCat)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>() <span class="sc">+</span> <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details>
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create boxplots to visualize the distribution of prey categories and proportion of prey not eaten</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>forage <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> PreyCat, <span class="at">y =</span> PropNotEat, <span class="at">fill =</span> PreyCat)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>() <span class="sc">+</span> <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Clam"</span> <span class="ot">=</span> <span class="st">"#1b9e77"</span>,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Urchin"</span> <span class="ot">=</span> <span class="st">"#d95f02"</span>,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Crab"</span> <span class="ot">=</span> <span class="st">"#7570b3"</span>,</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Cucumber"</span> <span class="ot">=</span> <span class="st">"#66a61e"</span>,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Star"</span> <span class="ot">=</span> <span class="st">"#e6ab02"</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">+</span> <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <p><img src="blog_post_draft_files/figure-html/unnamed-chunk-7-2.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
-<section id="statistical-model" class="level3">
-<h3 class="anchored" data-anchor-id="statistical-model"><strong>Statistical model</strong></h3>
-<p>[stat notation]</p>
-<p>Here, simulated data was generated to</p>
-<p><code>betareg(formula, data, subset, na.action, weights, offset, link = "logit", link.phi = NULL, control = betareg.control(...), model = TRUE, y = TRUE, x = FALSE, ...)</code></p>
+<section id="data-simulation-procedure" class="level3">
+<h3 class="anchored" data-anchor-id="data-simulation-procedure">Data Simulation Procedure</h3>
+<p>Here, simulated data was generated to evaluate model performance, explore parameter recovery, and verify that the fitted model behaves as expected. As cited in the <code>betareg</code> CRAN project, the</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Beta does not take direct 0 and 1! need to do adjustment to offset before 1 and after 0 ()</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>forage <span class="ot">&lt;-</span> forage <span class="sc">%&gt;%</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">PropNotEat_adj =</span> <span class="co"># Transformation to adjust (betareg cranr)</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>           (PropNotEat <span class="sc">*</span> (<span class="fu">nrow</span>(.) <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="fl">0.5</span>) <span class="sc">/</span> <span class="fu">nrow</span>(.))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Beta does not take direct 0 and 1! need to do adjustment to offset before 1 and after 0 ()</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>forage <span class="ot">&lt;-</span> forage <span class="sc">%&gt;%</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">PropNotEat_adj =</span> <span class="co"># Transformation to adjust (betareg cranr)</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>           (PropNotEat <span class="sc">*</span> (<span class="fu">nrow</span>(.) <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="fl">0.5</span>) <span class="sc">/</span> <span class="fu">nrow</span>(.))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Model with interaction</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>forage_interaction_added <span class="ot">&lt;-</span> <span class="fu">betareg</span>(PropNotEat_adj <span class="sc">~</span> PreyCat <span class="sc">*</span> DT <span class="sc">+</span> age, <span class="at">data =</span> forage)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in betareg.fit(X, Y, Z, weights, offset, link, link.phi, type, control,
-: no valid starting value for precision parameter found, using 1 instead</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Model with interaction</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>forage_interaction <span class="ot">&lt;-</span> <span class="fu">betareg</span>(PropNotEat_adj <span class="sc">~</span> PreyCat <span class="sc">*</span> DT, <span class="at">data =</span> forage)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in betareg.fit(X, Y, Z, weights, offset, link, link.phi, type, control,
-: no valid starting value for precision parameter found, using 1 instead</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Model with interaction</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>forage_interaction_age <span class="ot">&lt;-</span> <span class="fu">betareg</span>(PropNotEat_adj <span class="sc">~</span> PreyCat <span class="sc">+</span> DT<span class="sc">*</span>age, <span class="at">data =</span> forage)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in betareg.fit(X, Y, Z, weights, offset, link, link.phi, type, control,
-: no valid starting value for precision parameter found, using 1 instead</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(forage_interaction_age)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Original model</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>forage_beta <span class="ot">&lt;-</span> <span class="fu">glmmTMB</span>(</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  PropNotEat_adj <span class="sc">~</span> DT <span class="sc">+</span> PreyCat,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> forage,</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">family =</span> <span class="fu">beta_family</span>(<span class="at">link =</span> <span class="st">"logit"</span>)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Model with interaction between PreyCat and DT</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>forage_interaction <span class="ot">&lt;-</span> forage_org <span class="ot">&lt;-</span> <span class="fu">glmmTMB</span>(</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  PropNotEat_adj <span class="sc">~</span> PreyCat <span class="sc">*</span> DT,</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> forage,</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">family =</span> <span class="fu">beta_family</span>(<span class="at">link =</span> <span class="st">"logit"</span>)</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare models (lowest AIC) (Akaike's An Information Criterion for log-link)</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(forage_beta, forage_interaction)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-betareg(formula = PropNotEat_adj ~ PreyCat + DT * age, data = forage)
+<pre><code>                   df       AIC
+forage_beta         7 -19.32321
+forage_interaction 11 -12.10524</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reset seed (redefined)</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Define simulated obs... with law of large numbers, larger sample size should get closer to actual predictors</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>n_sim <span class="ot">&lt;-</span> <span class="dv">15000</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Define coefficients from original model</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>beta0 <span class="ot">&lt;-</span> <span class="fl">0.738077</span> </span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>beta_dive_time <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fl">0.004949</span> </span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>beta_crab <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fl">0.265717</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>beta_cucumber <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fl">0.449131</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>beta_star <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fl">0.240470</span> </span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>beta_urchin <span class="ot">&lt;-</span>  <span class="sc">-</span><span class="fl">0.205423</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>phi <span class="ot">&lt;-</span> <span class="fl">1.72</span> <span class="co"># Precision</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="do">## Simulate range for predictors</span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>dt <span class="ot">&lt;-</span> <span class="fu">runif</span>(n_sim, <span class="dv">3</span>, <span class="dv">255</span>) <span class="co"># Range of dive time</span></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Randomly generate PreyCat factors for simulated data... then for each level, sample with replacement to get vector of length n_sim</span></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>PreyCat <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"Clam"</span>,<span class="st">"Crab"</span>,<span class="st">"Cucumber"</span>,<span class="st">"Star"</span>,<span class="st">"Urchin"</span>), n_sim, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a><span class="do">## Define linear predictor and logit equation</span></span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign coefficient to each PreyCat level</span></span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>prey_effect <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(PreyCat <span class="sc">==</span> <span class="st">"Crab"</span>, beta_crab,</span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>               <span class="fu">ifelse</span>(PreyCat <span class="sc">==</span> <span class="st">"Cucumber"</span>, beta_cucumber,</span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>               <span class="fu">ifelse</span>(PreyCat <span class="sc">==</span> <span class="st">"Star"</span>, beta_star,</span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>               <span class="fu">ifelse</span>(PreyCat <span class="sc">==</span> <span class="st">"Urchin"</span>, beta_urchin, </span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>               <span class="dv">0</span>)))) <span class="co"># Else assign clam (reference)</span></span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a>glm_eq <span class="ot">&lt;-</span> beta0 <span class="sc">+</span> beta_dive_time <span class="sc">*</span> dt <span class="sc">+</span> prey_effect <span class="co"># Recall that prey_effect has the associated beta coefficient for each level</span></span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert linear predictor (logit scale) to  mean proportion on  response scale</span></span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a>mean_sim <span class="ot">&lt;-</span> <span class="fu">exp</span>(glm_eq) <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(glm_eq))</span>
+<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Reparameterize beta distribution parameters (derived from CRAN at (https://search.r-project.org/CRAN/refmans/betareg/html/dbetar.html)</span></span>
+<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> mean_sim <span class="sc">*</span> phi</span>
+<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a>beta <span class="ot">&lt;-</span> (<span class="dv">1</span> <span class="sc">-</span> mean_sim) <span class="sc">*</span> phi</span>
+<span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate response variable from beta distribution using calculated alpha and beta </span></span>
+<span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a>PropNotEat_adj <span class="ot">&lt;-</span> <span class="fu">rbeta</span>(n_sim, alpha, beta)</span>
+<span id="cb14-41"><a href="#cb14-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-42"><a href="#cb14-42" aria-hidden="true" tabindex="-1"></a><span class="co"># Create simulated data frame</span></span>
+<span id="cb14-43"><a href="#cb14-43" aria-hidden="true" tabindex="-1"></a>simulated_forage <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb14-44"><a href="#cb14-44" aria-hidden="true" tabindex="-1"></a>  <span class="at">PropNotEat_adj =</span> PropNotEat_adj,</span>
+<span id="cb14-45"><a href="#cb14-45" aria-hidden="true" tabindex="-1"></a>  <span class="at">DT =</span> dt,</span>
+<span id="cb14-46"><a href="#cb14-46" aria-hidden="true" tabindex="-1"></a>  <span class="at">PreyCat =</span> <span class="fu">factor</span>(PreyCat, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Clam"</span>,<span class="st">"Crab"</span>,<span class="st">"Cucumber"</span>,<span class="st">"Star"</span>,<span class="st">"Urchin"</span>))</span>
+<span id="cb14-47"><a href="#cb14-47" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-48"><a href="#cb14-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-49"><a href="#cb14-49" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit simulated model</span></span>
+<span id="cb14-50"><a href="#cb14-50" aria-hidden="true" tabindex="-1"></a>sim_model <span class="ot">&lt;-</span> <span class="fu">glmmTMB</span>(</span>
+<span id="cb14-51"><a href="#cb14-51" aria-hidden="true" tabindex="-1"></a>  PropNotEat_adj <span class="sc">~</span> DT <span class="sc">+</span> PreyCat,</span>
+<span id="cb14-52"><a href="#cb14-52" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> simulated_forage,</span>
+<span id="cb14-53"><a href="#cb14-53" aria-hidden="true" tabindex="-1"></a>  <span class="at">family =</span> <span class="fu">beta_family</span>(<span class="at">link =</span> <span class="st">"logit"</span>)</span>
+<span id="cb14-54"><a href="#cb14-54" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare coefficients</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(sim_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Family: beta  ( logit )
+Formula:          PropNotEat_adj ~ DT + PreyCat
+Data: simulated_forage
 
-Quantile residuals:
-    Min      1Q  Median      3Q     Max 
--1.8218 -0.6847 -0.2759  0.0956  2.9494 
+      AIC       BIC    logLik -2*log(L)  df.resid 
+  -2747.9   -2694.6    1381.0   -2761.9     14993 
 
-Coefficients (mean model with logit link):
-                 Estimate Std. Error z value Pr(&gt;|z|)    
-(Intercept)      0.659404   0.167937   3.927 8.62e-05 ***
-PreyCatCrab     -0.274429   0.165625  -1.657  0.09753 .  
-PreyCatCucumber -0.409292   0.238509  -1.716  0.08615 .  
-PreyCatStar     -0.012105   0.471555  -0.026  0.97952    
-PreyCatUrchin   -0.182964   0.340366  -0.538  0.59089    
-DT              -0.004529   0.001481  -3.058  0.00223 ** 
-ageJ            -0.824783   2.424516  -0.340  0.73372    
-DT:ageJ          0.018273   0.046002   0.397  0.69120    
 
-Phi coefficients (precision model with identity link):
-      Estimate Std. Error z value Pr(&gt;|z|)    
-(phi)   1.7881     0.1211   14.76   &lt;2e-16 ***
+Dispersion parameter for beta family (): 1.71 
+
+Conditional model:
+                  Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)      0.7406679  0.0270753   27.36  &lt; 2e-16 ***
+DT              -0.0050162  0.0001319  -38.03  &lt; 2e-16 ***
+PreyCatCrab     -0.2196297  0.0297231   -7.39 1.48e-13 ***
+PreyCatCucumber -0.4368883  0.0297059  -14.71  &lt; 2e-16 ***
+PreyCatStar     -0.2597803  0.0297271   -8.74  &lt; 2e-16 ***
+PreyCatUrchin   -0.2300222  0.0296505   -7.76 8.64e-15 ***
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
-
-Type of estimator: ML (maximum likelihood)
-Log-likelihood: 11.84 on 9 Df
-Pseudo R-squared: 0.03302
-Number of iterations: 32 (BFGS) + 2 (Fisher scoring) </code></pre>
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Control variable/additional variable inclusion beta regression</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>forage_beta <span class="ot">&lt;-</span> <span class="fu">betareg</span>(PropNotEat_adj <span class="sc">~</span> PreyCat <span class="sc">+</span> DT <span class="sc">+</span> age, <span class="at">data =</span> forage)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in betareg.fit(X, Y, Z, weights, offset, link, link.phi, type, control,
-: no valid starting value for precision parameter found, using 1 instead</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(forage_beta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(forage_beta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-betareg(formula = PropNotEat_adj ~ PreyCat + DT + age, data = forage)
+<pre><code> Family: beta  ( logit )
+Formula:          PropNotEat_adj ~ DT + PreyCat
+Data: forage
 
-Quantile residuals:
-    Min      1Q  Median      3Q     Max 
--1.8224 -0.6818 -0.2775  0.0939  2.9459 
+      AIC       BIC    logLik -2*log(L)  df.resid 
+    -19.3       6.9      16.7     -33.3       307 
 
-Coefficients (mean model with logit link):
+
+Dispersion parameter for beta family (): 1.72 
+
+Conditional model:
                  Estimate Std. Error z value Pr(&gt;|z|)    
-(Intercept)      0.659968   0.167951   3.930 8.51e-05 ***
-PreyCatCrab     -0.280862   0.164865  -1.704  0.08846 .  
-PreyCatCucumber -0.410692   0.238514  -1.722  0.08509 .  
-PreyCatStar     -0.013533   0.471602  -0.029  0.97711    
-PreyCatUrchin   -0.184814   0.340377  -0.543  0.58715    
-DT              -0.004519   0.001481  -3.051  0.00228 ** 
-ageJ             0.092024   0.808221   0.114  0.90935    
-
-Phi coefficients (precision model with identity link):
-      Estimate Std. Error z value Pr(&gt;|z|)    
-(phi)   1.7871     0.1211   14.76   &lt;2e-16 ***
+(Intercept)      0.738077   0.167395   4.409 1.04e-05 ***
+DT              -0.004949   0.001488  -3.325 0.000883 ***
+PreyCatCrab     -0.265717   0.163181  -1.628 0.103449    
+PreyCatCucumber -0.449131   0.240548  -1.867 0.061886 .  
+PreyCatStar     -0.240470   0.447564  -0.537 0.591071    
+PreyCatUrchin   -0.205423   0.340147  -0.604 0.545895    
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
-
-Type of estimator: ML (maximum likelihood)
-Log-likelihood: 11.76 on 8 Df
-Pseudo R-squared: 0.03259
-Number of iterations: 15 (BFGS) + 2 (Fisher scoring) </code></pre>
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>forage<span class="sc">$</span>PropNotEat_adj</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  [1] 0.69934211 0.99835526 0.79901316 0.50000000 0.50000000 0.50000000
-  [7] 0.33055921 0.69934211 0.50000000 0.50000000 0.50000000 0.79901316
- [13] 0.20098684 0.40032895 0.50000000 0.50000000 0.50000000 0.99835526
- [19] 0.10131579 0.20098684 0.99835526 0.10131579 0.50000000 0.50000000
- [25] 0.20098684 0.10131579 0.20098684 0.79901316 0.50000000 0.20098684
- [31] 0.10131579 0.20098684 0.20098684 0.99835526 0.20098684 0.20098684
- [37] 0.33055921 0.50000000 0.25082237 0.50000000 0.50000000 0.79901316
- [43] 0.99835526 0.50000000 0.25082237 0.50000000 0.50000000 0.74917763
- [49] 0.50000000 0.99835526 0.59967105 0.10131579 0.10131579 0.10131579
- [55] 0.50000000 0.50000000 0.79901316 0.50000000 0.50000000 0.30065789
- [61] 0.50000000 0.50000000 0.10131579 0.50000000 0.50000000 0.25082237
- [67] 0.20098684 0.33055921 0.50000000 0.50000000 0.99835526 0.50000000
- [73] 0.74917763 0.50000000 0.33055921 0.33055921 0.99835526 0.50000000
- [79] 0.25082237 0.25082237 0.33055921 0.25082237 0.50000000 0.99835526
- [85] 0.33055921 0.66645066 0.99835526 0.15115132 0.10131579 0.50000000
- [91] 0.40032895 0.74917763 0.20098684 0.20098684 0.20098684 0.33055921
- [97] 0.30065789 0.30065789 0.50000000 0.10131579 0.20098684 0.30065789
-[103] 0.25082237 0.10131579 0.10131579 0.30065789 0.50000000 0.25082237
-[109] 0.33055921 0.99835526 0.99835526 0.40032895 0.15115132 0.20098684
-[115] 0.50000000 0.74917763 0.10131579 0.10131579 0.10131579 0.05148026
-[121] 0.50000000 0.10131579 0.50000000 0.99835526 0.50000000 0.33055921
-[127] 0.99835526 0.99835526 0.50000000 0.33055921 0.50000000 0.33055921
-[133] 0.50000000 0.50000000 0.50000000 0.33055921 0.50000000 0.33055921
-[139] 0.99835526 0.50000000 0.50000000 0.25082237 0.25082237 0.40032895
-[145] 0.50000000 0.50000000 0.50000000 0.99835526 0.50000000 0.33055921
-[151] 0.50000000 0.25082237 0.25082237 0.50000000 0.50000000 0.74917763
-[157] 0.25082237 0.25082237 0.99835526 0.50000000 0.40032895 0.30065789
-[163] 0.10131579 0.50000000 0.25082237 0.25082237 0.15115132 0.40032895
-[169] 0.50000000 0.50000000 0.74917763 0.50000000 0.30065789 0.50000000
-[175] 0.33055921 0.50000000 0.33055921 0.10131579 0.20098684 0.20098684
-[181] 0.50000000 0.15115132 0.15115132 0.30065789 0.10131579 0.33055921
-[187] 0.50000000 0.74917763 0.33055921 0.33055921 0.99835526 0.25082237
-[193] 0.99835526 0.99835526 0.74917763 0.50000000 0.25082237 0.50000000
-[199] 0.25082237 0.25082237 0.99835526 0.25082237 0.50000000 0.50000000
-[205] 0.50000000 0.50000000 0.65947368 0.99835526 0.50000000 0.74917763
-[211] 0.99835526 0.99835526 0.10131579 0.59967105 0.30065789 0.20098684
-[217] 0.25082237 0.10131579 0.99835526 0.99835526 0.25082237 0.25082237
-[223] 0.25082237 0.50000000 0.50000000 0.99835526 0.50000000 0.15115132
-[229] 0.25082237 0.25082237 0.50000000 0.50000000 0.10131579 0.25082237
-[235] 0.10131579 0.25082237 0.10131579 0.79901316 0.50000000 0.05148026
-[241] 0.10131579 0.74917763 0.50000000 0.50000000 0.50000000 0.74917763
-[247] 0.50000000 0.25082237 0.25082237 0.50000000 0.50000000 0.50000000
-[253] 0.50000000 0.50000000 0.74917763 0.33055921 0.50000000 0.33055921
-[259] 0.50000000 0.50000000 0.65947368 0.50000000 0.99835526 0.99835526
-[265] 0.50000000 0.50000000 0.50000000 0.50000000 0.50000000 0.33055921
-[271] 0.50000000 0.50000000 0.50000000 0.99835526 0.33055921 0.50000000
-[277] 0.99835526 0.50000000 0.50000000 0.50000000 0.50000000 0.25082237
-[283] 0.50000000 0.25082237 0.10131579 0.10131579 0.25082237 0.74917763
-[289] 0.89868421 0.74917763 0.25082237 0.50000000 0.50000000 0.50000000
-[295] 0.50000000 0.50000000 0.50000000 0.50000000 0.74917763 0.50000000
-[301] 0.74917763 0.33055921 0.50000000 0.33055921</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>forage_org <span class="ot">&lt;-</span> <span class="fu">betareg</span>(PropNotEat_adj <span class="sc">~</span> PreyCat <span class="sc">+</span> DT, <span class="at">data =</span> forage)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in betareg.fit(X, Y, Z, weights, offset, link, link.phi, type, control,
-: no valid starting value for precision parameter found, using 1 instead</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co">#summary(forage_interaction)</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare models (lowest AIC) (Akaike's An Information Criterion for log-link)</span></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(forage_interaction_added, forage_interaction, forage_interaction_age, forage_beta, forage_org)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>                         df         AIC
-forage_interaction_added 12  0.09461034
-forage_interaction       11 -1.88836548
-forage_interaction_age    9 -5.67544028
-forage_beta               8 -7.51623184
-forage_org                7 -9.50307511</code></pre>
-</div>
-</div>
-<ul>
-<li><p>The statistical model is explained conceptually and using formal statistical notation</p></li>
-<li><p>The blog post demonstrates how to simulate data according to model assumptions</p></li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create simulated dataset (values for predictions) </span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>simulated_forage <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">PreyCat =</span> <span class="fu">levels</span>(<span class="fu">factor</span>(forage<span class="sc">$</span>PreyCat)),</span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="co">#age = levels(factor(forage$age)),</span></span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="co">#sex = levels(factor(forage$sex)),</span></span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">DT =</span> <span class="fu">seq</span>(<span class="fu">min</span>(forage<span class="sc">$</span>DT), <span class="fu">max</span>(forage<span class="sc">$</span>DT), <span class="at">length.out =</span> <span class="dv">40</span>) <span class="co"># 100 obs yeilds closest recovered parameter values</span></span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(simulated_forage)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>'data.frame':   200 obs. of  2 variables:
- $ PreyCat: Factor w/ 5 levels "Clam","Crab",..: 1 2 3 4 5 1 2 3 4 5 ...
- $ DT     : num  3 3 3 3 3 ...
- - attr(*, "out.attrs")=List of 2
-  ..$ dim     : Named int [1:2] 5 40
-  .. ..- attr(*, "names")= chr [1:2] "PreyCat" "DT"
-  ..$ dimnames:List of 2
-  .. ..$ PreyCat: chr [1:5] "PreyCat=Clam" "PreyCat=Crab" "PreyCat=Cucumber" "PreyCat=Star" ...
-  .. ..$ DT     : chr [1:40] "DT=  3.000000" "DT=  9.435897" "DT= 15.871795" "DT= 22.307692" ...</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract fitted param (phi and mean)</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>coef_vector <span class="ot">&lt;-</span> <span class="fu">coef</span>(forage_org) <span class="co"># Create vector of the coefficients</span></span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>coef_mean <span class="ot">&lt;-</span> coef_vector[<span class="fu">names</span>(coef_vector) <span class="sc">!=</span> <span class="st">"(phi)"</span>] <span class="co"># Do not include phi in estimates</span></span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>sim_phi <span class="ot">&lt;-</span> <span class="fu">coef</span>(forage_org)[<span class="dv">7</span>] <span class="co"># phi (precision) parameter</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Predict mean response for all predictors</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>mu_response_sim <span class="ot">&lt;-</span> <span class="fu">predict</span>(forage_org,</span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">newdata =</span> simulated_forage,</span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">type =</span> <span class="st">"response"</span>) <span class="co"># I just set it to response bc I don't think we need link space here... no need to undo with plogis since not in link space</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Recall the equation for parameterization of alpha and beta (https://search.r-project.org/CRAN/refmans/betareg/html/dbetar.html)</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> mu_response_sim <span class="sc">*</span> sim_phi</span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>beta <span class="ot">&lt;-</span> (<span class="dv">1</span><span class="sc">-</span>mu_response_sim) <span class="sc">*</span> sim_phi</span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate on response using rbeta()... generate random values in (0,1) using predicted mean and precision</span></span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>simulated_forage<span class="sc">$</span>PropNotEat_adj <span class="ot">&lt;-</span> <span class="fu">rbeta</span>(<span class="fu">nrow</span>(simulated_forage), alpha, beta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Refit model with simulated data</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>sim_forage_model <span class="ot">&lt;-</span> <span class="fu">betareg</span>(PropNotEat_adj <span class="sc">~</span> PreyCat <span class="sc">+</span> DT, <span class="at">data =</span> simulated_forage)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in betareg.fit(X, Y, Z, weights, offset, link, link.phi, type, control,
-: no valid starting value for precision parameter found, using 1 instead</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a data frame to compare coefficents (convert to kable extra)</span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>original_recovered_coef <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">term =</span> <span class="fu">names</span>(coef_mean),</span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">original =</span> coef_mean,</span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">recovered =</span> <span class="fu">coef</span>(sim_forage_model)[<span class="fu">names</span>(coef_mean)]</span>
-<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(original_recovered_coef, <span class="at">n=</span><span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>                           term     original    recovered
-(Intercept)         (Intercept)  0.661698472  0.468304173
-PreyCatCrab         PreyCatCrab -0.280232706 -0.030074480
-PreyCatCucumber PreyCatCucumber -0.411384070 -0.380476013
-PreyCatStar         PreyCatStar -0.014339710  0.085942159
-PreyCatUrchin     PreyCatUrchin -0.184978548  0.229856298
-DT                           DT -0.004531323 -0.004103654</code></pre>
-</div>
-</div>
-<ul>
-<li>The blog post demonstrates that a model fit to the simulated data recovers the parameters</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a function to run this workflow many times... generate lots of sampled coefs</span></span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>simulate_forage <span class="ot">&lt;-</span> forage <span class="sc">%&gt;%</span> <span class="fu">select</span>(DT, PreyCat)</span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>simulate_beta_and_fit <span class="ot">&lt;-</span> <span class="cf">function</span>(model_fit, data){</span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Create prediction values for the mean</span></span>
-<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>  sim_mean <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_fit, <span class="at">newdata =</span> data, <span class="at">type =</span> <span class="st">"response"</span>) <span class="co"># stay in response space </span></span>
-<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Use '$' to extract phi from coefficients</span></span>
-<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>  sim_phi <span class="ot">&lt;-</span>  model_fit<span class="sc">$</span>coefficients<span class="sc">$</span>precision <span class="co"># phi (precision) parameter</span></span>
-<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Reparamiterize alpha and beta ()</span></span>
-<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>  alpha <span class="ot">&lt;-</span> sim_mean <span class="sc">*</span> sim_phi</span>
-<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>  beta <span class="ot">&lt;-</span> (<span class="dv">1</span><span class="sc">-</span>sim_mean) <span class="sc">*</span> sim_phi</span>
-<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Simulate response (PropNotEat_adj) with rbeta() syntax</span></span>
-<span id="cb42-15"><a href="#cb42-15" aria-hidden="true" tabindex="-1"></a>  data<span class="sc">$</span>PropNotEat_adj <span class="ot">&lt;-</span> <span class="fu">rbeta</span>(<span class="fu">nrow</span>(data), alpha, beta)</span>
-<span id="cb42-16"><a href="#cb42-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-17"><a href="#cb42-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Fit model on simulated data</span></span>
-<span id="cb42-18"><a href="#cb42-18" aria-hidden="true" tabindex="-1"></a>  sim_forage_model <span class="ot">&lt;-</span> <span class="fu">betareg</span>(PropNotEat_adj <span class="sc">~</span> PreyCat <span class="sc">+</span> DT, <span class="at">data =</span> data)</span>
-<span id="cb42-19"><a href="#cb42-19" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb42-20"><a href="#cb42-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Extract original and simulated means</span></span>
-<span id="cb42-21"><a href="#cb42-21" aria-hidden="true" tabindex="-1"></a>  coef_mean <span class="ot">&lt;-</span> <span class="fu">coef</span>(model_fit)</span>
-<span id="cb42-22"><a href="#cb42-22" aria-hidden="true" tabindex="-1"></a>  coef_recovered  <span class="ot">&lt;-</span> <span class="fu">coef</span>(sim_forage_model)</span>
-<span id="cb42-23"><a href="#cb42-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-24"><a href="#cb42-24" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Return data frame</span></span>
-<span id="cb42-25"><a href="#cb42-25" aria-hidden="true" tabindex="-1"></a>  original_recovered_coefs <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb42-26"><a href="#cb42-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">term =</span> <span class="fu">names</span>(coef_mean), <span class="co"># Predictor/coefficient name</span></span>
-<span id="cb42-27"><a href="#cb42-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">original =</span> coef_mean, <span class="co"># Original model (forage_org) </span></span>
-<span id="cb42-28"><a href="#cb42-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">recovered =</span> coef_recovered[<span class="fu">names</span>(coef_mean)]</span>
-<span id="cb42-29"><a href="#cb42-29" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb42-30"><a href="#cb42-30" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate 50 times using map_dfr()</span></span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>coef_sim_df <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>, <span class="co"># Sequence of numbers to simulate by</span></span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>                       <span class="co"># Create a function to run simulation function multiple times</span></span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>                       <span class="cf">function</span>(x) <span class="fu">simulate_beta_and_fit</span>(forage_org, simulate_forage))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="inference" class="level3">
 <h3 class="anchored" data-anchor-id="inference"><strong>Inference</strong></h3>
 <ul>
-<li><p>Hypotheses are stated in plain language and with visualizations</p></li>
-<li><p>Model estimates are presented with appropriate uncertainty (e.g., confidence inter</p></li>
-<li><p>vals)</p></li>
+<li>Model estimates are presented with appropriate uncertainty (e.g., confidence intervals)</li>
 </ul>
+<p>[Extracting CIs via bootstrapping: Accompanying uncertainty estimates coming soon…]</p>
+<p>[Further interpretation coming soon…]</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a function to generate boot samples</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Build prediction grid</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>predicted_data <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Establish sequency for predictor range (DT)</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">DT =</span> <span class="fu">seq</span>(<span class="fu">min</span>(forage<span class="sc">$</span>DT, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="fu">max</span>(forage<span class="sc">$</span>DT, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">length.out =</span> <span class="dv">100</span>),</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">PreyCat =</span> <span class="fu">levels</span>(<span class="fu">factor</span>(forage<span class="sc">$</span>PreyCat)) <span class="co"># Convert to factor</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Ensure levels in predicted_data exactly match in forage$PreyCat</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>predicted_data<span class="sc">$</span>PreyCat <span class="ot">&lt;-</span> <span class="fu">factor</span>(predicted_data<span class="sc">$</span>PreyCat, <span class="at">levels =</span> <span class="fu">levels</span>(<span class="fu">factor</span>(forage<span class="sc">$</span>PreyCat)))</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Predict with glmmTMB()</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>predicted_data<span class="sc">$</span>predicted_PropNotEaten <span class="ot">&lt;-</span> <span class="fu">predict</span>(</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>  forage_beta, </span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">newdata =</span> predicted_data,</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"response"</span> </span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<ul>
-<li>A hypothesis is tested and the evidence is interpreted</li>
-</ul>
-</section>
-<section id="professionalism" class="level3">
-<h3 class="anchored" data-anchor-id="professionalism"><strong>Professionalism</strong></h3>
-<ul>
-<li><p>The overall appearance of the blog post (e.g., figures, code outputs) is portfolio-quality</p></li>
-<li><p>The writing is comprehensible to a technical audience</p></li>
-<li><p>The code is well-organized and appropriately documented</p></li>
-</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot fitted lines per prey category</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>predicted_data <span class="sc">%&gt;%</span> </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> DT, <span class="at">y =</span> predicted_PropNotEaten, <span class="at">color =</span> PreyCat)) <span class="sc">+</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Effect of Dive Time on Predicted Proportion Not Eaten Based on Prey Category"</span>,</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Dive Time (seconds)"</span>,</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Predicted Proportion Not Eaten"</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="blog_post_draft_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>For future analysis, the age (adult and juvenile) of observed sea otters may be considered as a potential confounding variable impacting diving time, preference for prey, and the proportion of prey left uneaten.</p>
 
 
 </section>
