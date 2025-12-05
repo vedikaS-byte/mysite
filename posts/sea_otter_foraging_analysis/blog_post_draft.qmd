@@ -48,12 +48,13 @@ This project uses \[VARIABLES\]:
 library(here)
 library(tidyverse)
 library(betareg) # https://cran.r-project.org/web/packages/betareg/vignettes/betareg.html#sec-model
-set.seed(42)
+
 ```
 
 ```{r}
 #| output: false
-forage <- read_csv("forage_final.csv")
+set.seed(123)
+forage <- read_csv("forage_final (1).csv")
 ```
 
 ```{r}
@@ -228,37 +229,10 @@ simulate_beta_and_fit <- function(model_fit, data){
 
 ```{r}
 #| warning: false
-# Simulate 50 times using map_dfr ()
-?map_dfr
+# Simulate 50 times using map_dfr()
 coef_sim_df <- map_dfr(1:50, # Sequence of numbers to simulate by
                        # Create a function to run simulation function multiple times
                        function(x) simulate_beta_and_fit(forage_org, simulate_forage))
-```
-
-```{W}
-```
-
-```{r}
-
-```
-
-```{r}
-
-```
-
-```{r}
-
-```
-
-```{}
-```
-
-```{r}
-
-```
-
-```{r}
-
 ```
 
 ### **Inference**
