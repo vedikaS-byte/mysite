@@ -9,25 +9,23 @@ format: html
 
 The sea otter (*Enhydra lutris)* is a highly social marine mammal that plays a vital role as a keystone species in maintaining the health of kelp forest ecosystems by keeping sea urchin populations in check. While sea otters are primary predators of sea urchins, their diets are shown to be varied. For example, sea otters are known to eat (SOURCE). Sea urchins. Because of their important role as a keystone species, understanding their diet and foraging patterns is essential for assessing feeding preferences and food availability in conservation. \[ADD DISTRIBUTION\].
 
-This blog post aims to present and discuss the results of a statistical regression analysis conducted on sea otter foraging data collected from visual observations in Prince of Wales, Alaska, by LaRoche et al. (2018). A beta regression using `betareg` with a zero-adjustment was selected for the analysis in order to assess the proportion of prey not consumed by sea otters during summer 2018. Both the age and sex of observed sea otters were considered as potential confounding variables impacting diving time. The following question was utilized to guide the analysis:
+This blog post aims to present and discuss the results of a statistical regression analysis conducted on sea otter foraging data collected from visual observations in Prince of Wales, Alaska, by LaRoche et al. (2018). A beta regression using `betareg` with a zero-adjustment was selected for the analysis in order to assess the proportion of prey not consumed by sea otters during summer 2018. The age (adult and juvenile) of observed sea otters were considered as a potential confounding variables impacting diving time, preference for prey, and the proportion of prey left uneaten. The following question was utilized to guide the analysis:
 
 **How does prey categorization and dive depth predict the proportion of prey not eaten?**
 
 The mean proportion not eaten was modeled using a Beta regression with a logit link, while a precision parameter (φ) captured the variability in proportions around the mean.
 
--   Hypothesis 1:
+-   **Hypothesis 1:**
 
-    -   H~0~: β~prey_cat_urchins~ = 0. There is no difference in the proportion of prey not eaten between
+    -   H~0~: β~prey_cat_urchins~ = 0. Sea otters leave the same proportin of urchins uneaten as they do clams; prey category does not influence the proportion of prey eaten.
 
-    -   HA: β~prey_cat_urchins~ ≠ 0.
+    -   HA: β~prey_cat_urchins~ ≠ 0. Sea otters leave a significantly different proportion of urchins uneaten compared to clams; prey category has a significant effect on the proportion of prey not eaten.
 
--   Hypothesis 2:
+-   **Hypothesis 2**:
 
-    -   H0: β~dive_time~ = 0
+    -   H0: β~dive_time~ = 0. Dive time has no significant effect on the proportion of prey not eaten; the duration of a dive does not influence how much prey is not eaten.
 
-    -   HA: β~dive_time~ ≠ 0
-
--   
+    -   HA: β~dive_time~ ≠ 0. Dive time does significantly affect the proportion of prey not eaten; longer or shorter dives are associated with a higher or lower proportion of prey left uneaten.
 
 -   The blog post provides context and background for the question
 
@@ -48,7 +46,9 @@ This project uses \[VARIABLES\]:
 library(here)
 library(tidyverse)
 library(betareg) # https://cran.r-project.org/web/packages/betareg/vignettes/betareg.html#sec-model
-
+library(broom)         
+library(broom.mixed)   # tidy() for glmmTMB
+library(kableExtra)
 ```
 
 ```{r}
@@ -112,7 +112,19 @@ forage <- forage %>%
 
 ```{r}
 # Model with interaction
-forage_interaction_added <- betareg(PropNotEat_adj ~ PreyCat * DT + age, data = forage)
+forage_beta <- glmmTMB(
+  PropNotEat_adj ~ DT + PreyCat,
+  data = forage,
+  family = beta_family(link = "logit")
+)
+
+# Model interaction with age
+forage_interaction_with_age <- forage_org <- glmmTMB(
+  PropNotEat_adj ~ PreyCat * DT + age,
+  data = forage,
+  family = beta_family(link = "logit")
+)
+
 # Model with interaction
 forage_interaction <- betareg(PropNotEat_adj ~ PreyCat * DT, data = forage)
 
@@ -138,113 +150,134 @@ AIC(forage_interaction_added, forage_interaction, forage_interaction_age, forage
 
 -   The blog post demonstrates how to simulate data according to model assumptions
 
-```{r}
-# Create simulated dataset (values for predictions) 
-simulated_forage <- expand.grid(
-  PreyCat = levels(factor(forage$PreyCat)),
-  #age = levels(factor(forage$age)),
-  #sex = levels(factor(forage$sex)),
-  DT = seq(min(forage$DT), max(forage$DT), length.out = 40) # 100 obs yeilds closest recovered parameter values
-  )
-
-
-str(simulated_forage)
-```
-
-```{r}
-# Extract fitted param (phi and mean)
-coef_vector <- coef(forage_org) # Create vector of the coefficients
-coef_mean <- coef_vector[names(coef_vector) != "(phi)"] # Do not include phi in estimates
-
-sim_phi <- coef(forage_org)[7] # phi (precision) parameter
-```
-
-```{r}
-# Predict mean response for all predictors
-mu_response_sim <- predict(forage_org,
-                  newdata = simulated_forage,
-                  type = "response") # I just set it to response bc I don't think we need link space here... no need to undo with plogis since not in link space
-```
-
-```{r}
-# Recall the equation for parameterization of alpha and beta (https://search.r-project.org/CRAN/refmans/betareg/html/dbetar.html)
-alpha <- mu_response_sim * sim_phi
-beta <- (1-mu_response_sim) * sim_phi
-# Simulate on response using rbeta()... generate random values in (0,1) using predicted mean and precision
-simulated_forage$PropNotEat_adj <- rbeta(nrow(simulated_forage), alpha, beta)
-```
-
-```{r}
-# Refit model with simulated data
-sim_forage_model <- betareg(PropNotEat_adj ~ PreyCat + DT, data = simulated_forage)
-```
-
-```{r}
-# Create a data frame to compare coefficents (convert to kable extra)
-original_recovered_coef <- data.frame(
-  term = names(coef_mean),
-  original = coef_mean,
-  recovered = coef(sim_forage_model)[names(coef_mean)]
-)
-```
-
-```{r}
-head(original_recovered_coef, n=6)
-```
+<!-- -->
 
 -   The blog post demonstrates that a model fit to the simulated data recovers the parameters
 
 ```{r}
-# Create a function to run this workflow many times... generate lots of sampled coefs
-simulate_forage <- forage %>% select(DT, PreyCat)
+# Build prediction grid
+predicted_data <- expand.grid(
+  # Establish 
+  DT = seq(min(forage$DT, na.rm = TRUE), max(forage$DT, na.rm = TRUE), length.out = 100),
+  PreyCat = levels(factor(forage$PreyCat))
+)
 
-simulate_beta_and_fit <- function(model_fit, data){
-  # Create prediction values for the mean
-  sim_mean <- predict(model_fit, newdata = data, type = "response") # stay in response space 
-  # Use '$' to extract phi from coefficients
-  sim_phi <-  model_fit$coefficients$precision # phi (precision) parameter
-  
-  # Reparamiterize alpha and beta ()
-  alpha <- sim_mean * sim_phi
-  beta <- (1-sim_mean) * sim_phi
-  
-  # Simulate response (PropNotEat_adj) with rbeta() syntax
-  data$PropNotEat_adj <- rbeta(nrow(data), alpha, beta)
+# 2. Match factor levels
+predicted_data_all$PreyCat <- factor(predicted_data_all$PreyCat, levels = levels(factor(forage$PreyCat)))
 
-  # Fit model on simulated data
-  sim_forage_model <- betareg(PropNotEat_adj ~ PreyCat + DT, data = data)
-  
-  # Extract original and simulated means
-  coef_mean <- coef(model_fit)
-  coef_recovered  <- coef(sim_forage_model)
+# 3. Predict with glmmTMB
+predicted_data_all$predicted_prop_not_eaten <- predict(
+  forage_org, 
+  newdata = predicted_data_all,
+  type = "response"
+)
 
-  # Return data frame
-  original_recovered_coefs <- data.frame(
-    term = names(coef_mean), # Predictor/coefficient name
-    original = coef_mean, # Original model (forage_org) 
-    recovered = coef_recovered[names(coef_mean)]
-  )
-}
+# 4. Plot fitted lines
+ggplot(predicted_data_all, aes(x = DT, y = predicted_prop_not_eaten, color = PreyCat)) +
+  geom_line(size = 1) +
+  labs(
+    title = "Predicted Proportion Not Eaten vs Dive Time by Prey Category",
+    x = "Dive Time (DT)",
+    y = "Predicted Proportion Not Eaten"
+  ) +
+  theme_minimal() +
+  scale_color_brewer(palette = "Set1")
+
 ```
 
 ```{r}
-#| warning: false
-# Simulate 50 times using map_dfr()
-coef_sim_df <- map_dfr(1:50, # Sequence of numbers to simulate by
-                       # Create a function to run simulation function multiple times
-                       function(x) simulate_beta_and_fit(forage_org, simulate_forage))
+# Reset seed (redefined)
+set.seed(123)
+
+# Define simulated obs... with law of large numbers, larger sample size should get closer to actual predictors
+n_sim <- 15000
+
+# Define coefficients from original model
+beta0 <- 0.661699 
+beta_dive_time <- -0.004531 
+beta_crab <- -0.280233
+beta_cucumber <- -0.411384
+beta_star <- -0.014340
+beta_urchin <- -0.184979
+phi <- 1.787047 # Precision
+
+## Simulate range for predictors
+dt <- runif(n_sim, 3, 255) # Range of dive time
+
+# Randomly generate PreyCat factors for simulated data... then for each level, sample with replacement to get vector of length n_sim
+PreyCat <- sample(c("Clam","Crab","Cucumber","Star","Urchin"), n_sim, replace = TRUE)
+
+## Define linear predictor and logit equation
+# Assign coefficient to each PreyCat level
+prey_effect <- ifelse(PreyCat == "Crab", beta_crab,
+               ifelse(PreyCat == "Cucumber", beta_cucumber,
+               ifelse(PreyCat == "Star", beta_star,
+               ifelse(PreyCat == "Urchin", beta_urchin, 
+               0)))) # Else assign clam (reference)
+
+glm_eq <- beta0 + beta_dive_time * dt + prey_effect # Recall that prey_effect has the associated beta coefficient for each level
+
+# Convert linear predictor (logit scale) to  mean proportion on  response scale
+mean_sim <- exp(glm_eq) / (1 + exp(glm_eq))
+
+# Reparameterize beta distribution parameters (derived from CRAN at (https://search.r-project.org/CRAN/refmans/betareg/html/dbetar.html)
+alpha <- mean_sim * phi
+beta <- (1 - mean_sim) * phi
+
+# Simulate response variable from beta distribution using calculated alpha and beta 
+PropNotEat_adj <- rbeta(n_sim, alpha, beta)
+
+# Create simulated data frame
+simulated_forage <- data.frame(
+  PropNotEat_adj = PropNotEat_adj,
+  DT = dt,
+  PreyCat = factor(PreyCat, levels = c("Clam","Crab","Cucumber","Star","Urchin"))
+)
+
+# Fit simulated model
+sim_model <- glmmTMB(
+  PropNotEat_adj ~ DT + PreyCat,
+  data = simulated_forage,
+  family = beta_family(link = "logit")
+)
+summary(sim_model)
+summary(forage_org)
 ```
 
 ### **Inference**
 
+```{r}
+# # Load necessary packages
+# 
+# ?tidy()
+# # Tidy original model 
+# orig_coefs <- broom::tidy(forage_org) %>%
+#   select(term, estimate) %>%
+#   rename(Estimate_Original = estimate)
+# 
+# # 2. Tidy the simulated model (glmmTMB)
+# sim_coefs <- broom.mixed::tidy(sim_model) %>%
+#   filter(effect == "fixed") %>%      # only fixed effects
+#   select(term, estimate) %>%
+#   rename(Estimate_Simulated = estimate)
+# 
+# # 3. Combine by term
+# coef_table <- full_join(orig_coefs, sim_coefs, by = "term")
+# 
+# # 4. Display table
+# coef_table %>%
+#   kable(format = "html", digits = 3, caption = "Comparison of Coefficients: Original vs Simulated") %>%
+#   kable_styling(full_width = F, position = "center", bootstrap_options = c("striped", "hover"))
+
+```
+
 -   Hypotheses are stated in plain language and with visualizations
 
--   Model estimates are presented with appropriate uncertainty (e.g., confidence inter
-
--   vals)
+-   Model estimates are presented with appropriate uncertainty (e.g., confidence intervals)
 
 ```{r}
-# Create a function to generate boot samples
+## bootstrapping
+
 
 ```
 
