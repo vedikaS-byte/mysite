@@ -5,11 +5,16 @@ format: html
 
 # Assessing Sea Otter Feeding Habitats Based on Prey Type and Dive Depth
 
+*Currently under construction: Some sections do not have descriptions and will be updated by this Saturday.*
+
 ### **Purpose**
 
-The sea otter (*Enhydra lutris)* is a highly social marine mammal that plays a vital role as a keystone species in maintaining the health of kelp forest ecosystems by keeping sea urchin populations in check. While sea otters are primary predators of sea urchins, their diets are shown to be varied. For example, sea otters are known to eat (SOURCE). Sea urchins. Because of their important role as a keystone species, understanding their diet and foraging patterns is essential for assessing feeding preferences and food availability in conservation. \[ADD DISTRIBUTION\].
+The sea otter (*Enhydra lutris*) is a highly social marine mammal that plays a vital role as a keystone species in maintaining the health of kelp forest ecosystems by controlling sea urchin populations. Although sea otters are primary predators of sea urchins, their diet is diverse and includes a wide variety of prey types. For example, sea otters in Alaska are known to consume a wide range of prey, including clams, crabs, sea urchins, sea cucumbers, and snails (LaRoche et al., 2018). In recolonized areas of Southeast Alaska, clams are strongly selected despite their relatively low abundance, reflecting their high quality value. Similarly, sea urchins dominate diets primarily in rocky reef habitats where they are more abundant (LaRoche et al., 2018). 
 
-This blog post aims to present and discuss the results of a statistical regression analysis conducted on sea otter foraging data collected from visual observations in Prince of Wales, Alaska, by LaRoche et al. (2018). A beta regression using `betareg` with a zero-adjustment was selected for the analysis in order to assess the proportion of prey not consumed by sea otters during summer 2018. The age (adult and juvenile) of observed sea otters were considered as a potential confounding variables impacting diving time, preference for prey, and the proportion of prey left uneaten. The following question was utilized to guide the analysis:
+
+The proportion of prey not eaten provides a measure of foraging efficiency and prey handling success, reflecting both biological constraints and behavioral choices during feeding. Because of their important role as a keystone species, understanding their diet and foraging patterns is essential for assessing feeding preferences and food availability in conservation.
+
+This blog post aims to present and discuss the results of a statistical regression analysis conducted on sea otter foraging data collected from visual observations in Prince of Wales, Alaska, by LaRoche et al. (2018). A beta regression using `betareg` with a zero-adjustment was selected for the analysis in order to assess the proportion of prey not consumed by sea otters during summer 2018. The following question was utilized to guide the analysis:
 
 **How does prey categorization and dive depth predict the proportion of prey not eaten?**
 
@@ -41,18 +46,38 @@ $$
 
     -   HA: β~dive_time~ ≠ 0. Dive time does significantly affect the proportion of prey not eaten; longer or shorter dives are associated with a higher or lower proportion of prey left uneaten.
 
--   The relationships and causal relationships are described with a DAG
+The categorical variable `PreyCat` represents the general prey categorization of a prey type. In particular, clams and urchins differ biologically in handling difficulty and energetic return. Urchins may require more processing and include defensive structures (spines), whereas clams require shell-breaking but offer concentrated soft tissue. These differences potentially influence the proportion of prey successfully consumed, indicating a direct causal effect of prey category on the proportion of prey not consumed
+
+Additionally, prey category may influence dive duration because hunting, handling, and extracting different prey may require different levels of effort and time. Thus, prey category potentially influences dive time, which in turn affects the proportion of prey not eaten.
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show code"
+# Create a DAG using dagitty package... relate to each variable 
+dag <- dagitty("dag { 
+  PreyCat -> DT 
+  DT -> PropNotEat
+  PreyCat -> PropNotEat
+}")
+
+plot(dag) # Visualize DAG
+```
 
 ### Data Importation, Exploration, and Cleaning
 
 ```{r}
+#| code-fold: true
+#| code-summary: "Show code"
 #| output: false
+#| warning: false
 library(here)
 library(tidyverse)
 library(betareg) # https://cran.r-project.org/web/packages/betareg/vignettes/betareg.html#sec-model
+library(glmmTMB)
 library(broom)         
 library(broom.mixed) # for glmmTMB mixed model
 library(kableExtra)
+library(dagitty)
 ```
 
 ```{r}
@@ -69,11 +94,9 @@ head(forage)
 ```{r}
 # Drop NAs 
 # Select for just prey category, diving time, and age
-forage <- forage %>% select(PreyCat, PropNotEat, age)
+forage <- forage %>% select(PreyCat, PropNotEat, DT, age)
 forage <- forage %>% filter(age != "U") 
 forage <- forage %>% drop_na()
-
-dim(forage)
 ```
 
 ```{r}
@@ -90,10 +113,16 @@ labs(x = "Diving Time (seconds)", y = "Proportion of Prey Not Eaten",
                                                title = "Proportion of Prey Not Consumed By Sea Otters Based on Diving Time") + theme(plot.title = element_text(size = 11, face = "bold"))
 
 # Create boxplots to visualize the distribution of prey categories and proportion of prey not eaten
-forage %>% ggplot(aes(x = PreyCat, y = PropNotEat, fill = PreyCat)) + geom_boxplot() + theme_bw()
+forage %>% ggplot(aes(x = PreyCat, y = PropNotEat, fill = PreyCat)) + geom_boxplot() + scale_fill_manual(values = c(
+    "Clam" = "#1b9e77",
+    "Urchin" = "#d95f02",
+    "Crab" = "#7570b3",
+    "Cucumber" = "#66a61e",
+    "Star" = "#e6ab02"
+  )) + theme_bw()
 ```
 
-### Data Simulation Procedure  
+### Data Simulation Procedure
 
 Here, simulated data was generated to evaluate model performance, explore parameter recovery, and verify that the fitted model behaves as expected. As cited in the `betareg` CRAN project, the
 
@@ -112,66 +141,18 @@ forage_beta <- glmmTMB(
   family = beta_family(link = "logit")
 )
 
-# Model interaction with age
-forage_interaction_with_age <- forage_org <- glmmTMB(
-  PropNotEat_adj ~ PreyCat * DT + age,
-  data = forage,
-  family = beta_family(link = "logit")
-)
 
 # Model with interaction between PreyCat and DT
 forage_interaction <- forage_org <- glmmTMB(
-  PropNotEat_adj ~ PropNotEat_adj ~ PreyCat * DT,
+  PropNotEat_adj ~ PreyCat * DT,
   data = forage,
   family = beta_family(link = "logit")
 )
 
-# Model with interaction between dive time and age
-
-forage_interaction_age <- betareg(PropNotEat_adj ~ PreyCat + DT*age, data = forage)
-summary(forage_interaction_age)
-
-# Control variable/additional variable inclusion beta regression
-forage_beta <- betareg(PropNotEat_adj ~ PreyCat + DT + age, data = forage)
-summary(forage_beta)
-forage$PropNotEat_adj
-forage_org <- betareg(PropNotEat_adj ~ PreyCat + DT, data = forage)
-
 # Compare models (lowest AIC) (Akaike's An Information Criterion for log-link)
-
-AIC(forage_interaction_added, forage_interaction, forage_interaction_age, forage_beta, forage_org)
+AIC(forage_beta, forage_interaction)
 ```
 
-```{r}
-# Build prediction grid
-predicted_data <- expand.grid(
-  # Establish 
-  DT = seq(min(forage$DT, na.rm = TRUE), max(forage$DT, na.rm = TRUE), length.out = 100),
-  PreyCat = levels(factor(forage$PreyCat))
-)
-
-# 2. Match factor levels
-predicted_data_all$PreyCat <- factor(predicted_data_all$PreyCat, levels = levels(factor(forage$PreyCat)))
-
-# 3. Predict with glmmTMB
-predicted_data_all$predicted_prop_not_eaten <- predict(
-  forage_org, 
-  newdata = predicted_data_all,
-  type = "response"
-)
-
-# 4. Plot fitted lines
-ggplot(predicted_data_all, aes(x = DT, y = predicted_prop_not_eaten, color = PreyCat)) +
-  geom_line(size = 1) +
-  labs(
-    title = "Predicted Proportion Not Eaten vs Dive Time by Prey Category",
-    x = "Dive Time (DT)",
-    y = "Predicted Proportion Not Eaten"
-  ) +
-  theme_minimal() +
-  scale_color_brewer(palette = "Set1")
-
-```
 
 ```{r}
 # Reset seed (redefined)
@@ -181,13 +162,13 @@ set.seed(123)
 n_sim <- 15000
 
 # Define coefficients from original model
-beta0 <- 0.661699 
-beta_dive_time <- -0.004531 
-beta_crab <- -0.280233
-beta_cucumber <- -0.411384
-beta_star <- -0.014340
-beta_urchin <- -0.184979
-phi <- 1.787047 # Precision
+beta0 <- 0.738077 
+beta_dive_time <- -0.004949 
+beta_crab <- -0.265717
+beta_cucumber <- -0.449131
+beta_star <- -0.240470 
+beta_urchin <-  -0.205423
+phi <- 1.72 # Precision
 
 ## Simulate range for predictors
 dt <- runif(n_sim, 3, 255) # Range of dive time
@@ -228,9 +209,15 @@ sim_model <- glmmTMB(
   data = simulated_forage,
   family = beta_family(link = "logit")
 )
-summary(sim_model)
-summary(forage_org)
 ```
+
+```{r}
+# Compare coefficients
+summary(sim_model)
+summary(forage_beta)
+```
+
+
 
 ### **Inference**
 
@@ -241,5 +228,37 @@ summary(forage_org)
 \[Further interpretation coming soon...\]
 
 ```{r}
+# Build prediction grid
+predicted_data <- expand.grid(
+  # Establish sequency for predictor range (DT)
+  DT = seq(min(forage$DT, na.rm = TRUE), max(forage$DT, na.rm = TRUE), length.out = 100),
+  PreyCat = levels(factor(forage$PreyCat)) # Convert to factor
+)
+
+# Ensure levels in predicted_data exactly match in forage$PreyCat
+predicted_data$PreyCat <- factor(predicted_data$PreyCat, levels = levels(factor(forage$PreyCat)))
+
+# Predict with glmmTMB()
+predicted_data$predicted_PropNotEaten <- predict(
+  forage_beta, 
+  newdata = predicted_data,
+  type = "response" 
+)
+```
+
+```{r}
+# Plot fitted lines per prey category
+predicted_data %>% 
+  ggplot(aes(x = DT, y = predicted_PropNotEaten, color = PreyCat)) +
+  geom_line(size = 1) +
+  labs(
+    title = "Effect of Dive Time on Predicted Proportion Not Eaten Based on Prey Category",
+    x = "Dive Time (seconds)",
+    y = "Predicted Proportion Not Eaten"
+  ) +
+  theme_minimal() +
+  scale_color_brewer(palette = "Set1")
 
 ```
+
+For future analysis, the age (adult and juvenile) of observed sea otters may be considered as a potential confounding variable impacting diving time, preference for prey, and the proportion of prey left uneaten.
