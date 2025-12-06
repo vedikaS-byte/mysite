@@ -148,12 +148,17 @@ depth <- rast(here::here("posts", "aquaculture-post","data_aqua", "depth.tif"))
 #| output: false
 #| collapse: true
 # Create a list of the tiff files for SST
+
 sst_years <- list.files(path="posts/aquaculture-post/data_aqua/", # File path
                         pattern = "average_annual", # File names matching pattern
                         full.names = TRUE) # Reference entire file names matching this pattern
 
 # Stack all rasters
 sst <- rast(sst_years)
+
+
+
+
 ```
 
 It is critical to ensure that the coordinate reference system (CRS) of
@@ -445,17 +450,10 @@ area_eez %>%
 ```
 
 ## **Part 2: Generalized Function of Aquaculture for Species Preferences**
-The workflow observed in Part 1 is applicable for a specific species of interest in generating 
-The `species_preference` function applies the generalized workflow
-(Part 1) to streamline identification of suitable zones based on
-species-specific sea surface temperature (SST) and depth ranges for any
-species of interest. The function takes minimum and maximum SST values,
-minimum and maximum depth limits, and a species name as inputs and
-returns a map of EEZ regions shaded by total suitable area.
+The workflow observed in Part 1 is applicable for a specific species of interest in generating a map of suitable areas for aquaculture within West Coast EEZs based on species-specific temperature and depth ranges. However, creating a reproducible workflow allows a user to recreate the same visualization specific to a species of interest based on a preferred species's temperature and depth range. As such, I created the `species_preference` function which applies the generalized workflow (Part 1) to streamline identification of suitable zones based on species-specific sea surface temperature (SST) and depth ranges for any species of interest. The function takes minimum and maximum SST values, minimum and maximum depth limits, and a species name as inputs and returns a map of EEZ regions shaded by total suitable area.
 
-13. Verify coordinate reference systems (CRS) and load required spatial
-    datasets before creating and running the function to ensure all
-    spatial objects are correctly prepared for processing.
+It is important to note that `species_preference` only considers calculations for the specific inputs, such as reclassification and average SST conversion. As a result, I reloaded all spatial objects and verified shared CRSs to ensure all spatial objects were correctly prepared for processing in the function.
+
 
 ```{r}
 #| output: false
@@ -464,22 +462,19 @@ returns a map of EEZ regions shaded by total suitable area.
 # Load in data again
 
 # West Coast EEZ
-eez <- vect(here::here("data", "wc_regions_clean.shp"))
+eez <- vect(here::here("posts", "aquaculture-post", "data_aqua", "wc_regions_clean.shp"))
 
 # Bathymetry raster
-depth <- rast(here::here("data", "depth.tif"))
+depth <- rast(here::here("posts", "aquaculture-post","data_aqua", "depth.tif"))
 
 # Create a list of the tiff files for SST
-sst_years <- list.files(path="data/", # File path
+sst_years <- list.files(path="posts/aquaculture-post/data_aqua/", # File path
                         pattern = "average_annual", # File names matching pattern
-                        full.names = TRUE) # Reference entire file names matching
-                                          #this pattern
-# Stack all rasters 
-sst <- rast(sst_years)
-```
+                        full.names = TRUE) # Reference entire file names matching this pattern
 
-```{r}
-#| code-fold: true
+# Stack all rasters
+sst <- rast(sst_years)
+
 # Create list of spatial objects
 spatial_objects <- list(eez, depth, sst)
 
@@ -504,8 +499,7 @@ if (st_crs(spatial_objects$sst) != ref_crs) {
 }
 ```
 
-14. Define the `multiply` function to support raster multiplication
-    within the `species_preference` function when used with `lapp()`.
+I also redefined the `multiply` function to support raster multiplication within the `species_preference` function when used with `lapp()`.
 
 ```{r}
 #| collapse: true
@@ -516,12 +510,11 @@ multiply <- function(x,y){
   }
 ```
 
-15. Create a function called `species_preference` that incorporates the
-    Part 1 workflow to generate a map of suitable aquaculture areas
-    within West Coast EEZs based on species-specific SST and depth
-    parameters.
+The following code cells demonstrate the integrated workflow utilized in the `species_preference` function to generate a map of suitable aquaculture areas
+within West Coast EEZs based on species-specific SST and depth parameters. I called the function on the specific temperature and depth range for the red abalone to replicate a map similar to that of the suitable oyster aquaculture areas.  
 
 ```{r}
+#| collapse: true
 # This function takes arguments:
 # minimum and maximum sea surface temperature
 # minimum and maximum depth
