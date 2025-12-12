@@ -7,7 +7,7 @@ format: html
 
 ## Purpose
 
-The sea otter (*Enhydra lutris*) is a highly social marine mammal that plays a vital role as a keystone species in maintaining the health of kelp forest ecosystems by controlling sea urchin populations. Although sea otters are primary predators of sea urchins, their diet is diverse and includes a wide variety of prey types. For example, sea otters in Alaska are known to consume a wide range of prey, including clams, crabs, sea urchins, sea cucumbers, and snails (LaRoche et al., 2018). In recolonized areas of Southeast Alaska, clams are strongly selected despite their relatively low abundance, reflecting their high quality value. Similarly, sea urchins dominate diets primarily in rocky reef habitats where they are more abundant (LaRoche et al., 2018).
+The sea otter (*Enhydra lutris*) is a highly social marine mammal that plays a vital role as a keystone species in maintaining the health of kelp forest ecosystems by controlling sea urchin populations. Although sea otters are primary predators of sea urchins, their diet is diverse and includes a wide variety of prey types. For example, sea otters in Alaska are known to consume a wide range of prey, including clams, crabs, sea urchins, sea cucumbers, and snails (LaRoche et al., 2023). In recolonized areas of Southeast Alaska, clams are strongly selected despite their relatively low abundance, reflecting their high quality value. Similarly, sea urchins dominate diets primarily in rocky reef habitats where they are more abundant (LaRoche et al., 2023).
 
 ![](images/clipboard-1982355787.png)
 
@@ -480,7 +480,7 @@ LaRoche, N., King, S., & Pearson, H. (2020). *Sea otter foraging data, visual ob
 
 <https://knb.ecoinformatics.org/view/doi%3A10.5063%2FF1C53J8X> 
 
-LaRoche, N., King, S., Fergusson, E., Eckert, G., & Pearson, H. (2022). *Sea otter diet nutrient composition with respect to recolonization, life history, and season in southern Southeast Alaska*. Wiley. <https://doi.org/10.22541/au.167222186.60136269/v1>
+LaRoche, N., King, S., Fergusson, E., Eckert, G., & Pearson, H. (2023). *Sea otter diet nutrient composition with respect to recolonization, life history, and season in southern Southeast Alaska*. Wiley. <https://doi.org/10.22541/au.167222186.60136269/v1>
 
 *R: The beta distribution in regression parameterization*. (n.d.). Retrieved December 11, 2025, from https://search.r-project.org/CRAN/refmans/betareg/html/dbetar.html?utm_source
 
