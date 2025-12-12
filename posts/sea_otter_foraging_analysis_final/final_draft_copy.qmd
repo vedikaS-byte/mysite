@@ -413,13 +413,27 @@ predicted_data %>%
     title = "Effect of Dive Time on Predicted Proportion Not Eaten Based on Prey Category",
     x = "Dive Time (seconds)",
     y = "Predicted Proportion Not Eaten"
-  ) + facet_wrap(~ PreyCat) +
+  ) + 
   theme_minimal() +
   scale_color_brewer(palette = "Set1")
 
+
+
+
+# Plot fitted lines per prey category (faceted view)
+predicted_data %>% 
+  ggplot(aes(x = DT, y = predicted_PropNotEat_adj, color = PreyCat)) +
+  geom_line(size = 1) + 
+  labs(
+    title = "Effect of Dive Time on Predicted Proportion Not Eaten Based on Prey Category",
+    x = "Dive Time (seconds)",
+    y = "Predicted Proportion Not Eaten"
+  ) + facet_wrap(~ PreyCat) +
+  theme_minimal() +
+  scale_color_brewer(palette = "Set1")
 ```
 
-With a faceted view, it is observable that
+With a faceted view, it is observable that as dive time increases, the proportion of prey left uneaten generally decreases for all prey types. Clams consistently have the highest predicted proportion left uneaten across dive times, while sea cucumbers show the lowest. Starfish and urchins also have similar predicted proportions, being slightly lower than clams but higher than sea cucumbers.
 
 ```{r}
 #| code-fold: true
@@ -445,8 +459,14 @@ ggplot(aes(x = DT, y = predicted_PropNotEat_adj, color = PreyCat)) +
   scale_fill_brewer(palette = "Set1")
 ```
 
+The predicted proportion of prey left uneaten for clams and urchins across dive times is visualized above, including 95% confidence intervals for predicted outcomes. As dive time increases, the proportion of prey left uneaten decreases for both prey types. Clams have a higher predicted proportion left uneaten than urchins across the range of five times. Additionally the ribbons illustrate the uncertainty around these predictions, with urchins indicating a wider confidence interval and potentially more variability in predicted values compared to clams.
+
+At approximately the halfway point of 125 seconds of diving, it can be stated with 95% confidence that sea otters leave about 57% of a clam uneaten on average, compared to 49% of an urchin. This suggests that sea otters may expend more energy processing sea urchins than clams, and as a result, they may leave less uneaten when spending more time diving.
+
 ## Conclusion
 
-For future analysis, the age (adult and juvenile) of observed sea otters may be considered as a potential confounding variable impacting diving time, preference for prey, and the proportion of prey left uneaten.
+The purpose of this analysis was to demonstrate how a statistical model, specifically beta regression, can be used to perform meaningful analyses, including hypothesis testing and interpreting confidence intervals. The analysis indicates that sea otters tend to leave more of their prey uneaten as dive time increases, reflecting the statistically significant effect of dive duration on the proportion of prey not consumed. Prey category does not appear to influence the proportion of urchins left uneaten. However, sea otters are generally more wasteful with sea cucumbers than with clams, suggesting that clams are a highly valued prey item. Interestingly, sea otters leave a higher proportion of clams uneaten than urchins as dive time increases. For example, at around 125 seconds of diving, it is estimated with 95% confidence that about 57% of a clam remains uneaten on average, compared to 49% of an urchin.
+
+For future analysis, the age (adult and juvenile) of observed sea otters may be considered as a potential confounding variable impacting diving time, preference for prey, and the proportion of prey left uneaten. Including age could be beneficial to clarify whether observed patterns in prey consumption are consistent across different life stages of if younger and older otters exhibit distinct foraging behaviors. Moreover, experience and physical capability could be accounted for in terms of impacts on feeding efficiency.
 
 ## References
