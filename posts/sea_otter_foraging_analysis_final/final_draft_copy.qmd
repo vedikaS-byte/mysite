@@ -83,10 +83,9 @@ Here, I loaded the necessary packages for the analysis and then imported the dat
 #| warning: false
 library(here) 
 library(tidyverse)
-# https://cran.r-project.org/web/packages/betareg/vignettes/betareg.html#sec-model
 library(glmmTMB)
 library(broom)         
-library(broom.mixed) # for glmmTMB mixed model
+library(broom.mixed) # For tidy glmmTMB mixed model
 library(kableExtra)
 ```
 
