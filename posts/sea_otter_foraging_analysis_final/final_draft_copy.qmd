@@ -284,9 +284,12 @@ logit(\mu_i)
 + \beta_{PreyCat\_cucumber} 
 + \beta_{PreyCat\_star}  $$
 
-###Hypothesis Testing Interpretation Here, I interpreted the model results to assess whether each hypothesis is supported.
+#### Hypothesis Testing Interpretation 
+
+The beta regression results were used to test whether prey category and dive time influence the proportion of prey left uneaten. Here, I interpreted the model results to assess whether each hypothesis is supported.
 
 ```{r}
+#| code-fold: true
 # Create cleaned summary output table
 tidy(forage_beta) %>% 
   mutate(
@@ -302,40 +305,51 @@ tidy(forage_beta) %>%
 
 #### Hypothesis 1
 
-Based on the model, the coefficient for urchins compared to clams was not statistically significant, and as a result, we fail to reject the null hypothesis that sea otters leave the same proportion of urchins
+-   H~0~: β~PreyCat_urchins~ = 0.
 
--   **Hypothesis 1:**
+-   H~A~: β~PreyCat_urchins~ ≠ 0.
 
-    -   H~0~: β~PreyCat_urchins~ = 0. Sea otters leave the same proportion of urchins uneaten as they do with clams; prey category does not influence the proportion of prey eaten.
+Based on the model, the coefficient for urchins compared to clams was not significant, indicating that sea otters do not leave a significantly different proportion of urchins uneaten (β = -0.21, p = 0.54). Thus, we fail to reject the null hypothesis that sea otters leave the same proportion of urchins uneaten as they do with clams; prey category does not appear to affect the proportion of prey left uneaten for urchins.
 
-    -   H~A~: β~PreyCat_urchins~ ≠ 0. Sea otters leave a significantly different proportion of urchins uneaten compared to clams; prey category has a significant effect on the proportion of prey not eaten.
+#### Hypothesis 2
 
--   **Hypothesis 2**:
+-   H~0~: β~dive_time~ = 0.
 
-    -   H~0~: β~dive_time~ = 0. Dive time has no significant effect on the proportion of prey not eaten; the duration of a dive does not influence how much prey is not eaten.
+-   H~A~: β~dive_time~ ≠ 0.
 
-    -   H~A~: β~dive_time~ ≠ 0. Dive time does significantly affect the proportion of prey not eaten; longer or shorter dives are associated with a higher or lower proportion of prey left uneaten.
+Based on the model, dive time had a significant negative effect on the proportion of prey not eaten, indicating that longer dives are associated with a slightly lower proportion of prey left uneaten (β = -0.005, p = 0.0006). As a result, we can reject the null hypothesis that the duration of a dive has no significant effect on the prey not consumed; there is sufficient statistical evidence to suggest that dive duration significantly influences the proportion of prey not consumed.
+
+## Confidence Intervals for Model Coefficients and Predictions
+
+Confidence intervals are essential for interpreting model estimates because they can be used to quantify uncertainty and interpret effect size. Confidence intervals can be calculated for individual model coefficients, indicating the range in which the true beta value is expected to fall approximately 95% of the time. Alternatively, confidence intervals can be constructed for predicted values of the response variable, showing the range in which the mean response is expected to fall about 95% of the time.
 
 ### **Interpreting Model β Confidence Intervals**
 
+I derived confidence intervals from the fitted model `forage_beta` using `confint()`. Note that these intervals are on the link scale, so they are not directly interpretable as proportions without transforming from the logit scale.
+
 ```{r}
-# Recall that 
+#| code-fold: true
+# Recall that still in link space
 ci_forage <- confint(forage_beta)
 
 # Style with kableExtra
-ci_forage %>% 
-  kable() %>%
+round(ci_forage,2) %>% 
+  kable() %>% 
   kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE)
-
-## Calculate with standard equation 
-
 ```
+
+The confidence interval for dive time is negative, indicating that longer dives are potentially associated with a slightly lower proportion of prey left uneaten. The confidence interval for `PreyCatCucumber` is negative and does not include zero, indicating that sea cucumbers are left uneaten significantly less often than clams (reference prey category).
+
+The confidence intervals for `PreyCatCrab`, `PreyCatStar`, and `PreyCatUrchin` all include zero, indicating that the proportion of these prey categories left uneaten are not significant different from clams. Overall, the confidence intervals of each predictor align with the p values from the beta regression model output; significant effects are reflected by the intervals that do not include zero, while the nonsignificant effects have intervals than include zero.
 
 ### Interpreting Confidence Intervals of Predicted Outcomes
 
-```{r}
-## CIs are currently in logit... switch to response scale 
+The uncertainty in the proportion of urchins and clams left uneaten was of interest and can be visualized using a ribbon graph among predicted lines from the model.
 
+I created a prediction grid to explore how dive time (`DT`) and prey category (`PreyCat`) influence the proportion of prey left uneaten by sea otters (`PropNotEat_adj`). I generated a sequence of 100 evenly time-spaced dive times, then combined these with all levels of `PreyCat`. I then ensured that the `PreyCat` factor levels in the prediction grid matched those in the original dataset.
+
+```{r}
+#| code-fold: true
 # Build prediction grid of all combinations of DT and PreyCat 
 predicted_data <- expand.grid(
   # Establish sequence for predictor range (DT)
@@ -348,8 +362,11 @@ predicted_data$PreyCat <- factor(predicted_data$PreyCat, levels = levels(factor(
 
 ```
 
+I utilized `forage_beta` to generate predictions on the logit link scale for each combination of dive time and prey category in the prediction grid. I also calculated the standard errors of these predictions. I then used the predicted values and their standard errors to compute 95% confidence intervals on the link scale by adding and subtracting 1.96 times the standard error from the predicted values to obtain the lower and upper bounds.
+
 ```{r}
-# Predict on logit link scale with SEs
+#| code-fold: true
+# Predict on logit link scale with standard errors
 pred_link <- predict(
   forage_beta,
   newdata = predicted_data,
@@ -358,24 +375,30 @@ pred_link <- predict(
 )
 
 # Predict on logit link scale with standard errors
-predicted_data$fit    <- pred_link$fit
+predicted_data$fit <- pred_link$fit
 predicted_data$se.fit <- pred_link$se.fit
 
-# CIs on link scale
+# Calculate CIs on link scale for lower and upper bounds
 predicted_data$lower_link <- predicted_data$fit - 1.96 * predicted_data$se.fit
-predicted_data$upper_link <- predicted_data$fit + 1.96 * predicted_data$se.fit
 
+predicted_data$upper_link <- predicted_data$fit + 1.96 * predicted_data$se.fit
+```
+
+It was necessary to revert the predicted values and confidence intervals from the logit link scale back to the response scale, so I created an inverse logit function to perform this transformation. I then calculated the predicted proportions as well as the lower and upper bounds of the 95% confidence intervals using the inverse logit function `inv_logit`. Finally, I filtered the prediction grid to focus only on the prey categories of interest, clams and urchins, for data visualization.
+
+```{r}
+#| code-fold: true
 # Revert to response scale usinng inverse logit
 inv_logit <- function(x) 1 / (1 + exp(-x))
-#
+
+# Run inverse function on lower and upper bounds, as well as predicted adjusted prop uneaten
 predicted_data$predicted_PropNotEat_adj <- inv_logit(predicted_data$fit)
 predicted_data$lower <- inv_logit(predicted_data$lower_link)
 predicted_data$upper <- inv_logit(predicted_data$upper_link)
 
-# Select only categories you want to plot
+# Select only categories to plot 
 predicted_ribbon <- predicted_data %>%
   filter(PreyCat %in% c("Clam", "Urchin"))
-
 ```
 
 ```{r}
@@ -396,7 +419,10 @@ predicted_data %>%
 
 ```
 
+With a faceted view, it is observable that
+
 ```{r}
+#| code-fold: true
 ## Ribbon
 predicted_data %>% filter(PreyCat %in% c("Clam", "Urchin")) %>%
 ggplot(aes(x = DT, y = predicted_PropNotEat_adj, color = PreyCat)) +
@@ -419,4 +445,8 @@ ggplot(aes(x = DT, y = predicted_PropNotEat_adj, color = PreyCat)) +
   scale_fill_brewer(palette = "Set1")
 ```
 
+## Conclusion
+
 For future analysis, the age (adult and juvenile) of observed sea otters may be considered as a potential confounding variable impacting diving time, preference for prey, and the proportion of prey left uneaten.
+
+## References
