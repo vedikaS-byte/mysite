@@ -46,7 +46,7 @@ Microsoft Planetary Computer. (n.d.). *Landsat Collection 2 Level-2*. Accessed N
 ## Import Necessary Libraries
 
 ```{python}
-# Import necessary libraries along with defined abbreviations
+# Import necessary libraries 
 import os
 import numpy as np
 import pandas as pd
@@ -77,8 +77,8 @@ palisades_fp = os.path.join("data", "Palisades_Perimeter_20250121",
 palisades = gpd.read_file(palisades_fp)
 
 # Establish file path to read in and open landsat data 
-fp = os.path.join("data", "landsat8-2025-02-23-palisades-eaton.nc")
-palisades_eaton = xarray.open_dataset(fp)
+landsat_fp = os.path.join("data", "landsat8-2025-02-23-palisades-eaton.nc")
+palisades_eaton = xarray.open_dataset(landsat_fp)
 
 # Establish EJI file path to read in EJI geodatabase
 eji_fp = os.path.join("data", "EJI_2024_California", "EJI_2024_California.gdb")
@@ -280,10 +280,9 @@ ax.set_xticks([])
 ax.set_yticks([])
 
 # Call plot
-plt.show
-```
+plt.show()
 
-```{python}
+
 ## Map the intersecting census tracts compared to the Palisades fire perimeter
 
 # Define figure and axis dimensions
@@ -303,7 +302,7 @@ ax.set_xticks([])
 ax.set_yticks([])
 
 # Call plot
-plt.show
+plt.show()
 ```
 
 #### Clipping Census Tracts to Fire Perimeters
@@ -338,9 +337,7 @@ ax.set_yticks([])
 
 # Call plot
 plt.show()
-```
 
-```{python}
 ## Plot clipped census tracts to the Eaton fire perimeter
 
 # Define figure and axis
