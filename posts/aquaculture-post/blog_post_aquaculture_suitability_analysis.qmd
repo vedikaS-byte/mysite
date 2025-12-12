@@ -19,22 +19,57 @@ editor_options:
 **GitHub Repository Link:**
 <https://github.com/vedikaS-byte/suitability-aquaculture-analysis>
 
-There is a growing global need to sustainably feed expanding human populations, and one promising solution is marine aquaculture. Aquaculture is defined as the organized cultivation, feeding, propagation, and production of aquatic organisms for commercial, recreational, or public use (Alleway et al., 2018). The aquaculture industry has significant potential to support food security while also contributing to conservation and economic development. In California, aquaculture is highly diverse in its production systems, cultured species, and final products, accounting for approximately 6% of the total value of the U.S. aquaculture industry (Wright et al., 2025). Wright et al. identify four main sectors within California aquaculture: finfish, shellfish, algae, and natural resource agencies. Finfish and shellfish production together represent more than 70% of the industry’s
-total value and primarily supply food for human consumption (Wright et al., 2025). As a result, commercial aquaculture has become an increasingly important and profitable source of marine food production in California.
+There is a growing global need to sustainably feed expanding human
+populations, and one promising solution is marine aquaculture.
+Aquaculture is defined as the organized cultivation, feeding,
+propagation, and production of aquatic organisms for commercial,
+recreational, or public use (Alleway et al., 2018). The aquaculture
+industry has significant potential to support food security while also
+contributing to conservation and economic development. In California,
+aquaculture is highly diverse in its production systems, cultured
+species, and final products, accounting for approximately 6% of the
+total value of the U.S. aquaculture industry (Wright et al., 2025).
+Wright et al. identify four main sectors within California aquaculture:
+finfish, shellfish, algae, and natural resource agencies. Finfish and
+shellfish production together represent more than 70% of the industry’s
+total value and primarily supply food for human consumption (Wright et
+al., 2025). As a result, commercial aquaculture has become an
+increasingly important and profitable source of marine food production
+in California.
 
 ![**Figure 1. Kelp forest pictured in Channel Islands National Park
 ([The Nature
 Conservancy](https://blog.nature.org/2019/01/21/aquaculture-could-be-conservations-secret-weapon/)).**](images/kelp_forest.png)
 
-Oysters and the critically endangered red abalone are two commercially significant species in California aquaculture. Oysters represent the largest share of mollusk aquaculture production in the state, followed by abalone, mussels, and marine clams, which together comprise the remainder of California’s mollusk industry output (Wright et al., 2025). Although oysters are relatively sturdy animals, they are sensitive to environmental conditions and are typically confined to sea surface  temperatures (SSTs) between 11-30°C and water depths ranging from 0-70 meters below sea level (Oliver, 2025). The critically endangered red abalone (*Haliotis rufescens*), a marine gastropod, thrives in cooler SSTs of 8-18°C and is generally limited to depths of 0-25 meters below sea level (SeaBase, n.d.). Both species are known to inhabit waters along the U.S. West Coast. As such, identifying regions where their suitable environmental ranges overlap within Exclusive Economic Zones
-(EEZs) may help evaluate potential areas for sustainable and profitable aquaculture development.
+Oysters and the critically endangered red abalone are two commercially
+significant species in California aquaculture. Oysters represent the
+largest share of mollusk aquaculture production in the state, followed
+by abalone, mussels, and marine clams, which together comprise the
+remainder of California’s mollusk industry output (Wright et al., 2025).
+Although oysters are relatively sturdy animals, they are sensitive to
+environmental conditions and are typically confined to sea surface
+temperatures (SSTs) between 11-30°C and water depths ranging from 0-70
+meters below sea level (Oliver, 2025). The critically endangered red
+abalone (*Haliotis rufescens*), a marine gastropod, thrives in cooler
+SSTs of 8-18°C and is generally limited to depths of 0-25 meters below
+sea level (SeaBase, n.d.). Both species are known to inhabit waters
+along the U.S. West Coast. As such, identifying regions where their
+suitable environmental ranges overlap within Exclusive Economic Zones
+(EEZs) may help evaluate potential areas for sustainable and profitable
+aquaculture development.
 
-[![**Figure 2. The critically endangered and commercially significant
-red abalone ([California Conservation Genomics
-Project)](https://www.ccgproject.org/species/haliotis-rufescens-red-abalone).**](images/clipboard-2766546493.png){fig-alt="Red Abalone CCGP"}](https://www.ccgproject.org/species/haliotis-rufescens-red-abalone)
+\[![Figure 2. The critically endangered and commercially significant red
+abalone (California Conservation Genomics
+Project).](images/clipboard-2766546493.png){fig-alt="Red Abalone CCGP"}\]
 
-The purpose of this blog post is to evaluate the suitability of West Coast Exclusive Economic Zones (EEZs) for developing marine aquaculture for multiple oyster species and the red abalone. Suitable locations are identified using species-specific ranges of sea surface temperature
-(SST) and ocean depth. This project utilizes GIS applications such as working with vector and raster data, raster resampling, masking, and map algebra to analyze environmental conditions. The analysis includes two main components: (1) creating a final map of suitable oyster aquaculture
+The purpose of this blog post is to evaluate the suitability of West
+Coast Exclusive Economic Zones (EEZs) for developing marine aquaculture
+for multiple oyster species and the red abalone. Suitable locations are
+identified using species-specific ranges of sea surface temperature
+(SST) and ocean depth. This project utilizes GIS applications such as
+working with vector and raster data, raster resampling, masking, and map
+algebra to analyze environmental conditions. The analysis includes two
+main components: (1) creating a final map of suitable oyster aquaculture
 areas, and (2) building a function that allows users to generate
 suitability maps by EEZ based on selected species, temperature ranges,
 and depth limits. The following research question was utilized to
@@ -138,7 +173,6 @@ if (length(sst_files) == 0) {
 
 # Stack raster files
 sst <- rast(sst_files)
-
 ```
 
 It is critical to ensure that the coordinate reference system (CRS) of
@@ -673,11 +707,46 @@ aquaculture areas within West Coast EEZs for red abalone.**
 
 ## Reflection
 
-Central California is the most suitable EEZ with about 3,656.82 km^2^ of suitable area while Northern California is the least suitable EEZ with about 194.13 km^2^ of suitable area. Central California likely offers the most favorable SST and depth conditions for oyster cultivation. Notably, the Washington EEZ has a larger suitable area (1,028.90 km²) than Northern California despite its colder location, indicating a higher proportion of habitat appropriate for mollusk aquaculture. Central and Southern California also show relatively high suitability. Oregon’s EEZ contains substantial suitable area as well, though less than most other regions.
+Central California is the most suitable EEZ with about 3,656.82 km^2^ of
+suitable area while Northern California is the least suitable EEZ with
+about 194.13 km^2^ of suitable area. Central California likely offers
+the most favorable SST and depth conditions for oyster cultivation.
+Notably, the Washington EEZ has a larger suitable area (1,028.90 km²)
+than Northern California despite its colder location, indicating a
+higher proportion of habitat appropriate for mollusk aquaculture.
+Central and Southern California also show relatively high suitability.
+Oregon’s EEZ contains substantial suitable area as well, though less
+than most other regions.
 
-The red abalone, a critically endangered marine gastropod, is a commercially valuable species with strong potential for aquaculture. The Washington EEZ appears especially promising for red abalone cultivation, with more than 1,500 km² of suitable area, likely due to the colder water temperatures preferred by the species. Interestingly, Central and Southern California also contain substantial suitable areas that exceed those of Northern California, despite being further south and having generally warmer conditions; differences in coastal upwelling and nutrient availability may explain this pattern. Red abalone aquaculture also represents a model for sustainable seafood production. For instance, the Monterrey Abalone Company in Central California raises abalone in both marine and land-based systems with minimal use of chemicals and antibiotics (Bailey, 2015). Overall, red abalone farms highlight opportunities for environmentally responsible aquaculture while supporting production in the most suitable West Coast EEZs, particularly in Washington, Central California, and Northern California.
+The red abalone, a critically endangered marine gastropod, is a
+commercially valuable species with strong potential for aquaculture. The
+Washington EEZ appears especially promising for red abalone cultivation,
+with more than 1,500 km² of suitable area, likely due to the colder
+water temperatures preferred by the species. Interestingly, Central and
+Southern California also contain substantial suitable areas that exceed
+those of Northern California, despite being further south and having
+generally warmer conditions; differences in coastal upwelling and
+nutrient availability may explain this pattern. Red abalone aquaculture
+also represents a model for sustainable seafood production. For
+instance, the Monterrey Abalone Company in Central California raises
+abalone in both marine and land-based systems with minimal use of
+chemicals and antibiotics (Bailey, 2015). Overall, red abalone farms
+highlight opportunities for environmentally responsible aquaculture
+while supporting production in the most suitable West Coast EEZs,
+particularly in Washington, Central California, and Northern California.
 
-Several considerations exist for future analysis. The analysis considers the average annual SST and depth, but does not account for seasonal variation that may influence species suitability. Additionally, the `species_preference` function considers only temperature and depth ranges; other ecological or biological factors (ex. salinity and predation) are not included and are thus simplified. The accruacy of the EEZ polygons are important as they affect results. For example, misaligned or outdated boundaries could mislead researchers into incorrect area calculations. Therefore, an improved analysis would incorporate flexibility for complex species preferences to avoid oversimplification and ensure that geospatial objects are properly aligned, yielding more accurate results.
+Several considerations exist for future analysis. The analysis considers
+the average annual SST and depth, but does not account for seasonal
+variation that may influence species suitability. Additionally, the
+`species_preference` function considers only temperature and depth
+ranges; other ecological or biological factors (ex. salinity and
+predation) are not included and are thus simplified. The accruacy of the
+EEZ polygons are important as they affect results. For example,
+misaligned or outdated boundaries could mislead researchers into
+incorrect area calculations. Therefore, an improved analysis would
+incorporate flexibility for complex species preferences to avoid
+oversimplification and ensure that geospatial objects are properly
+aligned, yielding more accurate results.
 
 ## References
 
