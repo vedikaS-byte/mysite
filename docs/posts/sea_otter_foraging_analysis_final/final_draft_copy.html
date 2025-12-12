@@ -168,11 +168,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#data-importation-exploration-and-processing" id="toc-data-importation-exploration-and-processing" class="nav-link" data-scroll-target="#data-importation-exploration-and-processing">Data Importation, Exploration, and Processing</a></li>
   <li><a href="#data-simulation-procedure" id="toc-data-simulation-procedure" class="nav-link" data-scroll-target="#data-simulation-procedure">Data Simulation Procedure</a></li>
   </ul></li>
-  <li><a href="#inference-and-hypothesis-testing-with-beta-regression" id="toc-inference-and-hypothesis-testing-with-beta-regression" class="nav-link" data-scroll-target="#inference-and-hypothesis-testing-with-beta-regression">Inference and Hypothesis Testing with Beta Regression</a>
+  <li><a href="#inference-and-hypothesis-testing-with-beta-regression" id="toc-inference-and-hypothesis-testing-with-beta-regression" class="nav-link" data-scroll-target="#inference-and-hypothesis-testing-with-beta-regression">Inference and Hypothesis Testing with Beta Regression</a></li>
+  <li><a href="#confidence-intervals-for-model-coefficients-and-predictions" id="toc-confidence-intervals-for-model-coefficients-and-predictions" class="nav-link" data-scroll-target="#confidence-intervals-for-model-coefficients-and-predictions">Confidence Intervals for Model Coefficients and Predictions</a>
   <ul class="collapse">
   <li><a href="#interpreting-model-β-confidence-intervals" id="toc-interpreting-model-β-confidence-intervals" class="nav-link" data-scroll-target="#interpreting-model-β-confidence-intervals"><strong>Interpreting Model β Confidence Intervals</strong></a></li>
   <li><a href="#interpreting-confidence-intervals-of-predicted-outcomes" id="toc-interpreting-confidence-intervals-of-predicted-outcomes" class="nav-link" data-scroll-target="#interpreting-confidence-intervals-of-predicted-outcomes">Interpreting Confidence Intervals of Predicted Outcomes</a></li>
   </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -240,7 +243,7 @@ logit(\mu_i)
 <h2 class="anchored" data-anchor-id="data-availability-and-characteristics">Data Availability and Characteristics</h2>
 <section id="data-access" class="level3">
 <h3 class="anchored" data-anchor-id="data-access">Data Access</h3>
-<p>The data used in this project were obtained from the <a href="https://knb.ecoinformatics.org/view/doi%3A10.5063%2FF1C53J8X">KNB Data Repository</a> and are based on the finalized foraging dataset “Sea otter foraging data, visual observations from Prince of Wales, Alaska<em>”</em> compiled by Nicole LaRoche, Sydney King, and Heidi Pearson (2018). LaRoche et al.&nbsp;documented sea otter diets from May to August 2018 using visual observations conducted along the western coast of Prince of Wales Island, Alaska, at sites characterized by high otter densities. The finalized foraging dataset is publicly accessible as a CSV file through the KNB Data Repository.</p>
+<p>The data used in this project were obtained from the <a href="https://knb.ecoinformatics.org/view/doi%3A10.5063%2FF1C53J8X">KNB Data Repository</a> and are based on the finalized foraging dataset “Sea otter foraging data, visual observations from Prince of Wales, Alaska<em>”</em> compiled by Nicole LaRoche, Sydney King, and Heidi Pearson (2022). LaRoche et al.&nbsp;documented sea otter diets from May to August 2018 using visual observations conducted along the western coast of Prince of Wales Island, Alaska, at sites characterized by high otter densities. The finalized foraging dataset is publicly accessible as a CSV file through the KNB Data Repository.</p>
 </section>
 <section id="data-importation-exploration-and-processing" class="level3">
 <h3 class="anchored" data-anchor-id="data-importation-exploration-and-processing">Data Importation, Exploration, and Processing</h3>
@@ -265,14 +268,12 @@ logit(\mu_i)
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>forage <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"forage_final (1)_copy.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>Missing values (NAs) were removed prior to analysis. I then selected only the variables required for modeling: prey category (<code>PreyCat</code>), dive time (<code>DT</code>), and proportion not eaten (<code>PropNotEat</code>). Column names were also updated for clarity. Additionally, I generated a summary table showing the number of observations within each prey category and verified that all <code>NAs</code> had been removed from the selected variables using <code>colSums()</code> in combination with <code>is.na()</code>.</p>
+<p>Missing values (NAs) were removed prior to analysis. I then selected only the variables required for modeling: prey category (<code>PreyCat</code>), dive time (<code>DT</code>), and proportion not eaten (<code>PropNotEat</code>). Additionally, I generated a summary table showing the number of observations within each prey category and verified that all <code>NAs</code> had been removed from the selected variables using <code>colSums()</code> in combination with <code>is.na()</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select for just prey category and diving time</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>forage <span class="ot">&lt;-</span> forage <span class="sc">%&gt;%</span> <span class="fu">select</span>(PreyCat, PropNotEat, DT)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#forage &lt;- forage %&gt;% filter(age != "U")</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>forage <span class="ot">&lt;-</span> forage <span class="sc">%&gt;%</span> <span class="fu">drop_na</span>() </span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#forage &lt;- forage %&gt;% filter(PreyCat != "PreyCatMussel", PreyCat != "PreyCatSnail")</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(forage<span class="sc">$</span>PreyCat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>forage <span class="ot">&lt;-</span> forage <span class="sc">%&gt;%</span> <span class="fu">drop_na</span>() </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(forage<span class="sc">$</span>PreyCat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Clam     Crab Cucumber     Star   Urchin 
@@ -306,14 +307,19 @@ logit(\mu_i)
 <details>
 <summary>Show code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create boxplots to visualize the distribution of prey categories and proportion of prey not eaten</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>forage <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> PreyCat, <span class="at">y =</span> PropNotEat, <span class="at">fill =</span> PreyCat)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Clam"</span> <span class="ot">=</span> <span class="st">"#1b9e77"</span>,</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Urchin"</span> <span class="ot">=</span> <span class="st">"#d95f02"</span>,</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Crab"</span> <span class="ot">=</span> <span class="st">"#7570b3"</span>,</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Cucumber"</span> <span class="ot">=</span> <span class="st">"#66a61e"</span>,</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Star"</span> <span class="ot">=</span> <span class="st">"#e6ab02"</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">+</span> <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>forage <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> PreyCat, <span class="at">y =</span> PropNotEat, <span class="at">fill =</span> PreyCat)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>() <span class="sc">+</span> </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Proportion of Prey Not Consumed By Sea Otters Based on Prey Category"</span>, </span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Prey Category"</span>, </span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Proportion of Prey Not Consumed"</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Clam"</span> <span class="ot">=</span> <span class="st">"#1b9e77"</span>,</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Urchin"</span> <span class="ot">=</span> <span class="st">"#d95f02"</span>,</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Crab"</span> <span class="ot">=</span> <span class="st">"#7570b3"</span>,</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Cucumber"</span> <span class="ot">=</span> <span class="st">"#66a61e"</span>,</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Star"</span> <span class="ot">=</span> <span class="st">"#e6ab02"</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">+</span> <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="final_draft_copy_files/figure-html/unnamed-chunk-6-2.png" class="img-fluid" width="672"></p>
@@ -479,8 +485,12 @@ logit(\mu_i)
 + \beta_{PreyCat\_crab}
 + \beta_{PreyCat\_cucumber}
 + \beta_{PreyCat\_star}  \]</span></p>
-<p>###Hypothesis Testing Interpretation Here, I interpreted the model results to assess whether each hypothesis is supported.</p>
+<section id="hypothesis-testing-interpretation" class="level4">
+<h4 class="anchored" data-anchor-id="hypothesis-testing-interpretation">Hypothesis Testing Interpretation</h4>
+<p>The beta regression results were used to test whether prey category and dive time influence the proportion of prey left uneaten. Here, I interpreted the model results to assess whether each hypothesis is supported.</p>
 <div class="cell">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create cleaned summary output table</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(forage_beta) <span class="sc">%&gt;%</span> </span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
@@ -492,6 +502,7 @@ logit(\mu_i)
 <span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(term, estimate, std.error, statistic, p.value) <span class="sc">%&gt;%</span></span>
 <span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>() <span class="sc">%&gt;%</span></span>
 <span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>), <span class="at">full_width =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <table class="table table-striped table-hover table-sm small" data-quarto-postprocess="true">
 <thead>
@@ -552,32 +563,41 @@ logit(\mu_i)
 
 </div>
 </div>
+</section>
 <section id="hypothesis-1" class="level4">
 <h4 class="anchored" data-anchor-id="hypothesis-1">Hypothesis 1</h4>
-<p>Based on the model, the coefficient for urchins compared to clams was not statistically significant, and as a result, we fail to reject the null hypothesis that sea otters leave the same proportion of urchins</p>
 <ul>
-<li><p><strong>Hypothesis 1:</strong></p>
-<ul>
-<li><p>H<sub>0</sub>: β<sub>PreyCat_urchins</sub> = 0. Sea otters leave the same proportion of urchins uneaten as they do with clams; prey category does not influence the proportion of prey eaten.</p></li>
-<li><p>H<sub>A</sub>: β<sub>PreyCat_urchins</sub> ≠ 0. Sea otters leave a significantly different proportion of urchins uneaten compared to clams; prey category has a significant effect on the proportion of prey not eaten.</p></li>
-</ul></li>
-<li><p><strong>Hypothesis 2</strong>:</p>
-<ul>
-<li><p>H<sub>0</sub>: β<sub>dive_time</sub> = 0. Dive time has no significant effect on the proportion of prey not eaten; the duration of a dive does not influence how much prey is not eaten.</p></li>
-<li><p>H<sub>A</sub>: β<sub>dive_time</sub> ≠ 0. Dive time does significantly affect the proportion of prey not eaten; longer or shorter dives are associated with a higher or lower proportion of prey left uneaten.</p></li>
-</ul></li>
+<li><p>H<sub>0</sub>: β<sub>PreyCat_urchins</sub> = 0.</p></li>
+<li><p>H<sub>A</sub>: β<sub>PreyCat_urchins</sub> ≠ 0.</p></li>
 </ul>
+<p>Based on the model, the coefficient for urchins compared to clams was not significant, indicating that sea otters do not leave a significantly different proportion of urchins uneaten (β = -0.21, p = 0.54). Thus, we fail to reject the null hypothesis that sea otters leave the same proportion of urchins uneaten as they do with clams; prey category does not appear to affect the proportion of prey left uneaten for urchins.</p>
 </section>
+<section id="hypothesis-2" class="level4">
+<h4 class="anchored" data-anchor-id="hypothesis-2">Hypothesis 2</h4>
+<ul>
+<li><p>H<sub>0</sub>: β<sub>dive_time</sub> = 0.</p></li>
+<li><p>H<sub>A</sub>: β<sub>dive_time</sub> ≠ 0.</p></li>
+</ul>
+<p>Based on the model, dive time had a significant negative effect on the proportion of prey not eaten, indicating that longer dives are associated with a slightly lower proportion of prey left uneaten (β = -0.005, p = 0.0006). As a result, we can reject the null hypothesis that the duration of a dive has no significant effect on the prey not consumed; there is sufficient statistical evidence to suggest that dive duration significantly influences the proportion of prey not consumed.</p>
+</section>
+</section>
+<section id="confidence-intervals-for-model-coefficients-and-predictions" class="level2">
+<h2 class="anchored" data-anchor-id="confidence-intervals-for-model-coefficients-and-predictions">Confidence Intervals for Model Coefficients and Predictions</h2>
+<p>Confidence intervals are essential for interpreting model estimates because they can be used to quantify uncertainty and interpret effect size. Confidence intervals can be calculated for individual model coefficients, indicating the range in which the true beta value is expected to fall approximately 95% of the time. Alternatively, confidence intervals can be constructed for predicted values of the response variable, showing the range in which the mean response is expected to fall about 95% of the time.</p>
 <section id="interpreting-model-β-confidence-intervals" class="level3">
 <h3 class="anchored" data-anchor-id="interpreting-model-β-confidence-intervals"><strong>Interpreting Model β Confidence Intervals</strong></h3>
+<p>I derived confidence intervals from the fitted model <code>forage_beta</code> using <code>confint()</code>. Note that these intervals are on the link scale, so they are not directly interpretable as proportions without transforming from the logit scale.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Recall that </span></span>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Recall that still in link space</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>ci_forage <span class="ot">&lt;-</span> <span class="fu">confint</span>(forage_beta)</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Style with kableExtra</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>ci_forage <span class="sc">%&gt;%</span> </span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(ci_forage,<span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>() <span class="sc">%&gt;%</span> </span>
 <span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>), <span class="at">full_width =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <table class="table table-striped table-hover table-sm small" data-quarto-postprocess="true">
 <thead>
@@ -591,90 +611,105 @@ logit(\mu_i)
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">0.4259353</td>
-<td style="text-align: right;">1.0780332</td>
-<td style="text-align: right;">0.7519842</td>
+<td style="text-align: right;">0.43</td>
+<td style="text-align: right;">1.08</td>
+<td style="text-align: right;">0.75</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">DT</td>
-<td style="text-align: right;">-0.0079078</td>
-<td style="text-align: right;">-0.0021660</td>
-<td style="text-align: right;">-0.0050369</td>
+<td style="text-align: right;">-0.01</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">-0.01</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">PreyCatCrab</td>
-<td style="text-align: right;">-0.5188186</td>
-<td style="text-align: right;">0.1099012</td>
-<td style="text-align: right;">-0.2044587</td>
+<td style="text-align: right;">-0.52</td>
+<td style="text-align: right;">0.11</td>
+<td style="text-align: right;">-0.20</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">PreyCatCucumber</td>
-<td style="text-align: right;">-0.9512994</td>
-<td style="text-align: right;">-0.0362902</td>
-<td style="text-align: right;">-0.4937948</td>
+<td style="text-align: right;">-0.95</td>
+<td style="text-align: right;">-0.04</td>
+<td style="text-align: right;">-0.49</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">PreyCatStar</td>
-<td style="text-align: right;">-1.1253184</td>
-<td style="text-align: right;">0.6290517</td>
-<td style="text-align: right;">-0.2481334</td>
+<td style="text-align: right;">-1.13</td>
+<td style="text-align: right;">0.63</td>
+<td style="text-align: right;">-0.25</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">PreyCatUrchin</td>
-<td style="text-align: right;">-0.8728423</td>
-<td style="text-align: right;">0.4584896</td>
-<td style="text-align: right;">-0.2071764</td>
+<td style="text-align: right;">-0.87</td>
+<td style="text-align: right;">0.46</td>
+<td style="text-align: right;">-0.21</td>
 </tr>
 </tbody>
 </table>
 
 
 </div>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Calculate with standard equation </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>The confidence interval for dive time is negative, indicating that longer dives are potentially associated with a slightly lower proportion of prey left uneaten. The confidence interval for <code>PreyCatCucumber</code> is negative and does not include zero, indicating that sea cucumbers are left uneaten significantly less often than clams (reference prey category).</p>
+<p>The confidence intervals for <code>PreyCatCrab</code>, <code>PreyCatStar</code>, and <code>PreyCatUrchin</code> all include zero, indicating that the proportion of these prey categories left uneaten are not significant different from clams. Overall, the confidence intervals of each predictor align with the p values from the beta regression model output; significant effects are reflected by the intervals that do not include zero, while the nonsignificant effects have intervals than include zero.</p>
 </section>
 <section id="interpreting-confidence-intervals-of-predicted-outcomes" class="level3">
 <h3 class="anchored" data-anchor-id="interpreting-confidence-intervals-of-predicted-outcomes">Interpreting Confidence Intervals of Predicted Outcomes</h3>
+<p>The uncertainty in the proportion of urchins and clams left uneaten was of interest and can be visualized using a ribbon graph among predicted lines from the model.</p>
+<p>I created a prediction grid to explore how dive time (<code>DT</code>) and prey category (<code>PreyCat</code>) influence the proportion of prey left uneaten by sea otters (<code>PropNotEat_adj</code>). I generated a sequence of 100 evenly time-spaced dive times, then combined these with all levels of <code>PreyCat</code>. I then ensured that the <code>PreyCat</code> factor levels in the prediction grid matched those in the original dataset.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="do">## CIs are currently in logit... switch to response scale </span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Build prediction grid of all combinations of DT and PreyCat </span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>predicted_data <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(</span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Establish sequence for predictor range (DT)</span></span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">DT =</span> <span class="fu">seq</span>(<span class="fu">min</span>(forage<span class="sc">$</span>DT, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="fu">max</span>(forage<span class="sc">$</span>DT, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">length.out =</span> <span class="dv">100</span>),</span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">PreyCat =</span> <span class="fu">levels</span>(<span class="fu">factor</span>(forage<span class="sc">$</span>PreyCat)) <span class="co"># Convert to factor</span></span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Ensure levels in predicted_data exactly match in forage$PreyCat</span></span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>predicted_data<span class="sc">$</span>PreyCat <span class="ot">&lt;-</span> <span class="fu">factor</span>(predicted_data<span class="sc">$</span>PreyCat, <span class="at">levels =</span> <span class="fu">levels</span>(<span class="fu">factor</span>(forage<span class="sc">$</span>PreyCat)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Build prediction grid of all combinations of DT and PreyCat </span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>predicted_data <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Establish sequence for predictor range (DT)</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">DT =</span> <span class="fu">seq</span>(<span class="fu">min</span>(forage<span class="sc">$</span>DT, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="fu">max</span>(forage<span class="sc">$</span>DT, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">length.out =</span> <span class="dv">100</span>),</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">PreyCat =</span> <span class="fu">levels</span>(<span class="fu">factor</span>(forage<span class="sc">$</span>PreyCat)) <span class="co"># Convert to factor</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Ensure levels in predicted_data exactly match in forage$PreyCat</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>predicted_data<span class="sc">$</span>PreyCat <span class="ot">&lt;-</span> <span class="fu">factor</span>(predicted_data<span class="sc">$</span>PreyCat, <span class="at">levels =</span> <span class="fu">levels</span>(<span class="fu">factor</span>(forage<span class="sc">$</span>PreyCat)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
+<p>I utilized <code>forage_beta</code> to generate predictions on the logit link scale for each combination of dive time and prey category in the prediction grid. I also calculated the standard errors of these predictions. I then used the predicted values and their standard errors to compute 95% confidence intervals on the link scale by adding and subtracting 1.96 times the standard error from the predicted values to obtain the lower and upper bounds.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Predict on logit link scale with SEs</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>pred_link <span class="ot">&lt;-</span> <span class="fu">predict</span>(</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  forage_beta,</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">newdata =</span> predicted_data,</span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"link"</span>,</span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">se.fit =</span> <span class="cn">TRUE</span></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Predict on logit link scale with standard errors</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>pred_link <span class="ot">&lt;-</span> <span class="fu">predict</span>(</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  forage_beta,</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">newdata =</span> predicted_data,</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"link"</span>,</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">se.fit =</span> <span class="cn">TRUE</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Predict on logit link scale with standard errors</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>predicted_data<span class="sc">$</span>fit <span class="ot">&lt;-</span> pred_link<span class="sc">$</span>fit</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>predicted_data<span class="sc">$</span>se.fit <span class="ot">&lt;-</span> pred_link<span class="sc">$</span>se.fit</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate CIs on link scale for lower and upper bounds</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>predicted_data<span class="sc">$</span>lower_link <span class="ot">&lt;-</span> predicted_data<span class="sc">$</span>fit <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> predicted_data<span class="sc">$</span>se.fit</span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>predicted_data<span class="sc">$</span>upper_link <span class="ot">&lt;-</span> predicted_data<span class="sc">$</span>fit <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> predicted_data<span class="sc">$</span>se.fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>It was necessary to revert the predicted values and confidence intervals from the logit link scale back to the response scale, so I created an inverse logit function to perform this transformation. I then calculated the predicted proportions as well as the lower and upper bounds of the 95% confidence intervals using the inverse logit function <code>inv_logit</code>. Finally, I filtered the prediction grid to focus only on the prey categories of interest, clams and urchins, for data visualization.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Revert to response scale usinng inverse logit</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>inv_logit <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="dv">1</span> <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="sc">-</span>x))</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Run inverse function on lower and upper bounds, as well as predicted adjusted prop uneaten</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>predicted_data<span class="sc">$</span>predicted_PropNotEat_adj <span class="ot">&lt;-</span> <span class="fu">inv_logit</span>(predicted_data<span class="sc">$</span>fit)</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>predicted_data<span class="sc">$</span>lower <span class="ot">&lt;-</span> <span class="fu">inv_logit</span>(predicted_data<span class="sc">$</span>lower_link)</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>predicted_data<span class="sc">$</span>upper <span class="ot">&lt;-</span> <span class="fu">inv_logit</span>(predicted_data<span class="sc">$</span>upper_link)</span>
 <span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Predict on logit link scale with standard errors</span></span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>predicted_data<span class="sc">$</span>fit    <span class="ot">&lt;-</span> pred_link<span class="sc">$</span>fit</span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>predicted_data<span class="sc">$</span>se.fit <span class="ot">&lt;-</span> pred_link<span class="sc">$</span>se.fit</span>
-<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="co"># CIs on link scale</span></span>
-<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>predicted_data<span class="sc">$</span>lower_link <span class="ot">&lt;-</span> predicted_data<span class="sc">$</span>fit <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> predicted_data<span class="sc">$</span>se.fit</span>
-<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>predicted_data<span class="sc">$</span>upper_link <span class="ot">&lt;-</span> predicted_data<span class="sc">$</span>fit <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> predicted_data<span class="sc">$</span>se.fit</span>
-<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Revert to response scale usinng inverse logit</span></span>
-<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>inv_logit <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="dv">1</span> <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="sc">-</span>x))</span>
-<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
-<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>predicted_data<span class="sc">$</span>predicted_PropNotEat_adj <span class="ot">&lt;-</span> <span class="fu">inv_logit</span>(predicted_data<span class="sc">$</span>fit)</span>
-<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>predicted_data<span class="sc">$</span>lower <span class="ot">&lt;-</span> <span class="fu">inv_logit</span>(predicted_data<span class="sc">$</span>lower_link)</span>
-<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>predicted_data<span class="sc">$</span>upper <span class="ot">&lt;-</span> <span class="fu">inv_logit</span>(predicted_data<span class="sc">$</span>upper_link)</span>
-<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Select only categories you want to plot</span></span>
-<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a>predicted_ribbon <span class="ot">&lt;-</span> predicted_data <span class="sc">%&gt;%</span></span>
-<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(PreyCat <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Clam"</span>, <span class="st">"Urchin"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Select only categories to plot </span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>predicted_ribbon <span class="ot">&lt;-</span> predicted_data <span class="sc">%&gt;%</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(PreyCat <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Clam"</span>, <span class="st">"Urchin"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell">
 <details>
@@ -687,43 +722,79 @@ logit(\mu_i)
 <span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Effect of Dive Time on Predicted Proportion Not Eaten Based on Prey Category"</span>,</span>
 <span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Dive Time (seconds)"</span>,</span>
 <span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Predicted Proportion Not Eaten"</span></span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span> PreyCat) <span class="sc">+</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
 <span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
 <span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="final_draft_copy_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Ribbon</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>predicted_data <span class="sc">%&gt;%</span> <span class="fu">filter</span>(PreyCat <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Clam"</span>, <span class="st">"Urchin"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> DT, <span class="at">y =</span> predicted_PropNotEat_adj, <span class="at">color =</span> PreyCat)) <span class="sc">+</span></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Ribbon for Clam and Urchin</span></span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(</span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> predicted_ribbon,</span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">ymin =</span> lower, <span class="at">ymax =</span> upper, <span class="at">fill =</span> PreyCat),</span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.2</span>,</span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="cn">NA</span></span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Predicted lines for all categories</span></span>
-<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Effect of Dive Time on Predicted Proportion Not Eaten by Prey Category"</span>,</span>
-<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Dive Time (seconds)"</span>,</span>
-<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Predicted Proportion Not Eaten"</span></span>
-<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
-<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>) <span class="sc">+</span></span>
-<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
 <p><img src="final_draft_copy_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
 </div>
+<details>
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot fitted lines per prey category (faceted view)</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>predicted_data <span class="sc">%&gt;%</span> </span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> DT, <span class="at">y =</span> predicted_PropNotEat_adj, <span class="at">color =</span> PreyCat)) <span class="sc">+</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Effect of Dive Time on Predicted Proportion Not Eaten Based on Prey Category"</span>,</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Dive Time (seconds)"</span>,</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Predicted Proportion Not Eaten"</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span> PreyCat) <span class="sc">+</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="final_draft_copy_files/figure-html/unnamed-chunk-19-2.png" class="img-fluid" width="672"></p>
 </div>
-<p>For future analysis, the age (adult and juvenile) of observed sea otters may be considered as a potential confounding variable impacting diving time, preference for prey, and the proportion of prey left uneaten.</p>
-
-
+</div>
+<p>With a faceted view, it is observable that as dive time increases, the proportion of prey left uneaten generally decreases for all prey types. Clams consistently have the highest predicted proportion left uneaten across dive times, while sea cucumbers show the lowest. Starfish and urchins also have similar predicted proportions, being slightly lower than clams but higher than sea cucumbers.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Ribbon</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>predicted_data <span class="sc">%&gt;%</span> <span class="fu">filter</span>(PreyCat <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Clam"</span>, <span class="st">"Urchin"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> DT, <span class="at">y =</span> predicted_PropNotEat_adj, <span class="at">color =</span> PreyCat)) <span class="sc">+</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Ribbon for Clam and Urchin</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> predicted_ribbon,</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">ymin =</span> lower, <span class="at">ymax =</span> upper, <span class="at">fill =</span> PreyCat),</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.2</span>,</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="cn">NA</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Predicted lines for all categories</span></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Effect of Dive Time on Predicted Proportion Not Eaten by Prey Category"</span>,</span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Dive Time (seconds)"</span>,</span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Predicted Proportion Not Eaten"</span></span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>) <span class="sc">+</span></span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="final_draft_copy_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The predicted proportion of prey left uneaten for clams and urchins across dive times is visualized above, including 95% confidence intervals for predicted outcomes. As dive time increases, the proportion of prey left uneaten decreases for both prey types. Clams have a higher predicted proportion left uneaten than urchins across the range of five times. Additionally the ribbons illustrate the uncertainty around these predictions, with urchins indicating a wider confidence interval and potentially more variability in predicted values compared to clams.</p>
+<p>At approximately the halfway point of 125 seconds of diving, it can be stated with 95% confidence that sea otters leave about 57% of a clam uneaten on average, compared to 49% of an urchin. This suggests that sea otters may expend more energy processing sea urchins than clams, and as a result, they may leave less uneaten when spending more time diving.</p>
 </section>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>The purpose of this analysis was to demonstrate how a statistical model, specifically beta regression, can be used to perform meaningful analyses, including hypothesis testing and interpreting confidence intervals. The analysis indicates that sea otters tend to leave more of their prey uneaten as dive time increases, reflecting the statistically significant effect of dive duration on the proportion of prey not consumed. Prey category does not appear to influence the proportion of urchins left uneaten. However, sea otters are generally more wasteful with sea cucumbers than with clams, suggesting that clams are a highly valued prey item. Interestingly, sea otters leave a higher proportion of clams uneaten than urchins as dive time increases. For example, at around 125 seconds of diving, it is estimated with 95% confidence that about 57% of a clam remains uneaten on average, compared to 49% of an urchin.</p>
+<p>For future analysis, the age (adult and juvenile) of observed sea otters may be considered as a potential confounding variable impacting diving time, preference for prey, and the proportion of prey left uneaten. Including age could be beneficial to clarify whether observed patterns in prey consumption are consistent across different life stages of if younger and older otters exhibit distinct foraging behaviors. Moreover, experience and physical capability could be accounted for in terms of impacts on feeding efficiency.</p>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<p>Cribari-Neto, F. (n.d.). <em>Beta regression in R</em>. Retrieved December 11, 2025, from https://cran.r-project.org/web/packages/betareg/vignettes/betareg.html</p>
+<p>LaRoche, N., King, S., &amp; Pearson, H. (2020). <em>Sea otter foraging data, visual observations from Prince of Wales, Alaska</em>. [Dataset]. Knowledge Network for Biocomplexity. Retrieved October 5, 2025, from</p>
+<p><a href="https://knb.ecoinformatics.org/view/doi%3A10.5063%2FF1C53J8X" class="uri">https://knb.ecoinformatics.org/view/doi%3A10.5063%2FF1C53J8X</a>&nbsp;</p>
+<p>LaRoche, N., King, S., Fergusson, E., Eckert, G., &amp; Pearson, H. (2022). <em>Sea otter diet nutrient composition with respect to recolonization, life history, and season in southern Southeast Alaska</em>. Wiley. <a href="https://doi.org/10.22541/au.167222186.60136269/v1" class="uri">https://doi.org/10.22541/au.167222186.60136269/v1</a></p>
+<p><em>R: The beta distribution in regression parameterization</em>. (n.d.). Retrieved December 11, 2025, from https://search.r-project.org/CRAN/refmans/betareg/html/dbetar.html?utm_source</p>
+<p>Smithson, M., &amp; Verkuilen, J. (2006). <em>A better lemon squeezer? Maximum-likelihood regression with beta-distributed dependent variables</em>. <em>Psychological Methods</em>, <em>11</em>(1), 54–71. https://doi.org/10.1037/1082-989x.11.1.54</p>
+
+
 </section>
 </section>
 

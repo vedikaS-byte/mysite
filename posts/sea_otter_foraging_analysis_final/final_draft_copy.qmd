@@ -68,7 +68,7 @@ plot(dag) # Visualize DAG
 
 ### Data Access
 
-The data used in this project were obtained from the [KNB Data Repository](https://knb.ecoinformatics.org/view/doi%3A10.5063%2FF1C53J8X) and are based on the finalized foraging dataset "Sea otter foraging data, visual observations from Prince of Wales, Alaska*”* compiled by Nicole LaRoche, Sydney King, and Heidi Pearson (2018). LaRoche et al. documented sea otter diets from May to August 2018 using visual observations conducted along the western coast of Prince of Wales Island, Alaska, at sites characterized by high otter densities. The finalized foraging dataset is publicly accessible as a CSV file through the KNB Data Repository.
+The data used in this project were obtained from the [KNB Data Repository](https://knb.ecoinformatics.org/view/doi%3A10.5063%2FF1C53J8X) and are based on the finalized foraging dataset "Sea otter foraging data, visual observations from Prince of Wales, Alaska*”* compiled by Nicole LaRoche, Sydney King, and Heidi Pearson (2022). LaRoche et al. documented sea otter diets from May to August 2018 using visual observations conducted along the western coast of Prince of Wales Island, Alaska, at sites characterized by high otter densities. The finalized foraging dataset is publicly accessible as a CSV file through the KNB Data Repository.
 
 ### Data Importation, Exploration, and Processing
 
@@ -97,14 +97,12 @@ set.seed(123) # For reproducibility
 forage <- read_csv("forage_final (1)_copy.csv")
 ```
 
-Missing values (NAs) were removed prior to analysis. I then selected only the variables required for modeling: prey category (`PreyCat`), dive time (`DT`), and proportion not eaten (`PropNotEat`). Column names were also updated for clarity. Additionally, I generated a summary table showing the number of observations within each prey category and verified that all `NAs` had been removed from the selected variables using `colSums()` in combination with `is.na()`.
+Missing values (NAs) were removed prior to analysis. I then selected only the variables required for modeling: prey category (`PreyCat`), dive time (`DT`), and proportion not eaten (`PropNotEat`). Additionally, I generated a summary table showing the number of observations within each prey category and verified that all `NAs` had been removed from the selected variables using `colSums()` in combination with `is.na()`.
 
 ```{r}
 # Select for just prey category and diving time
 forage <- forage %>% select(PreyCat, PropNotEat, DT)
-#forage <- forage %>% filter(age != "U")
 forage <- forage %>% drop_na() 
-#forage <- forage %>% filter(PreyCat != "PreyCatMussel", PreyCat != "PreyCatSnail")
 table(forage$PreyCat)
 ```
 
@@ -128,7 +126,12 @@ forage %>% ggplot(aes(x = DT, y = PropNotEat, col = PreyCat)) +
   theme(plot.title = element_text(size = 11, face = "bold"))
 
 # Create boxplots to visualize the distribution of prey categories and proportion of prey not eaten
-forage %>% ggplot(aes(x = PreyCat, y = PropNotEat, fill = PreyCat)) + geom_boxplot() +
+forage %>% ggplot(aes(x = PreyCat, y = PropNotEat, fill = PreyCat)) + geom_boxplot() + 
+  labs(
+    title = "Proportion of Prey Not Consumed By Sea Otters Based on Prey Category", 
+    x = "Prey Category", 
+    y = "Proportion of Prey Not Consumed"
+  ) +
   scale_fill_manual(values = c(
     "Clam" = "#1b9e77",
     "Urchin" = "#d95f02",
@@ -470,3 +473,15 @@ The purpose of this analysis was to demonstrate how a statistical model, specifi
 For future analysis, the age (adult and juvenile) of observed sea otters may be considered as a potential confounding variable impacting diving time, preference for prey, and the proportion of prey left uneaten. Including age could be beneficial to clarify whether observed patterns in prey consumption are consistent across different life stages of if younger and older otters exhibit distinct foraging behaviors. Moreover, experience and physical capability could be accounted for in terms of impacts on feeding efficiency.
 
 ## References
+
+Cribari-Neto, F. (n.d.). *Beta regression in R*. Retrieved December 11, 2025, from https://cran.r-project.org/web/packages/betareg/vignettes/betareg.html
+
+LaRoche, N., King, S., & Pearson, H. (2020). *Sea otter foraging data, visual observations from Prince of Wales, Alaska*. \[Dataset\]. Knowledge Network for Biocomplexity. Retrieved October 5, 2025, from
+
+<https://knb.ecoinformatics.org/view/doi%3A10.5063%2FF1C53J8X> 
+
+LaRoche, N., King, S., Fergusson, E., Eckert, G., & Pearson, H. (2022). *Sea otter diet nutrient composition with respect to recolonization, life history, and season in southern Southeast Alaska*. Wiley. <https://doi.org/10.22541/au.167222186.60136269/v1>
+
+*R: The beta distribution in regression parameterization*. (n.d.). Retrieved December 11, 2025, from https://search.r-project.org/CRAN/refmans/betareg/html/dbetar.html?utm_source
+
+Smithson, M., & Verkuilen, J. (2006). *A better lemon squeezer? Maximum-likelihood regression with beta-distributed dependent variables*. *Psychological Methods*, *11*(1), 54–71. https://doi.org/10.1037/1082-989x.11.1.54
