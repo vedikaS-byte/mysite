@@ -54,11 +54,11 @@ abalone (*Haliotis rufescens*), a marine gastropod, thrives in cooler
 SSTs of 8-18°C and is generally limited to depths of 0-25 meters below
 sea level (SeaBase, n.d.).
 
-Both oysters and red abalone are known to inhabit waters along the U.S.
-West Coast. The West Coast includes multiple Exclusive Economic Zones
-(EEZs), ocean areas extending roughly 230 miles beyond a nation’s
-territorial sea and where a coastal nation has jurisdiction over both
-biotic and abiotic resources (NOAA, 2023). As such, identifying regions
+The West Coast includes multiple Exclusive Economic Zones (EEZs), ocean
+areas extending roughly 230 miles beyond a nation’s territorial sea
+where a coastal nation has jurisdiction over both biotic and abiotic
+resources (NOAA, 2023). Both oysters and red abalone are known to
+inhabit waters along the U.S. West Coast. As such, identifying regions
 where their suitable environmental ranges overlap within Exclusive
 Economic Zones (EEZs) may help evaluate potential areas for sustainable
 and profitable aquaculture development.
@@ -427,7 +427,8 @@ oyster_pref_map <- tm_shape(area_eez) +
 oyster_pref_map
 ```
 
-**Map 1. Suitable aquaculture areas within West Coast EEZs for oysters.**
+**Map 1. Suitable aquaculture areas within West Coast EEZs for
+oysters.**
 
 The suitable area for oyster harvesting relative to the total area of
 each EEZ region was also examined. I created a table using `kableExtra`
@@ -711,7 +712,8 @@ species_pref_map <- species_preference(min_temp = 8,
 species_pref_map
 ```
 
-**Map 2. Suitable aquaculture areas within West Coast EEZs for red abalone.**
+**Map 2. Suitable aquaculture areas within West Coast EEZs for red
+abalone.**
 
 ## Reflection
 
