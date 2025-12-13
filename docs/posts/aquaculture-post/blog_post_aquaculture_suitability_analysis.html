@@ -483,11 +483,14 @@ max value   :    1 </code></pre>
 <span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>     <span class="at">position =</span> <span class="fu">c</span>(<span class="st">"right"</span>, <span class="st">"top"</span>)) <span class="sc">+</span> <span class="co"># Adjust position</span></span>
 <span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_basemap</span>(<span class="st">"Esri.OceanBasemap"</span>) <span class="co"># Ocean basemap</span></span>
 <span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Save finalized map to figs</span></span>
-<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_save</span>(oyster_pref_map, <span class="at">filename =</span> <span class="st">"images/oyster_pref_map.png"</span>, <span class="at">width =</span> <span class="dv">8</span>, <span class="at">height =</span> <span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Print map</span></span>
+<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a>oyster_pref_map</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+<div class="cell-output-display">
+<p><img src="blog_post_aquaculture_suitability_analysis_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
 </div>
-<p><img src="images/oyster_pref_map.png" class="img-fluid" width="2500"> <strong>Map 1. Finalized map of suitable aquaculture areas within West Coast EEZs for oysters.</strong></p>
+</div>
+<p><strong>Map 1. Suitable aquaculture areas within West Coast EEZs for oysters.</strong></p>
 <p>The suitable area for oyster harvesting relative to the total area of each EEZ region was also examined. I created a table using <code>kableExtra</code> to display both the total suitable area and the proportion of each EEZ that is suitable for oyster aquaculture, allowing for comparisons across regions independent of EEZ size.</p>
 <div class="cell">
 <details>

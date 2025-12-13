@@ -423,12 +423,11 @@ oyster_pref_map <- tm_shape(area_eez) +
      position = c("right", "top")) + # Adjust position
   tm_basemap("Esri.OceanBasemap") # Ocean basemap
 
-# Save finalized map to figs
-tmap_save(oyster_pref_map, filename = "images/oyster_pref_map.png", width = 8, height = 6)
+# Print map
+oyster_pref_map
 ```
 
-![](images/oyster_pref_map.png){width="2500"} **Map 1. Finalized map of
-suitable aquaculture areas within West Coast EEZs for oysters.**
+**Map 1. Suitable aquaculture areas within West Coast EEZs for oysters.**
 
 The suitable area for oyster harvesting relative to the total area of
 each EEZ region was also examined. I created a table using `kableExtra`
