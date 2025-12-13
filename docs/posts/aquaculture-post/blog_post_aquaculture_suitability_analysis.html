@@ -460,14 +460,14 @@ max value   :    1 </code></pre>
 <span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span>  </span>
 <span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_text</span>(<span class="st">"rgn"</span>, <span class="co"># Label by region</span></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>          <span class="at">size =</span> .<span class="dv">65</span>, <span class="co"># Adjust size</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>          <span class="at">size =</span> .<span class="dv">5</span>, <span class="co"># Adjust size</span></span>
 <span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>          <span class="at">col =</span> <span class="st">"white"</span>, <span class="co"># Adjust text color</span></span>
 <span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>          <span class="at">fontface =</span> <span class="st">"bold"</span>,  <span class="co"># Labels are bolded</span></span>
 <span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>          <span class="at">xmod =</span> <span class="sc">-</span>.<span class="dv">5</span>) <span class="sc">+</span> <span class="co"># Adjust .5 from the left</span></span>
 <span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>( <span class="co"># Center title outside bounding box</span></span>
 <span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">main.title =</span> <span class="st">"Marine Aquaculture Suitability for Oysters in West Coast EEZs"</span>,</span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>     <span class="at">main.title.size =</span> <span class="fl">1.5</span>, <span class="co"># Adjust title size</span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>     <span class="at">main.title.size =</span> <span class="fl">1.2</span>, <span class="co"># Adjust title size</span></span>
 <span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.outside =</span> <span class="cn">TRUE</span>, <span class="co"># Place legend outside map frame</span></span>
 <span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.outside.position =</span> <span class="st">"right"</span>, <span class="co"># Place legend to right</span></span>
 <span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">component.autoscale =</span> <span class="cn">FALSE</span>, <span class="co"># Disable autoscaling for title</span></span>
@@ -747,7 +747,7 @@ max value   :    1 </code></pre>
 <span id="cb17-103"><a href="#cb17-103" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Suitable Area"</span><span class="sc">~</span><span class="st">"("</span><span class="sc">~</span> km<span class="sc">^</span><span class="dv">2</span><span class="sc">~</span><span class="st">")"</span>) <span class="co">#Rename legend title</span></span>
 <span id="cb17-104"><a href="#cb17-104" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span>  </span>
 <span id="cb17-105"><a href="#cb17-105" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_text</span>(<span class="st">"rgn"</span>, <span class="co"># Label by region</span></span>
-<span id="cb17-106"><a href="#cb17-106" aria-hidden="true" tabindex="-1"></a>          <span class="at">size =</span> .<span class="dv">65</span>, <span class="co"># Adjust size</span></span>
+<span id="cb17-106"><a href="#cb17-106" aria-hidden="true" tabindex="-1"></a>          <span class="at">size =</span> .<span class="dv">5</span>, <span class="co"># Adjust size</span></span>
 <span id="cb17-107"><a href="#cb17-107" aria-hidden="true" tabindex="-1"></a>          <span class="at">col =</span> <span class="st">"white"</span>, <span class="co"># Adjust text color</span></span>
 <span id="cb17-108"><a href="#cb17-108" aria-hidden="true" tabindex="-1"></a>          <span class="at">fontface =</span> <span class="st">"bold"</span>,  <span class="co"># Labels are bolded</span></span>
 <span id="cb17-109"><a href="#cb17-109" aria-hidden="true" tabindex="-1"></a>          <span class="at">xmod =</span> <span class="sc">-</span>.<span class="dv">5</span>) <span class="sc">+</span> <span class="co"># Adjust .5 from the left</span></span>
@@ -756,7 +756,7 @@ max value   :    1 </code></pre>
 <span id="cb17-112"><a href="#cb17-112" aria-hidden="true" tabindex="-1"></a>    <span class="at">main.title =</span> <span class="fu">paste</span>(<span class="st">"Marine Aquaculture Suitability for"</span>,</span>
 <span id="cb17-113"><a href="#cb17-113" aria-hidden="true" tabindex="-1"></a>                        species_name, <span class="co"># Include species name in title</span></span>
 <span id="cb17-114"><a href="#cb17-114" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"in West Coast EEZs"</span>),</span>
-<span id="cb17-115"><a href="#cb17-115" aria-hidden="true" tabindex="-1"></a>     <span class="at">main.title.size =</span> <span class="fl">1.5</span>, <span class="co"># Adjust title size</span></span>
+<span id="cb17-115"><a href="#cb17-115" aria-hidden="true" tabindex="-1"></a>     <span class="at">main.title.size =</span> <span class="fl">1.2</span>, <span class="co"># Adjust title size</span></span>
 <span id="cb17-116"><a href="#cb17-116" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.outside =</span> <span class="cn">TRUE</span>, <span class="co"># Place legend outside map frame</span></span>
 <span id="cb17-117"><a href="#cb17-117" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.outside.position =</span> <span class="st">"right"</span>, <span class="co"># Place legend to right</span></span>
 <span id="cb17-118"><a href="#cb17-118" aria-hidden="true" tabindex="-1"></a>    <span class="at">component.autoscale =</span> <span class="cn">FALSE</span>, <span class="co"># Disable autoscaling for title</span></span>
@@ -787,11 +787,14 @@ max value   :    1 </code></pre>
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">max_depth =</span> <span class="dv">0</span>, </span>
 <span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">species_name =</span> <span class="st">"Red Abalone"</span>)</span>
 <span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Save finalized map to figs</span></span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_save</span>(species_pref_map, <span class="at">filename =</span> <span class="st">"images/species_pref_map.png"</span>, <span class="at">width =</span> <span class="dv">8</span>, <span class="at">height =</span> <span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Print map </span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>species_pref_map</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+<div class="cell-output-display">
+<p><img src="blog_post_aquaculture_suitability_analysis_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
 </div>
-<p><img src="images/species_pref_map.png" class="img-fluid" width="1000"> <strong>Map 2. Finalized map of suitable aquaculture areas within West Coast EEZs for red abalone.</strong></p>
+</div>
+<p><strong>Map 2. Suitable aquaculture areas within West Coast EEZs for red abalone.</strong></p>
 </section>
 <section id="reflection" class="level2">
 <h2 class="anchored" data-anchor-id="reflection">Reflection</h2>

@@ -400,14 +400,14 @@ oyster_pref_map <- tm_shape(area_eez) +
   ) +  
   
   tm_text("rgn", # Label by region
-          size = .65, # Adjust size
+          size = .5, # Adjust size
           col = "white", # Adjust text color
           fontface = "bold",  # Labels are bolded
           xmod = -.5) + # Adjust .5 from the left
   
   tm_layout( # Center title outside bounding box
     main.title = "Marine Aquaculture Suitability for Oysters in West Coast EEZs",
-     main.title.size = 1.5, # Adjust title size
+     main.title.size = 1.2, # Adjust title size
     legend.outside = TRUE, # Place legend outside map frame
     legend.outside.position = "right", # Place legend to right
     component.autoscale = FALSE, # Disable autoscaling for title
@@ -666,7 +666,7 @@ tm_shape(area_eez) +
       "Suitable Area"~"("~ km^2~")") #Rename legend title
   ) +  
   tm_text("rgn", # Label by region
-          size = .65, # Adjust size
+          size = .5, # Adjust size
           col = "white", # Adjust text color
           fontface = "bold",  # Labels are bolded
           xmod = -.5) + # Adjust .5 from the left
@@ -675,7 +675,7 @@ tm_shape(area_eez) +
     main.title = paste("Marine Aquaculture Suitability for",
                         species_name, # Include species name in title
                        "in West Coast EEZs"),
-     main.title.size = 1.5, # Adjust title size
+     main.title.size = 1.2, # Adjust title size
     legend.outside = TRUE, # Place legend outside map frame
     legend.outside.position = "right", # Place legend to right
     component.autoscale = FALSE, # Disable autoscaling for title
@@ -707,12 +707,11 @@ species_pref_map <- species_preference(min_temp = 8,
                                        max_depth = 0, 
                                        species_name = "Red Abalone")
 
-# Save finalized map to figs
-tmap_save(species_pref_map, filename = "images/species_pref_map.png", width = 8, height = 6)
+# Print map 
+species_pref_map
 ```
 
-![](images/species_pref_map.png){width="1000"} **Map 2. Finalized map of
-suitable aquaculture areas within West Coast EEZs for red abalone.**
+**Map 2. Suitable aquaculture areas within West Coast EEZs for red abalone.**
 
 ## Reflection
 
