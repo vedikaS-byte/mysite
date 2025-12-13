@@ -56,12 +56,12 @@ sea level (SeaBase, n.d.).
 
 Both oysters and red abalone are known to inhabit waters along the U.S.
 West Coast. The West Coast includes multiple Exclusive Economic Zones
-(EEZs), which are ocean areas extending roughly 230 miles beyond a
-nation’s territorial sea, where a coastal nation has jurisdiction over
-both biotic and abiotic resources (NOAA, 2023). As such, identifying
-regions where their suitable environmental ranges overlap within
-Exclusive Economic Zones (EEZs) may help evaluate potential areas for
-sustainable and profitable aquaculture development.
+(EEZs), ocean areas extending roughly 230 miles beyond a nation’s
+territorial sea and where a coastal nation has jurisdiction over both
+biotic and abiotic resources (NOAA, 2023). As such, identifying regions
+where their suitable environmental ranges overlap within Exclusive
+Economic Zones (EEZs) may help evaluate potential areas for sustainable
+and profitable aquaculture development.
 
 ![**Figure 2. The critically endangered and commercially significant red
 abalone ([California Conservation Genomics
