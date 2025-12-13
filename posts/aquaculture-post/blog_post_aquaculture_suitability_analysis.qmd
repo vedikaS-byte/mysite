@@ -52,15 +52,20 @@ temperatures (SSTs) between 11-30°C and water depths ranging from 0-70
 meters below sea level (Oliver, 2025). The critically endangered red
 abalone (*Haliotis rufescens*), a marine gastropod, thrives in cooler
 SSTs of 8-18°C and is generally limited to depths of 0-25 meters below
-sea level (SeaBase, n.d.). Both species are known to inhabit waters
-along the U.S. West Coast. As such, identifying regions where their
-suitable environmental ranges overlap within Exclusive Economic Zones
-(EEZs) may help evaluate potential areas for sustainable and profitable
-aquaculture development.
+sea level (SeaBase, n.d.).
 
-\[![Figure 2. The critically endangered and commercially significant red
-abalone (California Conservation Genomics
-Project).](images/clipboard-2766546493.png){fig-alt="Red Abalone CCGP"}\]
+Both oysters and red abalone are known to inhabit waters along the U.S.
+West Coast. The West Coast includes multiple Exclusive Economic Zones
+(EEZs), which are ocean areas extending roughly 230 miles beyond a
+nation’s territorial sea, where a coastal nation has jurisdiction over
+both biotic and abiotic resources (NOAA, 2023). As such, identifying
+regions where their suitable environmental ranges overlap within
+Exclusive Economic Zones (EEZs) may help evaluate potential areas for
+sustainable and profitable aquaculture development.
+
+![**Figure 2. The critically endangered and commercially significant red
+abalone ([California Conservation Genomics
+Project](https://www.ccgproject.org/species/haliotis-rufescens-red-abalone)).**](images/clipboard-2766546493.png)
 
 The purpose of this blog post is to evaluate the suitability of West
 Coast Exclusive Economic Zones (EEZs) for developing marine aquaculture
@@ -264,6 +269,8 @@ combine both layers by multiplying the reclassified rasters to identify
 areas that met both environmental requirements. Finally, I stacked the
 reclassified SST and depth layers using `lapp()` and applied the
 function to generate a single binary raster showing overall suitability.
+The output raster `avg_sst_depth` is a `SpatRaster` with binary values
+of 0 and 1.
 
 ```{r}
 #| collapse: true
@@ -310,6 +317,9 @@ multiply <- function(x,y){
 avg_sst_depth <- lapp(
   x = c(avg_sst_reclass,depth_reclass), # Stack rasters
   fun = multiply) # Apply multiplication function 
+
+# Print binary raster 
+avg_sst_depth
 ```
 
 ### **Determining the Most Suitable EEZ**
@@ -390,7 +400,7 @@ oyster_pref_map <- tm_shape(area_eez) +
   ) +  
   
   tm_text("rgn", # Label by region
-          size = .8, # Adjust size
+          size = .65, # Adjust size
           col = "white", # Adjust text color
           fontface = "bold",  # Labels are bolded
           xmod = -.5) + # Adjust .5 from the left
@@ -414,11 +424,11 @@ oyster_pref_map <- tm_shape(area_eez) +
   tm_basemap("Esri.OceanBasemap") # Ocean basemap
 
 # Save finalized map to figs
-tmap_save(oyster_pref_map, filename = "images/oyster_pref_map.png", width = 8, height = 10)
+tmap_save(oyster_pref_map, filename = "images/oyster_pref_map.png", width = 8, height = 6)
 ```
 
-![](images/oyster_pref_map.png) **Map 1. Finalized map of suitable
-aquaculture areas within West Coast EEZs for oysters.**
+![](images/oyster_pref_map.png){width="2500"} **Map 1. Finalized map of
+suitable aquaculture areas within West Coast EEZs for oysters.**
 
 The suitable area for oyster harvesting relative to the total area of
 each EEZ region was also examined. I created a table using `kableExtra`
@@ -657,7 +667,7 @@ tm_shape(area_eez) +
       "Suitable Area"~"("~ km^2~")") #Rename legend title
   ) +  
   tm_text("rgn", # Label by region
-          size = .8, # Adjust size
+          size = .65, # Adjust size
           col = "white", # Adjust text color
           fontface = "bold",  # Labels are bolded
           xmod = -.5) + # Adjust .5 from the left
@@ -699,24 +709,24 @@ species_pref_map <- species_preference(min_temp = 8,
                                        species_name = "Red Abalone")
 
 # Save finalized map to figs
-tmap_save(species_pref_map, filename = "images/species_pref_map.png", width = 8, height = 10)
+tmap_save(species_pref_map, filename = "images/species_pref_map.png", width = 8, height = 6)
 ```
 
-![](images/species_pref_map.png) **Map 2. Finalized map of suitable
-aquaculture areas within West Coast EEZs for red abalone.**
+![](images/species_pref_map.png){width="1000"} **Map 2. Finalized map of
+suitable aquaculture areas within West Coast EEZs for red abalone.**
 
 ## Reflection
 
-Central California is the most suitable EEZ with about 3,656.82 km^2^ of
-suitable area while Northern California is the least suitable EEZ with
-about 194.13 km^2^ of suitable area. Central California likely offers
-the most favorable SST and depth conditions for oyster cultivation.
-Notably, the Washington EEZ has a larger suitable area (1,028.90 km²)
-than Northern California despite its colder location, indicating a
-higher proportion of habitat appropriate for mollusk aquaculture.
-Central and Southern California also show relatively high suitability.
-Oregon’s EEZ contains substantial suitable area as well, though less
-than most other regions.
+For oysters species along the West Coast, Central California is the most
+suitable EEZ with about 3,656.82 km^2^ of suitable area while Northern
+California is the least suitable EEZ with about 194.13 km^2^ of suitable
+area. Central California likely offers the most favorable SST and depth
+conditions for oyster cultivation. Notably, the Washington EEZ has a
+larger suitable area (1,028.90 km²) than Northern California despite its
+colder location, indicating a higher proportion of habitat appropriate
+for mollusk aquaculture. Central and Southern California also show
+relatively high suitability. Oregon’s EEZ contains substantial suitable
+area as well, though less than most other regions.
 
 The red abalone, a critically endangered marine gastropod, is a
 commercially valuable species with strong potential for aquaculture. The
@@ -755,34 +765,41 @@ Theuerkauf, S. J., & Jones, R. (2018). *The ecosystem services of marine
 aquaculture: Valuing benefits to people and nature*. BioScience, 69(1),
 59–68. <https://doi.org/10.1093/biosci/biy137>
 
-\[2\] *Gridded bathymetry data*. (n.d.). GEBCO. Retrieved November 30,
+\[2\] California Conservation Genomics Project. (n.d.). *Haliotis
+rufescens (Red Abalone)*. Retrieved November 29, 2025, from
+<https://www.ccgproject.org/species/haliotis-rufescens-red-abalone>
+
+\[3\] *Gridded bathymetry data*. (n.d.). GEBCO. Retrieved November 30,
 2025, from
 <https://www.gebco.net/data-products/gridded-bathymetry-data#area>
 
-\[3\] *Haliotis rufescens, Red abalone: Fisheries.* (n.d.). Retrieved
+\[4\] *Haliotis rufescens, Red abalone: Fisheries.* (n.d.). Retrieved
 November 30, 2025, from
 <https://www.sealifebase.ca/summary/Haliotis-rufescens.html>
 
-\[4\] *Marine regions.* (n.d.). Retrieved November 28, 2025, from
+\[5\] Hausheer, J. E. (2023). *Aquaculture Could Be Conservation’s
+Secret Weapon.* The Nature Conservancy. Retrieved November 29, 2025,
+from
+<https://blog.nature.org/2019/01/21/aquaculture-could-be-conservations-secret-weapon/>
+
+\[6\] *Marine regions.* (n.d.). Retrieved November 28, 2025, from
 <https://www.marineregions.org/eez.php>
 
-*Monterey Bay Abalone farm shows what sustainable aquaculture can be
-like.* (n.d.). Earth Island Journal. Retrieved November 29, 2025, from
-
+\[7\] *Monterey Bay Abalone farm shows what sustainable aquaculture can
+be like.* (n.d.). Earth Island Journal. Retrieved November 29, 2025,
+from
 <https://www.earthisland.org/journal/index.php/articles/entry/monterey_bay_abalone_farm_shows_what_sustainable_aquaculture_can_be_like/>
 
-\[5\] *NOAA coral reef watch daily 5km satellite coral bleaching heat
+\[8\] *NOAA coral reef watch daily 5km satellite coral bleaching heat
 stress SST anomaly product* (version 3.1). (n.d.). Retrieved November
 29, 2025, from
 <https://coralreefwatch.noaa.gov/product/5km/index_5km_ssta.php>
 
-\[6\] Oliver, R. (2025). *Homework assignment 4.* Retrieved November 28,
+\[9\] Oliver, R. (2025). *Homework assignment 4.* Retrieved November 28,
 2025, from
 <https://eds-223-geospatial.github.io/assignments/HW4.html#fnref1>
 
-\[7\] Wright, A., Moody, C., & Gross, J. (2025). *Composition of
+\[10\] Wright, A., Moody, C., & Gross, J. (2025). *Composition of
 California’s aquaculture industry and surveying its disease challenges
 and management strategies.* Aquaculture Reports, 42, 102799. Retrieved
-November 29, 2025, from
-
-<https://doi.org/10.1016/j.aqrep.2025.102799>
+November 29, 2025, from <https://doi.org/10.1016/j.aqrep.2025.102799>
