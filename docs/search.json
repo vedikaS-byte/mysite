@@ -53,14 +53,14 @@
     "href": "posts/my-first-blog-post/index.html",
     "title": "My first blog post",
     "section": "",
-    "text": "Welcome to my first blog! This is just a quick introduction into what to expect from my entries1. Here is an inline footnote2.\nLet’s practice citing a paper on the vaquita using a DOI."
+    "text": "Welcome to my first blog! This is just a quick introduction into what to expect from my entries1.\nThis series of posts incorporates final projects from courses completed throughout the Master of Environmental Data Science (MEDS) program at the Bren School of Environmental Science and Management. Finalized blog posts published on this site include analysis and visualization in the R and Python programming languages. Occasionally, I will publish informational posts on additional topics, such as conservation and future advances in climate tech to counter the effects of anthropogenic climate change."
   },
   {
     "objectID": "posts/my-first-blog-post/index.html#footnotes",
     "href": "posts/my-first-blog-post/index.html#footnotes",
     "title": "My first blog post",
     "section": "Footnotes",
-    "text": "Footnotes\n\n\nThis is a practice test for creating footnotes.↩︎\nhere’s my inline note↩︎"
+    "text": "Footnotes\n\n\nThis is a practice test for creating footnotes.↩︎"
   },
   {
     "objectID": "posts/aquaculture-post/blog_post_aquaculture_suitability_analysis.html",

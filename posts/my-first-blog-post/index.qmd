@@ -8,13 +8,11 @@ citation:
   url: https://github.com/vedikaS-byte
 #draft: true 
 draft-mode: linked
-bibliography: bibliography.bib
+#bibliography: bibliography.bib
 ---
 
-Welcome to my first blog! This is just a quick introduction into what to expect from my entries[^1]. Here is an inline footnote[^2].
+Welcome to my first blog! This is just a quick introduction into what to expect from my entries[^1].
 
 [^1]: This is a practice test for creating footnotes.
 
-[^2]: here's my inline note
-
-Let's practice citing a paper on the vaquita using a DOI.
+This series of posts incorporates final projects from courses completed throughout the Master of Environmental Data Science (MEDS) program at the Bren School of Environmental Science and Management. Finalized blog posts published on this site include analysis and visualization in the R and Python programming languages. Occasionally, I will publish informational posts on additional topics, such as conservation and future advances in climate tech to counter the effects of anthropogenic climate change.
