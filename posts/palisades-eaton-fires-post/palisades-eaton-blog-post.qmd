@@ -1,9 +1,11 @@
 ---
 title: 'Beyond the Burn: Fire Scars and Social Impacts of the Palisades and Eaton Fires'
+#code-fold: true
 jupyter: eds220-env
+toc: True
 ---
 
-**Repository**: [https://github.com/vedikaS-byte/fire-scars-and-social-impacts-analysis ](https://github.com/vedikaS-byte/fire-scars-and-social-impacts-analysis)
+**Repository**: <https://github.com/vedikaS-byte/fire-scars-and-social-impacts-analysis>
 
 ## About
 
@@ -17,13 +19,13 @@ The final outputs include a false color map of the Palisades and Eaton fires cre
 
 ### Key Highlights
 
--   **Remote sensing allows for quantitative and spatial mapping of fire impact, and false color imagery provides detailed insight into vegetation changes.** Using Python tools such as `xarray` and `geopandas`, the satellite raster data was processed to map fire-scar perimeters and generate true and false color imagery that clearly distinguishes burned areas from healthy vegetation, providing precise spatial context and improved interpretation of affected landscapes (Earth Observatory, 2025).
+-   [**Remote sensing allows for quantitative and spatial mapping of fire impact, and false color imagery provides detailed insight into vegetation changes.**]{.underline} Using Python tools such as `xarray` and `geopandas`, the satellite raster data was processed to map fire-scar perimeters and generate true and false color imagery that clearly distinguishes burned areas from healthy vegetation, providing precise spatial context and improved interpretation of affected landscapes (Earth Observatory, 2025).
 
--   **The coordinate reference system (CRS) is important when handling and mapping multiple geospatial objects to ensure accurate spatial analysis**. When combining multiple geospatial datasets (ex. fire perimeters and satellite imagery), having consistent CRS prevents misalignment, ensures correct distance and area measurements, and allows layers to overlay properly on maps.
+-   [**The coordinate reference system (CRS) is important when handling and mapping multiple geospatial objects to ensure accurate spatial analysis**.]{.underline} When combining multiple geospatial datasets (ex. fire perimeters and satellite imagery), having consistent CRS prevents misalignment, ensures correct distance and area measurements, and allows layers to overlay properly on maps.
 
--   **Geospatial information can be assigned to an object using a spatial reference.** In this analysis, the EPSG code embedded in the `.spatial_ref.crs_wkt` output was identified and used to properly assign and (if needed) reproject the dataset.
+-   [**Geospatial information can be assigned to an object using a spatial reference.**]{.underline} In this analysis, the EPSG code embedded in the `.spatial_ref.crs_wkt` output was identified and used to properly assign and (if needed) reproject the dataset.
 
--   **Performing a spatial join and clipping can produce different results.** When an `intersects` spatial join between the census tracts and fire perimeters was performed, the output included entire census tracts that touched the fire perimeter, resulting in a larger extent. This differs from clipping, which would limit the output strictly to the area within the fire perimeter.
+-   [**Performing a spatial join and clipping can produce different results.**]{.underline} When an `intersects` spatial join between the census tracts and fire perimeters was performed, the output included entire census tracts that touched the fire perimeter, resulting in a larger extent. This differs from clipping, which would limit the output strictly to the area within the fire perimeter.
 
 ### Data Description
 
@@ -119,7 +121,7 @@ palisades.info()
 print(f"CRS of Palisades shapefile: {palisades.crs.name} ({palisades.crs}).")
 ```
 
-The `palisades` fire perimeter dataset includes five attributes: `OBJECTID`, `type`, `Shape__Are`, `Shape__Len`, and a `geometry`. The `OBJECTID` variable is stored as an `int64`, `type` appears as an `object` (likely a string), and both `Shape__Are` and `Shape__Len` are represented as `float64` values, while the `geometry` column stores spatial features. All 21 records are complete with no missing values observed. The `palisades` shapefile, loaded as a `geopandas GeoDataFrame`, is projected and stored in the WGS 84 / Pseudo-Mercator CRS, identified by EPSG code 3857.
+The `palisades` fire perimeter dataset includes five attributes: `OBJECTID`, `type`, `Shape__Are`, `Shape__Len`, and a `geometry`. The `OBJECTID` variable is stored as an `int64`, `type` appears as an `object` (likely a string), and both `Shape__Area` and `Shape__Len` are represented as `float64` values, while the `geometry` column stores spatial features. All 21 records are complete with no missing values observed. The `palisades` shapefile, loaded as a `geopandas GeoDataFrame`, is projected and stored in the WGS 84 / Pseudo-Mercator CRS, identified by EPSG code 3857.
 
 #### Exploring the NetCDF Satellite Imagery
 
@@ -137,6 +139,7 @@ As observed in this section, the NetCDF file (`palisades_eaton`) was not automat
 
 ```{python}
 #| tags: []
+#| code-fold: false
 # Call rio.crs on palisades_eaton to check for geospatial information
 palisades_eaton.rio.crs # There is no output generated
 ```
@@ -144,12 +147,14 @@ palisades_eaton.rio.crs # There is no output generated
 To continue with the analysis, I needed to restore the spatial information by assigning the correct CRS. I used the `write_crs()` function through the `rio` accessor to reattach the geospatial reference and project the Landsat data to EPSG:32611, which I identified from the NetCDF using `spatial_ref.crs_wkt`.
 
 ```{python}
+#| code-fold: false
 # Call spatial_red.crs_wkt on NetCDF to access geospatial reference info
 palisades_eaton.spatial_ref.crs_wkt
 ```
 
 ```{python}
 #| tags: []
+#| code-fold: false
 # Assign the EPSG:32611 CRS to palisades_eaton 
 palisades_eaton = palisades_eaton.rio.write_crs(32611)
 ```
@@ -159,6 +164,7 @@ palisades_eaton = palisades_eaton.rio.write_crs(32611)
 I utilized false color imagery to highlight the extent of the Palisades and Eaton fire scars in Los Angeles County by combining the shortwave infrared (`swir22`), near-infrared (`nir08`), and red bands. This view allowed burned areas and changes in vegetation to be more visible. Before plotting, I also ensured that all geospatial datasets shared the CRS by applying transformations with conditional statements as needed to prevent geospatial misalignment.
 
 ```{python}
+#| code-fold: false
 # Landsat CRS is the reference CRS used for transformation
 crs_raster = palisades_eaton.rio.crs
 
@@ -171,7 +177,7 @@ if eaton.crs != crs_raster:
     eaton = eaton.to_crs(crs_raster)
 ```
 
-In the final step of my analysis, I created a map using this false color combination and included a figure description to explain how it highlights burned regions and vegetation patterns. At first, the image did not plot correctly due to missing (`NaN`) values in some bands; however, replacing those values with zeros using `.fillna(0)` and reducing the influence of outliers such as clouds with `robust = True` generated a corrected image that clearly outlines fire scars across the landscape.
+In the final step of my analysis, I created a map using this false color combination and included a figure description to explain how it highlights burned regions and vegetation patterns. At first, the image did not plot correctly due to missing (`NaN`) values in some bands; however, replacing those values with zeros using `.fillna(0)` and reducing the influence of outliers such as cloud cover with `robust = True` generated a corrected image that clearly outlines fire scars across the landscape.
 
 ```{python}
 #| tags: []
@@ -241,6 +247,7 @@ To visually understand the difference between clipping and spatial joining, I ap
 
 ```{python}
 #| tags: []
+#| code-fold: false
 # Reproject EJI to match Palisades CRS if needed
 if eji.crs != palisades.crs:
     eji = eji.to_crs(palisades.crs)
@@ -255,12 +262,15 @@ if eji.crs != eaton.crs:
 In this section, I explored and visualized spatial joins by using the EJI data with the Palisades and Eaton fire perimeters through `sjoin()`.
 
 ```{python}
+#| code-fold: false
 # Only include EJI census tracts that intersect the Palisades fire perimeter
 eji_palisades = gpd.sjoin(eji, palisades, predicate = "intersects")
 
 # Only include EJI census tracts that intersect the Eaton fire perimeter
 eji_eaton = gpd.sjoin(eji, eaton, predicate = "intersects")
+```
 
+```{python}
 ## Map the intersecting census tracts compared to the Palisades fire perimeter
 
 # Define figure and axis dimensions
@@ -310,6 +320,7 @@ plt.show()
 An alternative to using a spatial join is clipping, which restricts one geospatial dataset to the extent of another. Here, I used `geopandas.clip()` instead of a spatial join to limit the census tracts to the boundaries of each fire.
 
 ```{python}
+#| code-fold: false
 # Clip the census tracts to the extent of the palisades perimeter
 eji_palisades_clip = gpd.clip(eji, palisades)
 

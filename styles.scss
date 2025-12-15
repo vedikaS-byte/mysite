@@ -13,13 +13,50 @@ $stormyblue: #8BA0A5;
 $bluegray: #B8C6C8;
 $mistgray: #E5ECEC;
 $purewhite: #FFFFFF;
-
+$accentblue: #3A6F8F; // for links & emphasis
 // define quarto variables
+//$body-bg: $mistgray;
+//$navbar-bg: $stormyblue;
+//$navbar-fg: $mistgray;
+//$navbar-hl: $stormyblue;
+//$link-color: $deeptealgrey;
+
+// Base
 $body-bg: $mistgray;
+$body-color: $deeptealgrey;
+
+// Navbar
 $navbar-bg: $stormyblue;
-$navbar-fg: $mistgray;
-$navbar-hl: $stormyblue;
-$link-color: $deeptealgrey;
+$navbar-fg: $purewhite;
+$navbar-hl: $deeptealgrey;
+
+// Links
+$link-color: $accentblue;
+$link-hover-color: darken($accentblue, 10%);
+
+// Headings
+$headings-color: #2F4F4F;
+
+// Code blocks
+$code-bg: lighten($mistgray, 3%);
+$code-color: #2C3E3E;
+
+.card {
+  background-color: $purewhite;
+  border: 1px solid $bluegray;
+}
+figcaption {
+  color: darken($deeptealgrey, 10%);
+}
+
+
+
+
+
+
+
+
+
 
 /*-- scss:rules --*/
 
@@ -28,28 +65,101 @@ h3, h4, p {
 }
 
 h1, h2 {
-  letter-spacing: 3px;
+  letter-spacing: 1px;
   font-weight: 600;
 
 }
 
-.title {
-  color: $deeptealgrey;
-}
+//.title {
+  //color: $deeptealgrey;
+//}
 
 .center-text {
   text-align: center;
 }
 
 .navbar-brand img{
-  max-height: 100px;
-  //width: auto;
+  max-height: 70px;
+  width: auto;
 }
 
 .grey-text {
   color: $deeptealgrey;
 }
 
+/* Base corner logo styling */
+.corner-logo {
+  position: fixed;
+  width: 70px;
+  height: 70px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0.70;           /* subtle, professional */
+  z-index: 0;              /* stays behind content */
+  pointer-events: none;    /* not clickable */
+}
+
+/* Upper-left: R */
+.r-logo {
+  top: -420px;
+  left: 5px;
+  background-image: url("images/r-logo.png");
+}
+
+/* Lower-right: Python */
+.python-logo {
+  bottom: 430px;
+  right: 60px;
+  width: 110px;
+  height: 110px;
+  background-image: url("images/python-logo.png");
+}
+
+/* Lower-right: Python */
+.machine-learning {
+  top: -450px;
+  right: 10px;
+  //width: 110px;
+  //height: 110px;
+  background-image: url("images/machine-learning.png");
+}
+
+/* Lower-right: Python */
+.earth-logo {
+  bottom: 230px;
+  right: 20px;
+  //width: 110px;
+  //height: 110px;
+  background-image: url("images/earth-logo.png");
+}
+
+/* Lower-right: Python */
+.ghg-emissions {
+  bottom: 230px;
+  left: 20px;
+  //width: 110px;
+  //height: 110px;
+  background-image: url("images/ghg-emissions.png");
+}
+
+
+/* Lower-right: Python */
+.sql-logo {
+  bottom: 430px;
+  left: 70px;
+  //width: 110px;
+  //height: 110px;
+  background-image: url("images/sql-logo.png");
+}
+
+
+
+
+@media (max-width: 768px) {
+  .corner-logo {
+    display: none;
+  }
+}
 
 
 

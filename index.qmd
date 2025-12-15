@@ -1,11 +1,11 @@
 ---
-title: "Vedika Shirtekar"
+title: "hello world"
+toc: False
 image: "Vedika Shirtekar_MEDS2026.jpg"
 about: 
   template: jolla 
   image-shape: round
-  image-width: 17em
-  #image-height: 19em
+  image-width: 20em
   links: 
     - text: LinkedIn
       icon: linkedin
@@ -16,10 +16,26 @@ about:
       href: https://github.com/vedikaS-byte
 ---
 
-### hello world
+::: {.corner-logo .r-logo}
+:::
+
+::: {.corner-logo .python-logo}
+:::
+
+::: {.corner-logo .machine-learning}
+:::
+
+::: {.corner-logo .earth-logo}
+:::
+
+::: {.corner-logo .ghg-emissions}
+:::
+
+::: {.corner-logo .sql-logo}
+:::
+
+### Welcome to my website!
 
 I am an aspiring data scientist looking to pursue a career in climate tech and sustainability consulting. Having recently graduated with a B.S. in Environmental Science and an Applied Statistical Modeling Credential from UT Austin, I’m eager to integrate environmental and data science to develop data driven solutions for addressing climate change.
 
 I am passionate about protecting the planet for future generations by using data science applications to address climate change. I want to help guide other like-minded climate enthusiasts with understanding their emissions and potential reduction solutions.
-
-\[[Here is a link](https://github.com/vedikaS-byte/mysite)\]

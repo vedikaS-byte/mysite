@@ -1,6 +1,6 @@
 ---
-title: ""
-author: "" 
+title: "Ocean Superfarms: Finding the Best Spots to Grow Seafood"
+#author: "" 
 date: "12/6/2025"
 format:
   html: 
@@ -11,8 +11,6 @@ editor:
 editor_options: 
   chunk_output_type: console
 ---
-
-# Ocean Superfarms: Finding the Best Spots to Grow Seafood
 
 ## **Purpose**
 
@@ -750,7 +748,7 @@ the average annual SST and depth, but does not account for seasonal
 variation that may influence species suitability. Additionally, the
 `species_preference` function considers only temperature and depth
 ranges; other ecological or biological factors (ex. salinity and
-predation) are not included and are thus simplified. The accruacy of the
+predation) are not included and are thus simplified. The accuracy of the
 EEZ polygons are important as they affect results. For example,
 misaligned or outdated boundaries could mislead researchers into
 incorrect area calculations. Therefore, an improved analysis would

@@ -290,7 +290,7 @@ logit(\mu_i)
 + \beta_{PreyCat\_cucumber} 
 + \beta_{PreyCat\_star}  $$
 
-#### Hypothesis Testing Interpretation 
+#### Hypothesis Testing Interpretation
 
 The beta regression results were used to test whether prey category and dive time influence the proportion of prey left uneaten. Here, I interpreted the model results to assess whether each hypothesis is supported.
 
