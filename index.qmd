@@ -1,6 +1,6 @@
 ---
-title: ""
-toc: False
+title: "Vedika Shirtekar"   # This will show up in the navbar
+toc: false
 image: "Vedika_cropped.png"
 about: 
   template: trestles 
@@ -9,13 +9,12 @@ about:
   links: 
     - text: LinkedIn
       icon: linkedin
-      href: www.linkedin.com/in/vedika-shirtekar-b2814b201
+      href: https://www.linkedin.com/in/vedika-shirtekar-b2814b201
       target: _blank
     - text: GitHub
       icon: github 
       href: https://github.com/vedikaS-byte
 ---
-
 <h1 class="typing">
 
 Hello World <img src="images/earth-logo.png" alt="Earth Logo" class="earth-logo"/>
