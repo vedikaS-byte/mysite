@@ -1,7 +1,7 @@
 ---
 title: "hello world"
 toc: False
-image: "Vedika Shirtekar_MEDS2026.jpg"
+image: "Vedika_cropped.png"
 about: 
   template: marquee 
   image-shape: round

@@ -1,6 +1,7 @@
 ---
 title: 'Beyond the Burn: Fire Scars and Social Impacts of the Palisades and Eaton Fires'
 description: "Mapping wildfire impacts and social vulnerability"
+date: "12/3/2025"
 categories: [MEDS, data-viz, Python]
 code-fold: true
 jupyter: eds220-env
