@@ -125,7 +125,7 @@ h1, h2 {
 
 /* Upper-right: ML */
 .machine-learning {
-  top: 110px;
+  top: 120px;
   left: 260px;
   background-image: url("images/machine-learning.png");
 }
@@ -188,6 +188,49 @@ h1, h2 {
   to { opacity: 1; }
 }
 
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Apply fade-in to text block */
+.marquee-text-right {
+  opacity: 0;
+  animation: fadeIn 2s forwards;
+  animation-delay: 1s; /* adjust to start after heading types */
+}
+
+/* Apply fade-in to icons */
+.corner-logo {
+  opacity: 0;
+  animation: fadeIn 2s forwards;
+  animation-delay: 1s; /* same as text to fade in together */
+}
+
+/* Positioning for your icons */
+.ghg-emissions {
+  bottom: 90px;
+  left: 115px;
+  background-image: url("images/ghg-emissions.png");
+  width: 50px;    /* adjust size */
+  height: 50px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+}
+
+.machine-learning {
+  top: 120px;
+  left: 260px;
+  background-image: url("images/machine-learning.png");
+  width: 50px;
+  height: 50px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+}
 
 
 

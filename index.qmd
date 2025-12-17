@@ -17,10 +17,10 @@ about:
 ---
 
 <h1 class="typing">
-  Hello World <img src="images/earth-logo.png" class="earth-logo" alt="Earth Logo">
+
+Hello World <img src="images/earth-logo.png" alt="Earth Logo" class="earth-logo"/>
+
 </h1>
-
-
 
 ::: {.corner-logo .machine-learning}
 :::
