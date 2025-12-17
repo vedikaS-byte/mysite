@@ -125,7 +125,7 @@ h1, h2 {
 
 /* Upper-right: ML */
 .machine-learning {
-  top: 15px;
+  top: 110px;
   left: 260px;
   background-image: url("images/machine-learning.png");
 }
@@ -133,11 +133,11 @@ h1, h2 {
 
 
 /* Lower-right: Earth */
-.earth-logo {
-  top: -75px;
-  left: 200px;
-  background-image: url("images/earth-logo.png");
-}
+//.earth-logo {
+ // top: -75px;
+//  left: 200px;
+//  background-image: url("images/earth-logo.png");
+//}
 
 /* Lower-left: GHG */
 .ghg-emissions {
@@ -155,6 +155,39 @@ h1, h2 {
   column-gap: 3rem;
   align-items: center;
 }
+
+.typing {
+  white-space: nowrap;              
+  overflow: hidden;                 
+  width: 0;                         
+  border-right: 2px solid black;    /* cursor */
+  display: inline-flex;
+  align-items: center;
+  animation: typing 3s steps(12, end) forwards, blink 0.75s step-end infinite;
+}
+
+.earth-logo {
+  width: 1em;                       
+  height: 1em;
+  margin-left: 0.25em;
+  opacity: 0;                        /* hide until typing finishes */
+  animation: fadeIn 0.5s forwards;
+  animation-delay: 3s;               /* matches typing duration */
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 12ch }                  /* number of characters in text */
+}
+
+@keyframes blink {
+  50% { border-color: transparent; }
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
 
 
 
