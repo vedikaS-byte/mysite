@@ -6,3 +6,7 @@ listing:
   sort: "date desc"
   categories: true
 ---
+
+<div class="corner-logo r-logo"></div>
+<div class="corner-logo python-logo"></div>
+<div class="corner-logo sql-logo"></div>

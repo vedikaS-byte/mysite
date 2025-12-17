@@ -1,6 +1,7 @@
 ---
 title: "Ocean Superfarms: Finding the Best Spots to Grow Seafood"
 #author: "" 
+categories: [MEDS, data-viz, R]
 date: "12/6/2025"
 format:
   html: 

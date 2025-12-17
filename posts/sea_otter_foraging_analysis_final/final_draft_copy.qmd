@@ -1,9 +1,8 @@
 ---
-title: ""
+title: "Assessing Sea Otter Feeding Habitats Based on Prey Type and Dive Depth"
+categories: [MEDS, data-viz, R, statistical-analysis]
 format: html
 ---
-
-# Assessing Sea Otter Feeding Habitats Based on Prey Type and Dive Depth
 
 ## Purpose
 
