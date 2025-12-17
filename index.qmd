@@ -3,7 +3,7 @@ title: ""
 toc: False
 image: "Vedika_cropped.png"
 about: 
-  template: marquee 
+  template: trestles 
   image-shape: round
   image-width: 20em
   links: 
