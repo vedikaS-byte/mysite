@@ -14,8 +14,8 @@ website:
         text: Home
      # - about.qmd
       - post.qmd
-      - href: resources.qmd
-        text: Resources
+     # - href: resources.qmd
+     #   text: Resources
       - icon: github
         href: https://github.com/vedikaS-byte/mysite
   page-footer: 
