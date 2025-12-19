@@ -319,7 +319,9 @@ avg_sst_depth <- lapp(
   fun = multiply) # Apply multiplication function 
 
 # Print binary raster 
-avg_sst_depth
+plot(avg_sst_depth)
+
+
 ```
 
 ### **Determining the Most Suitable EEZ**
@@ -339,9 +341,14 @@ included in the following calculations.
 eez <- project(eez, avg_sst_depth)
 
 # Select suitable areas
-avg_sst_depth_suitable <- ifel(avg_sst_depth == 0, 
+avg_sst_depth_suitable <- ifel(avg_sst_depth == 0,
                                NA, # Replace with NA
                                1) # Otherwise assign "1"
+
+#avg_sst_depth[is.na(avg_sst_depth)] <- 0
+
+
+
 ```
 
 Next, I calculated the total suitable aquaculture area (km²) within each
@@ -395,8 +402,10 @@ oyster_pref_map <- tm_shape(area_eez) +
     palette = "-mako", # Reverse blue scale
     style = "cont", # Continuous scale (styles referenced:
     #https://r-tmap.github.io/tmap-book/visual-variables.html)
-    title = expression(
-      "Suitable Area"~"("~ km^2~")") # Rename legend title
+   title = expression("Suitable Area"~"("~ km^2~")"), # Rename legend title
+  colorNA = "transparent",
+  textNA = "",
+  #legend.na.show = FALSE
   ) +  
   
   tm_text("rgn", # Label by region
@@ -664,7 +673,9 @@ tm_shape(area_eez) +
     palette = "-mako", # Reverse blue scale
     style = "cont", # Continuous scale 
     title = expression(
-      "Suitable Area"~"("~ km^2~")") #Rename legend title
+      "Suitable Area"~"("~ km^2~")"), #Rename legend title
+   colorNA = "transparent",
+  textNA = ""
   ) +  
   tm_text("rgn", # Label by region
           size = .5, # Adjust size

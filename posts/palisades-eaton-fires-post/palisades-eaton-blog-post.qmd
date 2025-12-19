@@ -32,7 +32,7 @@ The final outputs include a false color map of the Palisades and Eaton fires cre
 
 ### Data Description
 
-This analysis utilized two datasets. The first is a simplified set of satellite image bands (red, green, blue, near-infrared, and shortwave infrared) from the Landsat 8 satellite, downloaded from the [Microsoft Planetary Computer](https://planetarycomputer.microsoft.com/dataset/landsat-c2-l2) and trimmed to the fire area. It is used only for visualization and learning and is provided as `landsat8-2025-02-23-palisades-eaton.nc` in the EDS 220 course resources.
+This analysis utilized three datasets. The first is a simplified set of satellite image bands (red, green, blue, near-infrared, and shortwave infrared) from the Landsat 8 satellite, downloaded from the [Microsoft Planetary Computer](https://planetarycomputer.microsoft.com/dataset/landsat-c2-l2) and trimmed to the fire area. It is used only for visualization and learning and is provided as `landsat8-2025-02-23-palisades-eaton.nc` in the EDS 220 course resources.
 
 The second dataset shows the burned areas for the Palisades and Eaton fires. The fire boundary shapefiles were downloaded from the [County of Los Angeles Enterprise GIS](https://egis-lacounty.hub.arcgis.com/maps/ad51845ea5fb4eb483bc2a7c38b2370c/about). Each fire originally had daily mapped boundaries, which were combined (dissolved) into one final outline showing the total area burned by each fire (County of Los Angeles, 2025).
 
@@ -366,7 +366,7 @@ plt.show()
 
 ### Part 2: Mapping Environmental Justice Data in Affected Areas
 
-For visualizing census tracts based on social conditions within each fire perimeter, clipping is preferred because clipping limits the data to only the portions of census tracts that fall inside the fire boundaries, rather than including entire tracts that touch the perimeter. With an `intersects` spatial join, whole census tracts were returned even if only a small portion overlapped the fire area, which resulted in larger extents than the actual fire boundaries.
+Clipping is preferred for visualizing census tracts based on social conditions within each fire perimeter because clipping limits the data to only the portions of census tracts that fall inside the fire boundaries, rather than including entire tracts that touch the perimeter. With an `intersects` spatial join, whole census tracts were returned even if only a small portion overlapped the fire area, which resulted in larger extents than the actual fire boundaries.
 
 Here, I mapped the clipped census tracts within each fire perimeter to visualize the varying percentages of the population in each tract living below 200% of the poverty line.
 
