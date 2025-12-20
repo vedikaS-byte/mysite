@@ -30,8 +30,8 @@ logit(\mu_i)
 + \beta_{diveTime} 
 + \beta_{PreyCat\_urchin} 
 + \beta_{PreyCat\_crab} 
-+ \beta_{PreCat\_cucumber} 
-+ \beta_{PreCat\_star}  
++ \beta_{PreyCat\_cucumber} 
++ \beta_{PreyCat\_star}  
 $$
 
 -   **Hypothesis 1:**
@@ -46,7 +46,7 @@ $$
 
     -   H~A~: β~dive_time~ ≠ 0. Dive time does significantly affect the proportion of prey not eaten; longer or shorter dives are associated with a higher or lower proportion of prey left uneaten.
 
-The categorical variable `PreyCat` represents the general prey categorization of a prey type. In particular, clams and urchins differ biologically in handling difficulty and energetic return. Urchins may require more processing and include defensive structures (spines), whereas clams require shell-breaking but offer concentrated soft tissue. These differences potentially influence the proportion of prey successfully consumed, indicating a direct causal effect of prey category on the proportion of prey not consumed
+The categorical variable `PreyCat` represents the general prey categorization of a prey type. In particular, clams and urchins differ biologically in handling difficulty and energetic return. Urchins may require more processing and include defensive structures (spines), whereas clams require shell-breaking but offer concentrated soft tissue. These differences potentially influence the proportion of prey successfully consumed, indicating a direct causal effect of prey category on the proportion of prey not consumed.
 
 Additionally, prey category may influence dive duration (continuous numeric variable) because hunting, handling, and extracting different prey may require different levels of effort and time. Thus, prey category potentially influences dive time, which in turn affects the proportion of prey not eaten.
 
@@ -213,8 +213,6 @@ prey_effect <- ifelse(PreyCat == "Crab", beta_crab,
                ifelse(PreyCat == "Star", beta_star,
                ifelse(PreyCat == "Urchin", beta_urchin, 
                0)))) # Else assign clam (reference)
-
-
 ```
 
 A linear predictor combining dive time and prey effects was calculated on the logit scale and transformed to the response scale. Each observation was then reparameterized into `alpha` and `beta` parameters (derived from the `betareg` CRAN project) for the beta distribution using the mean and precision. `PropNotEat_adj` values were simulated accordingly using `rbeta()`.
@@ -347,7 +345,7 @@ round(ci_forage,2) %>%
 
 The confidence interval for dive time is negative, indicating that longer dives are potentially associated with a slightly lower proportion of prey left uneaten. The confidence interval for `PreyCatCucumber` is negative and does not include zero, indicating that sea cucumbers are left uneaten significantly less often than clams (reference prey category).
 
-The confidence intervals for `PreyCatCrab`, `PreyCatStar`, and `PreyCatUrchin` all include zero, indicating that the proportion of these prey categories left uneaten are not significant different from clams. Overall, the confidence intervals of each predictor align with the p values from the beta regression model output; significant effects are reflected by the intervals that do not include zero, while the nonsignificant effects have intervals than include zero.
+The confidence intervals for `PreyCatCrab`, `PreyCatStar`, and `PreyCatUrchin` all include zero, indicating that the proportion of these prey categories left uneaten are not significant different from clams. Overall, the confidence intervals of each predictor align with the p values from the beta regression model output; significant effects are reflected by the intervals that do not include zero, while the non-significant effects have intervals than include zero.
 
 ### Interpreting Confidence Intervals of Predicted Outcomes
 
