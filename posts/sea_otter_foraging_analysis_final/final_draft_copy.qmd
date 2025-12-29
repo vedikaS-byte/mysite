@@ -3,6 +3,7 @@ title: "Assessing Sea Otter Feeding Habitats Based on Prey Type and Dive Depth"
 description: "Regression analysis of sea otter prey consumption"
 date: "12/5/2025"
 categories: [MEDS, data-viz, R, statistical-analysis]
+draft: true
 format: html
 ---
 

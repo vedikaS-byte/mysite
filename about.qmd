@@ -2,10 +2,12 @@
 title: "About"
 ---
 
-## Experience
+## A little about me
 
-Here's my experience
+I’ve always been drawn to nature. Growing up in Arizona and Texas, and now living in California, I’ve experienced a wide range of climates and landscapes that have shaped my appreciation for the natural world. With a deep familial connection to the ocean, I’m especially motivated to better understand and protect the environments we depend on. This curiosity ultimately led me to pursue environmental science and explore data-driven approaches to sustainability, especially in reducing greenhouse gas emissions.
+
+## What I do
+I work at the intersection of environmental science and data science to better understand how we may minimize the impacts of climate change from human  activity. Through coursework and applied projects, I use tools such as R and Python to analyze environmental datasets, including geospatial data, and have experience building a carbon inventory to develop sustainability initiatives. Building on these skills and experiences, I aim to pursue a career translating complex analyses into clear, actionable insights that support environmental decision-making in research and corporate sustainability.
 
 ## Hobbies
-
-I like to read and sing.
+When I’m not coding, you can usually find me swimming in the ocean, reading, singing, writing, or curled up with a good book.
