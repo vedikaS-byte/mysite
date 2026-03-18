@@ -14,6 +14,8 @@ editor_options:
 
 # The Anatomy of a Spotify Hit
 
+![](images/listen to spotify.jpg)
+
 Music is an essential part of daily life as it shapes moods, makes memories, and defines cultural moments. As someone who loves karaoke and vocal technique, I have always been personally curious about what makes certain songs resonate so deeply with listeners. With the rise of algorithmic music discovery, the question of what makes a song popular has become a topic of interest. Spotify, the world's largest audio streaming platform with over 751 million users and a catalog spanning 100,000 tracks, 7 million podcasts, and 500,000 audiobooks, sits at the center of this shift ([Spotify Newsroom, n.d.](https://newsroom.spotify.com/company-info/)). Its dominance in the streaming landscape and its influence on charts, like the Billboard Hot 100, makes it a compelling lens through which to visualize modern music popularity.
 
 This project aims to uncover and explore the audio and genre characteristics that distinguish Spotify hits from the rest of the catalog. Drawing on the [Spotify Music Dataset](https://www.kaggle.com/datasets/solomonameh/spotify-music-dataset) compiled by Solomon Ameh and accessed via Kaggle, I visualize the sonic "ingredients" behind a Spotify hit using Spotify’s audio feature data including attributes like energy, danceability, loudness, and acousticness, alongside a popularity score based on total streams and recency of plays. "Hits" were defined based on a score of 68 (roughly the 75th percentile across the dataset) to separate high-performance tracks from the rest.
