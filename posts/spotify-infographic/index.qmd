@@ -30,11 +30,11 @@ This infographic explores three core questions:
 
 Together, these visualizations aim to reveal whether there is a discernible recipe behind a Spotify hit.
 
-## Final infographic
+## Final Infographic
 
 The finalized infographic is compiled of three plots built using `ggplot` and further designed in Canva.
 
-![](images/Anatomy of Spotify Hit Infographic (3).png)
+![](images/Anatomy of Spotify Hit Infographic (4).png)
 
 ## Spotify Web API Dataset
 
@@ -369,7 +369,7 @@ genre_pct %>%
 
 Icons are derived from [icons8](https://icons8.com/).
 
--   Microphone: `<a target="_blank" href="https://icons8.com/icon/MlGSWD5FCHqv/microphone"`{=html}Microphone</a> icon by `<a target="_blank" href="https://icons8.com"`{=html}Icons8</a>
+-   `Microphone: <a target="_blank" href="https://icons8.com/icon/MlGSWD5FCHqv/microphone"`{=html}Microphone</a> icon by `<a target="_blank" href="https://icons8.com"`{=html}Icons8</a>
 
 -   Electric Guitar: `<a target="_blank" href="https://icons8.com/icon/11076/rock-music"`{=html}electric guitar</a> icon by `<a target="_blank" href="https://icons8.com"`{=html}Icons8</a>
 
