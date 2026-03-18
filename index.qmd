@@ -10,7 +10,7 @@ about:
     - text: LinkedIn
       icon: linkedin
       href: https://www.linkedin.com/in/vedika-shirtekar-b2814b201
-      target: _blank
+    #  target: _blank
     - text: GitHub
       icon: github 
       href: https://github.com/vedikaS-byte
