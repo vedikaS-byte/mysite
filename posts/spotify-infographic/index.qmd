@@ -124,11 +124,13 @@ Within each panel, I included bold green subtitles to highlight the key takeaway
 
 ## Key Findings
 
-Is there a dicernible recipe for a Spotify hit? The data suggests that there may be to some degree. Popular songs tend to be loud, energetic, and danceable. Genre also seems to be a strong factor in influencing a song's popularity likelihood. Pop and rock songs have a higher likelihood of achieving popularity, whereas "calmer" genres (ex. lofi and jazz) face more of a challenge to reach popularity. The contour plot clearly outlined that high-popularity songs form a notably tight cluster, indicating that hits don’t just share a few traits but also they occupy a very specific region of this sonic feature space.
+Is there a discernible recipe for a Spotify hit? Based on this exploration, there may be one, but only to some degree. Popular songs tend to be loud, energetic, and danceable. Genre also seems to be a strong factor in influencing a song's popularity likelihood. Pop and rock songs have a higher likelihood of achieving popularity, whereas "calmer" genres (ex. lofi and jazz) face more of a challenge to reach popularity. The contour plot clearly outlined that high-popularity songs form a notably tight cluster, indicating that hits not only share a few traits but also occupy a very specific region of this sonic space.
 
 It is worth noting that the data cannot explain why this pattern exists. For example, is a pop song more popular because it resonates more with listeners or because Spotify's algorithm historically amplifies these tracks, potentially introducing bias? Additional behavioral data, for example, is probably required to address this question and is a topic of interest for further analysis.
 
 ## All Code
+
+All code is included below for reference.
 
 ```{r}
 #| echo: true
@@ -365,27 +367,27 @@ genre_pct %>%
 
 ## Icon Attribution
 
-Icons are derived from icons8.com.
+Icons are derived from [icons8](https://icons8.com/).
 
--   `<a target="_blank" href="https://icons8.com/icon/MlGSWD5FCHqv/microphone"`{=html}Microphone</a> icon by `<a target="_blank" href="https://icons8.com"`{=html}Icons8</a>
+-   Microphone: `<a target="_blank" href="https://icons8.com/icon/MlGSWD5FCHqv/microphone"`{=html}Microphone</a> icon by `<a target="_blank" href="https://icons8.com"`{=html}Icons8</a>
 
--   `<a target="_blank" href="https://icons8.com/icon/11076/rock-music"`{=html}electric guitar</a> icon by `<a target="_blank" href="https://icons8.com"`{=html}Icons8</a>
+-   Electric Guitar: `<a target="_blank" href="https://icons8.com/icon/11076/rock-music"`{=html}electric guitar</a> icon by `<a target="_blank" href="https://icons8.com"`{=html}Icons8</a>
 
--   `<a target="_blank" href="https://icons8.com/icon/fzTNjNsM9oYv/rap"`{=html}Rap</a> icon by `<a target="_blank" href="https://icons8.com"`{=html}Icons8</a>
+-   Rap: `<a target="_blank" href="https://icons8.com/icon/fzTNjNsM9oYv/rap"`{=html}Rap</a> icon by `<a target="_blank" href="https://icons8.com"`{=html}Icons8</a>
 
--   `<a target="_blank" href="https://icons8.com/icon/a8hPL12leqi4/dancing"`{=html}Dancing</a> icon by `<a target="_blank" href="https://icons8.com"`{=html}Icons8</a>
+-   Dancing: `<a target="_blank" href="https://icons8.com/icon/a8hPL12leqi4/dancing"`{=html}Dancing</a> icon by `<a target="_blank" href="https://icons8.com"`{=html}Icons8</a>
 
--   `<a target="_blank" href="https://icons8.com/icon/11144/electronic-music"`{=html}Electronic Music</a> icon by `<a target="_blank" href="https://icons8.com"`{=html}Icons8</a>
+-   Electronic Music: `<a target="_blank" href="https://icons8.com/icon/11144/electronic-music"`{=html}Electronic Music</a> icon by `<a target="_blank" href="https://icons8.com"`{=html}Icons8</a>
 
--   `<a target="_blank" href="https://icons8.com/icon/11404/moon-and-stars"`{=html}Moon and Stars</a> icon by `<a target="_blank" href="https://icons8.com"`{=html}Icons8</a>
+-   Moon and Stars: `<a target="_blank" href="https://icons8.com/icon/11404/moon-and-stars"`{=html}Moon and Stars</a> icon by `<a target="_blank" href="https://icons8.com"`{=html}Icons8</a>
 
--   `<a target="_blank" href="https://icons8.com/icon/9313/sun"`{=html}Sun</a> icon by `<a target="_blank" href="https://icons8.com"`{=html}Icons8</a>
+-   Sun: `<a target="_blank" href="https://icons8.com/icon/9313/sun"`{=html}Sun</a> icon by `<a target="_blank" href="https://icons8.com"`{=html}Icons8</a>
 
--   `<a target="_blank" href="https://icons8.com/icon/84635/earth-planet"`{=html}Earth</a> icon by `<a target="_blank" href="https://icons8.com"`{=html}Icons8</a>
+-   Earth: `<a target="_blank" href="https://icons8.com/icon/84635/earth-planet"`{=html}Earth</a> icon by `<a target="_blank" href="https://icons8.com"`{=html}Icons8</a>
 
--   `<a target="_blank" href="https://icons8.com/icon/f6N0ObuRcP91/listening-to-music-on-headphones"`{=html}Listening To Music On Headphones</a> icon by `<a target="_blank" href="https://icons8.com"`{=html}Icons8</a>
+-   Headphones: `<a target="_blank" href="https://icons8.com/icon/f6N0ObuRcP91/listening-to-music-on-headphones"`{=html}Listening To Music On Headphones</a> icon by `<a target="_blank" href="https://icons8.com"`{=html}Icons8</a>
 
--   `<a target="_blank" href="https://icons8.com/icon/24854/jazz"`{=html}Jazz</a> icon by `<a target="_blank" href="https://icons8.com"`{=html}Icons8</a>
+-   Jazz: `<a target="_blank" href="https://icons8.com/icon/24854/jazz"`{=html}Jazz</a> icon by `<a target="_blank" href="https://icons8.com"`{=html}Icons8</a>
 
 ## References
 
