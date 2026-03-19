@@ -108,15 +108,15 @@ I focused on ensuring the infographic felt intentional and cohesive rather than 
 
 Each plot type was chosen for its communicatation purposed and not simply for convention. The heatmap, for example, makes all audio feature pairwise correlations immediately scannable. Additionally, the contour plot reveals distributional density in a simplified manner compared to a scatterplot with 3,000 overlapping points. The lollipop chart meaningfully conveys ranked proportions with less visual weight than a bar chart. As such, selecting the appropriate chart type was the first step in making each panel clear and easy to interpret.
 
-### **Color Palette**
+### **Color palette**
 
 The infographic is supported by Spotify’s signature green (`#1DB954`) on a near-black background (`#2b2b2b`) to better signal the subject matter without explicitly labeling that the infographic relates to Spotify data. Green and white were chosen for annotations to create a two-color language that highlight key findings across each plot. For example, green was utilized to highlight the primary takeaway from each plot, while white was chosen for general annotations.
 
-### Themes
+### **Themes**
 
 I aimed to incorporate non-data visual elements to create engaging associations that highlight key takeaways. For example, I used icons to represent each genre in my lollipop chart, making the visualization more intuitive (ex. a microphone for pop music or a keyboard for electronic music).
 
-### **Typography and Text**
+### **Typography and text**
 
 I used two custom fonts throughout: Bugaki for titles which has a slightly retro vibe, and Glock Grotesk for all body text and labels to keep things readable without clashing with the titles. Keeping one expressive and one functional font family creates typographic consistency across all three panels and the Canva layout. As such, the infographic reads as a single object rather than three separate charts pasted together.
 
