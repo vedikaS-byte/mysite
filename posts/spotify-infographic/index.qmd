@@ -34,7 +34,7 @@ Together, these visualizations aim to reveal whether there is a discernible reci
 
 The finalized infographic is compiled of three plots built using `ggplot` and further designed in Canva.
 
-![](images/Anatomy of Spotify Hit Infographic.png)
+![](images/Anatomy%20of%20Spotify%20Hit%20Infographic.png)
 
 ## Spotify Web API Dataset
 
@@ -110,9 +110,13 @@ Each plot type was chosen for its communicatation purposed and not simply for co
 
 ### **Color Palette**
 
-The infographic is supported by Spotify’s signature green (`#1DB954`) on a near-black background (`#2b2b2b`) to better signla the subject matter without explicitly labeling that the infographic relates to Spotify data. Green consistently encodes “popular” or “high” across all three plots, allowing readers to quickly build a visual intuition. White represents low popularity throughout, establishing a clear and consistent two-color visual language. I also verified that the green-on-dark contrast meets accessibility standards for readability.
+The infographic is supported by Spotify’s signature green (`#1DB954`) on a near-black background (`#2b2b2b`) to better signal the subject matter without explicitly labeling that the infographic relates to Spotify data. Green and white were chosen for annotations to create a two-color language that highlight key findings across each plot. For example, green was utilized to highlight the primary takeaway from each plot, while white was chosen for general annotations.
 
-### **Typography**
+### Themes
+
+I aimed to incorporate non-data visual elements to create engaging associations that highlight key takeaways. For example, I used icons to represent each genre in my lollipop chart, making the visualization more intuitive (ex. a microphone for pop music or a keyboard for electronic music).
+
+### **Typography and Text**
 
 I used two custom fonts throughout: Bugaki for titles which has a slightly retro vibe, and Glock Grotesk for all body text and labels to keep things readable without clashing with the titles. Keeping one expressive and one functional font family creates typographic consistency across all three panels and the Canva layout. As such, the infographic reads as a single object rather than three separate charts pasted together.
 
