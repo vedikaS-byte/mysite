@@ -14,7 +14,7 @@ editor_options:
 
 # The Anatomy of a Spotify Hit
 
-![](images/listen to spotify.jpg)
+![](images/listen%20to%20spotify.jpg)
 
 Music is an essential part of daily life as it shapes moods, makes memories, and defines cultural moments. As someone who loves karaoke and vocal technique, I have always been personally curious about what makes certain songs resonate so deeply with listeners. With the rise of algorithmic music discovery, the question of what makes a song popular has become a topic of interest. Spotify, the world's largest audio streaming platform with over 751 million users and a catalog spanning 100,000 tracks, 7 million podcasts, and 500,000 audiobooks, sits at the center of this shift ([Spotify Newsroom, n.d.](https://newsroom.spotify.com/company-info/)). Its dominance in the streaming landscape and its influence on charts, like the Billboard Hot 100, makes it a compelling lens through which to visualize modern music popularity.
 
@@ -34,7 +34,7 @@ Together, these visualizations aim to reveal whether there is a discernible reci
 
 The finalized infographic is compiled of three plots built using `ggplot` and further designed in Canva.
 
-![](images/Anatomy of Spotify Hit Infographic (4).png)
+![](images/Anatomy of Spotify Hit Infographic.png)
 
 ## Spotify Web API Dataset
 
@@ -58,7 +58,7 @@ The audio features I focused on were:
 
 For further information on variable definitions and measurement, please see the [Spotify Web API documentation](https://developer.spotify.com/documentation/web-api/reference/get-audio-features).
 
-## Graphical Forms 
+## Graphical Forms
 
 All three plots were built in `ggplot2` and finished in Canva, where I added annotations and decorative elements. All code is include the folded chunk at the bottom of this page.
 
@@ -116,7 +116,7 @@ The infographic is supported by Spotify’s signature green (`#1DB954`) on a nea
 
 I used two custom fonts throughout: Bugaki for titles which has a slightly retro vibe, and Glock Grotesk for all body text and labels to keep things readable without clashing with the titles. Keeping one expressive and one functional font family creates typographic consistency across all three panels and the Canva layout. As such, the infographic reads as a single object rather than three separate charts pasted together.
 
-### **Visual hierarchy and layout** 
+### **Visual hierarchy and layout**
 
 The three plots are intentionally ordered to build a clear argument: first, how audio features relate (heatmap establishes landscape); second, whether a “signature sound” exists (contour plot reveals clustering); and third, which genres are most likely to land there (lollipop chart provides genre-level context).
 
