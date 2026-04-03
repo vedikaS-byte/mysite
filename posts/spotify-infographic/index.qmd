@@ -92,7 +92,7 @@ Rather than comparing raw counts of popular songs by genre, I calculated the per
 
 ![](images/clipboard-1324587313.png)
 
-I also decided to exlude "gaming" as a playlist genre because it represents a Spotify playlist type rather than a specific genre; its tracks largely overlap with pop, hip-hop, and R&B, which are already captured elsewhere in their respective genres.
+I also decided to exclude "gaming" as a playlist genre because it represents a Spotify playlist type rather than a specific genre; its tracks largely overlap with pop, hip-hop, and R&B, which are already captured elsewhere in their respective genres.
 
 The results indicate notable contrasts across genres. Pop has about 80% of its songs classified as hits, followed by rock at about 74%. World, lofi, and jazz have the least percentage of hit songs in their respective genres. Genre is likely a strong factor in determining a song's success, as pop or rock songs have a substantially higher baseline probability of becoming hits compared to those in lofi or ambient categories.
 
