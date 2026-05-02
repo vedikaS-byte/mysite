@@ -107,15 +107,15 @@
   {
     "objectID": "posts/my-first-blog-post/index.html",
     "href": "posts/my-first-blog-post/index.html",
-    "title": "My first blog post",
+    "title": "Hello, World!",
     "section": "",
-    "text": "Welcome to my first blog! This is just a quick introduction into what to expect from my entries1.\nThis series of posts incorporates final projects from courses completed throughout the Master of Environmental Data Science (MEDS) program at the Bren School of Environmental Science and Management. Finalized blog posts published on this site include analysis and visualization in the R and Python programming languages. Occasionally, I will publish informational posts on additional topics, such as conservation and future advances in climate tech to counter the effects of anthropogenic climate change.\n\n\n\n\nFootnotes\n\n\nThis is a practice test for creating footnotes.↩︎\n\nCitationBibTeX citation:@online{shirtekar2025,\n  author = {Vedika Shirtekar},\n  title = {My First Blog Post},\n  date = {2025-11-12},\n  url = {https://github.com/vedikaS-byte},\n  langid = {en}\n}\nFor attribution, please cite this work as:\nVedika Shirtekar. 2025. “My First Blog Post.” November 12,\n2025. https://github.com/vedikaS-byte."
+    "text": "Welcome to my first blog! This is just a quick introduction into what to expect from my entries.\nThis series of posts incorporates final projects from courses completed throughout the Master of Environmental Data Science (MEDS) program at the Bren School of Environmental Science and Management. Finalized blog posts published on this site include analysis and visualization in the R and Python programming languages. Occasionally, I will publish informational posts on additional topics, such as conservation and future advances in climate tech to counter the effects of anthropological climate change.\n\n\n\nCitationBibTeX citation:@online{shirtekar2025,\n  author = {Vedika Shirtekar},\n  title = {Hello, {World!}},\n  date = {2025-11-12},\n  url = {https://github.com/vedikaS-byte},\n  langid = {en}\n}\nFor attribution, please cite this work as:\nVedika Shirtekar. 2025. “Hello, World!” November 12, 2025.\nhttps://github.com/vedikaS-byte."
   },
   {
     "objectID": "post.html",
     "href": "post.html",
     "title": "Blogs",
     "section": "",
-    "text": "Ocean Superfarms: Finding the Best Spots to Grow Seafood\n\n\n\nMEDS\n\n\ndata-viz\n\n\nR\n\n\n\nGIS-based suitability analysis for shellfish aquaculture\n\n\n\nVedika Shirtekar\n\n\nDec 6, 2025\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nBeyond the Burn: Fire Scars and Social Impacts of the Palisades and Eaton Fires\n\n\n\nMEDS\n\n\ndata-viz\n\n\nPython\n\n\n\nMapping wildfire impacts and social vulnerability\n\n\n\nVedika Shirtekar\n\n\nDec 3, 2025\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMy first blog post\n\n\n\nMEDS\n\n\ndata-viz\n\n\n\nIntroduction to website blogs\n\n\n\nVedika Shirtekar\n\n\nNov 12, 2025\n\n\n\n\n\n\n\n\nNo matching items"
+    "text": "Ocean Superfarms: Finding the Best Spots to Grow Seafood\n\n\n\nMEDS\n\n\ndata-viz\n\n\nR\n\n\n\nGIS-based suitability analysis for shellfish aquaculture\n\n\n\nVedika Shirtekar\n\n\nDec 6, 2025\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nBeyond the Burn: Fire Scars and Social Impacts of the Palisades and Eaton Fires\n\n\n\nMEDS\n\n\ndata-viz\n\n\nPython\n\n\n\nMapping wildfire impacts and social vulnerability\n\n\n\nVedika Shirtekar\n\n\nDec 3, 2025\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHello, World!\n\n\n\nMEDS\n\n\n\nIntroduction to website blogs\n\n\n\nVedika Shirtekar\n\n\nNov 12, 2025\n\n\n\n\n\n\n\n\nNo matching items"
   }
 ]

@@ -1,8 +1,8 @@
 ---
-title: "My first blog post"
+title: "Hello, World!"
 description: "Introduction to website blogs"
 date: 2025-11-12
-categories: [MEDS, data-viz]
+categories: [MEDS]
 image: hello-world.jpg
 citation: 
   url: https://github.com/vedikaS-byte
@@ -11,8 +11,6 @@ draft-mode: linked
 #bibliography: bibliography.bib
 ---
 
-Welcome to my first blog! This is just a quick introduction into what to expect from my entries[^1].
+Welcome to my first blog! This is just a quick introduction into what to expect from my entries.
 
-[^1]: This is a practice test for creating footnotes.
-
-This series of posts incorporates final projects from courses completed throughout the Master of Environmental Data Science (MEDS) program at the Bren School of Environmental Science and Management. Finalized blog posts published on this site include analysis and visualization in the R and Python programming languages. Occasionally, I will publish informational posts on additional topics, such as conservation and future advances in climate tech to counter the effects of anthropogenic climate change.
+This series of posts incorporates final projects from courses completed throughout the Master of Environmental Data Science (MEDS) program at the Bren School of Environmental Science and Management. Finalized blog posts published on this site include analysis and visualization in the R and Python programming languages. Occasionally, I will publish informational posts on additional topics, such as conservation and future advances in climate tech to counter the effects of anthropological climate change.
