@@ -4,6 +4,7 @@ title: "Ocean Superfarms: Finding the Best Spots to Grow Seafood"
 description: "GIS-based suitability analysis for shellfish aquaculture"
 categories: [MEDS, data-viz, R]
 date: "12/6/2025"
+image: "images/kelp_forest.png"
 format:
   html: 
     code-fold: true
@@ -162,10 +163,8 @@ depth <- rast(here::here("posts", "aquaculture-post","data_aqua", "depth.tif"))
 ```{r}
 #| output: false
 # Create a list of the tiff files for SST
-sst_files <- list.files( # Define file path
-  path = "/Users/vedikashirtekar/Documents/MEDS/mysite/posts/aquaculture-post/data_aqua"
-,
-  # Pattern matches all tiff files starting with   "average_annual"
+sst_files <- list.files(
+  path = here::here("posts", "aquaculture-post", "data_aqua"),
   pattern = "average_annual.*\\.tif$",
   full.names = T 
 )
@@ -506,14 +505,11 @@ eez <- vect(here::here("posts", "aquaculture-post", "data_aqua", "wc_regions_cle
 depth <- rast(here::here("posts", "aquaculture-post","data_aqua", "depth.tif"))
 
 # Create a list of the tiff files for SST
-sst_files <- list.files( # Define file path
-  path = "/Users/vedikashirtekar/Documents/MEDS/mysite/posts/aquaculture-post/data_aqua"
-,
-  # Pattern matches all tiff files starting with   "average_annual"
+sst_files <- list.files(
+  path = here::here("posts", "aquaculture-post", "data_aqua"),
   pattern = "average_annual.*\\.tif$",
   full.names = T 
 )
-
 
 # Stop running if character(0) returned
 if (length(sst_files) == 0) {
