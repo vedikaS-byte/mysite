@@ -1,61 +1,82 @@
-<svg width="900" height="320" viewBox="0 0 900 320" xmlns="http://www.w3.org/2000/svg">
+<svg width="1000" height="380" viewBox="0 0 1000 380" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="waveGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
+    <linearGradient id="dw1" x1="0%" y1="0%" x2="100%" y2="0%">
       <stop offset="0%" stop-color="#5EEAD4"/>
-      <stop offset="100%" stop-color="#38BDF8"/>
-    </linearGradient>
-    <linearGradient id="waveGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#22D3EE"/>
+      <stop offset="50%" stop-color="#38BDF8"/>
       <stop offset="100%" stop-color="#0EA5E9"/>
     </linearGradient>
-    <radialGradient id="nodeGrad" cx="50%" cy="50%" r="50%">
+    <linearGradient id="dw2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#22D3EE"/>
+      <stop offset="50%" stop-color="#0EA5E9"/>
+      <stop offset="100%" stop-color="#0369A1"/>
+    </linearGradient>
+    <linearGradient id="dw3" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0C7A94"/>
+      <stop offset="100%" stop-color="#083A52"/>
+    </linearGradient>
+    <radialGradient id="dwDot" cx="50%" cy="50%" r="50%">
       <stop offset="0%" stop-color="#FFFFFF"/>
       <stop offset="100%" stop-color="#BAF7EC"/>
     </radialGradient>
   </defs>
 
-  <!-- Icon group: ocean waves + data network -->
-  <g transform="translate(40,40)">
-    <!-- data network arcs above the waves, suggesting data flowing over the ocean -->
-    <g stroke="#7DD3FC" stroke-width="2" fill="none" opacity="0.9">
-      <path d="M15,70 Q45,20 75,55" />
-      <path d="M75,55 Q100,30 120,60" />
-      <path d="M45,90 Q70,55 100,80" />
-    </g>
-    <g fill="url(#nodeGrad)" stroke="#0891B2" stroke-width="1.5">
-      <circle cx="15" cy="70" r="6"/>
-      <circle cx="75" cy="55" r="7"/>
-      <circle cx="120" cy="60" r="5"/>
-      <circle cx="45" cy="90" r="5.5"/>
-      <circle cx="100" cy="80" r="6"/>
-    </g>
-
-    <!-- Ocean waves -->
-    <path d="M0,150 
-             C 20,130 40,170 60,150 
-             C 80,130 100,170 120,150 
-             C 140,130 160,170 180,150 
-             L 180,230 L 0,230 Z"
-          fill="url(#waveGrad1)" opacity="0.85"/>
-
-    <path d="M0,175 
-             C 20,158 40,192 60,175 
-             C 80,158 100,192 120,175 
-             C 140,158 160,192 180,175 
-             L 180,230 L 0,230 Z"
-          fill="url(#waveGrad2)" opacity="0.95"/>
-
-    <path d="M0,200 
-             C 20,186 40,214 60,200 
-             C 80,186 100,214 120,200 
-             C 140,186 160,214 180,200 
-             L 180,230 L 0,230 Z"
-          fill="#0C7A94"/>
+  <!-- Name text, fully clear above the waves -->
+  <g transform="translate(60,110)">
+    <text x="0" y="0" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="80" font-weight="700" fill="#FFFFFF">Vedika</text>
+    <text x="0" y="90" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="80" font-weight="700" fill="#5EEAD4">Shirtekar</text>
   </g>
 
-  <!-- Name text -->
-  <g transform="translate(240,165)">
-    <text x="0" y="0" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="52" font-weight="600" fill="#FFFFFF">Vedika</text>
-    <text x="0" y="60" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="52" font-weight="600" fill="#5EEAD4">Shirtekar</text>
+  <!-- Dynamic waves, data nodes riding directly on the crest of the top wave -->
+  <g transform="translate(0,235)">
+    <path id="crest" d="M-30,30
+             C 90,-15 170,60 270,15
+             C 370,-25 450,60 550,20
+             C 630,-12 710,50 800,20
+             C 870,-2 940,25 1010,10"
+          stroke="url(#dw1)" stroke-width="18" fill="none" stroke-linecap="round" opacity="1"/>
+
+    <g fill="url(#dwDot)" stroke="#0891B2" stroke-width="1.8">
+      <circle cx="10" cy="18" r="8"/>
+      <circle cx="150" cy="0" r="7.5"/>
+      <circle cx="270" cy="15" r="8"/>
+      <circle cx="410" cy="4" r="7.5"/>
+      <circle cx="550" cy="20" r="8.5"/>
+      <circle cx="690" cy="10" r="7.5"/>
+      <circle cx="800" cy="20" r="8"/>
+      <circle cx="940" cy="6" r="7.5"/>
+    </g>
+
+    <path d="M-30,60
+             C 90,20 170,95 270,55
+             C 370,15 450,95 550,58
+             C 630,28 710,88 800,58
+             C 870,36 940,60 1010,48
+             L1010,140 L-30,140 Z"
+          fill="url(#dw2)" opacity="0.92"/>
+
+    <g fill="#7DE0F5" opacity="0.8">
+      <circle cx="60" cy="52" r="4"/>
+      <circle cx="220" cy="72" r="4"/>
+      <circle cx="380" cy="48" r="4"/>
+      <circle cx="540" cy="70" r="4"/>
+      <circle cx="700" cy="46" r="4"/>
+      <circle cx="860" cy="68" r="4"/>
+    </g>
+
+    <path d="M-30,95
+             C 100,58 190,120 290,90
+             C 390,60 470,120 570,92
+             C 650,68 730,108 820,90
+             C 890,74 950,92 1010,84
+             L1010,145 L-30,145 Z"
+          fill="url(#dw3)"/>
+
+    <g fill="#BAF7EC" opacity="0.55">
+      <circle cx="100" cy="88" r="3.5"/>
+      <circle cx="300" cy="102" r="3.5"/>
+      <circle cx="500" cy="86" r="3.5"/>
+      <circle cx="700" cy="100" r="3.5"/>
+      <circle cx="900" cy="84" r="3.5"/>
+    </g>
   </g>
 </svg>

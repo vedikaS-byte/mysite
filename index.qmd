@@ -1,6 +1,6 @@
 ---
 title: "Vedika Shirtekar"
-subtitle: "Environmental Data Scientist · Climate Tech & Sustainability"
+#subtitle: "Climate Tech & Sustainability"
 toc: false
 image: "Vedika_cropped.png"
 about: 
