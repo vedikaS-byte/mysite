@@ -1,5 +1,5 @@
 ---
-title: "Blogs"
+title: "Blogs" 
 listing: 
   contents: posts
   type: default
@@ -7,11 +7,9 @@ listing:
   categories: true
 ---
 
-::: {.corner-logo .r-logo}
+::: {.skill-badges}
+[R]{.tech-badge} [Python]{.tech-badge} [SQL]{.tech-badge} 
 :::
 
-::: {.corner-logo .python-logo}
-:::
 
-::: {.corner-logo .sql-logo}
-:::
+
