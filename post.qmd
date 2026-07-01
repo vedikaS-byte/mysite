@@ -6,7 +6,6 @@ listing:
   sort: "date desc"
   categories: true
 ---
-
 ::: {.skill-badges}
 [R]{.tech-badge} [Python]{.tech-badge} [SQL]{.tech-badge} 
 :::
