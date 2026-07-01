@@ -8,12 +8,20 @@ $libre: "Libre Baskerville", serif;
 
 
 // colors 
-$deeptealgrey: #5A6E6E;
-$stormyblue: #8BA0A5;
-$bluegray: #B8C6C8;
-$mistgray: #E5ECEC;
-$purewhite: #FFFFFF;
-$accentblue: #3A6F8F; // for links & emphasis
+// $deeptealgrey: #5A6E6E;
+// $stormyblue: #8BA0A5;
+// $bluegray: #B8C6C8;
+// $mistgray: #E5ECEC;
+// $purewhite: #FFFFFF;
+// $accentblue: #3A6F8F; // for links & emphasis
+
+$deeptealgrey: #2C4A44;   // darker, richer — used for body text & headings
+$stormyblue:   #3B6E63;   // deep forest teal — navbar background
+$bluegray:     #B8C6C8;   // unchanged — card borders
+$mistgray:     #FAF9F4;   // warm off-white instead of gray — page background
+$purewhite:    #FFFFFF;
+$accentblue:   #C9662F;   // warm coral — links & emphasis (new, high contrast)
+
 // define quarto variables
 //$body-bg: $mistgray;
 //$navbar-bg: $stormyblue;
@@ -26,25 +34,44 @@ $body-bg: $mistgray;
 $body-color: $deeptealgrey;
 
 // Navbar
+// $navbar-bg: $stormyblue;
+// $navbar-fg: $purewhite;
+// $navbar-hl: $deeptealgrey;
+
 $navbar-bg: $stormyblue;
 $navbar-fg: $purewhite;
-$navbar-hl: $deeptealgrey;
+$navbar-hl: $accentblue;
 
 // Links
+// $link-color: $accentblue;
+// $link-hover-color: darken($accentblue, 10%);
+
 $link-color: $accentblue;
 $link-hover-color: darken($accentblue, 10%);
 
 // Headings
-$headings-color: #2F4F4F;
+// $headings-color: #2F4F4F;
+$headings-color: #1F3B36;
 
 // Code blocks
-$code-bg: lighten($mistgray, 3%);
+// $code-bg: lighten($mistgray, 3%);
+// $code-color: #2C3E3E;
+
+$code-bg: darken($mistgray, 3%);
 $code-color: #2C3E3E;
 
 .card {
   background-color: $purewhite;
   border: 1px solid $bluegray;
+  // new: subtle hover lift so cards don't look flat against the lighter background
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
+
+.card:hover {
+  box-shadow: 0 4px 14px rgba(44, 74, 68, 0.12);
+  transform: translateY(-2px);
+}
+
 figcaption {
   color: darken($deeptealgrey, 10%);
 }
@@ -281,6 +308,3 @@ h1, h2 {
     display: none;
   }
 }
-
-
-
