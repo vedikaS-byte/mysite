@@ -107,8 +107,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
-<script src="../../site_libs/kePrint-0.0.1/kePrint.js"></script>
-<link href="../../site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="../../styles.css">
@@ -122,8 +120,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="../../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../../images/new_logo.png" alt="the name vedika shirtekar with an ocean tech generated icon" class="navbar-logo light-content">
-    <img src="../../images/new_logo.png" alt="the name vedika shirtekar with an ocean tech generated icon" class="navbar-logo dark-content">
+    <img src="../../images/new_logo.svg" alt="the name vedika shirtekar with an ocean tech generated icon" class="navbar-logo light-content">
+    <img src="../../images/new_logo.svg" alt="the name vedika shirtekar with an ocean tech generated icon" class="navbar-logo dark-content">
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -331,16 +329,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
 <span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">message</span>(<span class="st">"depth CRS already matches eez CRS."</span>)</span>
 <span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="do">## depth CRS already matches eez CRS.</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">st_crs</span>(spatial_objects<span class="sc">$</span>sst) <span class="sc">!=</span> ref_crs) {</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">warning</span>(<span class="st">"sst CRS does not match. </span></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="st">          Transforming to match eez CRS."</span>)</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>  spatial_objects<span class="sc">$</span>sst <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(spatial_objects<span class="sc">$</span>sst, ref_crs)</span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">message</span>(<span class="st">"sst CRS already matches eez CRS."</span>)</span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="do">## sst CRS already matches eez CRS.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">st_crs</span>(spatial_objects<span class="sc">$</span>sst) <span class="sc">!=</span> ref_crs) {</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">warning</span>(<span class="st">"sst CRS does not match. </span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="st">          Transforming to match eez CRS."</span>)</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>  spatial_objects<span class="sc">$</span>sst <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(spatial_objects<span class="sc">$</span>sst, ref_crs)</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">message</span>(<span class="st">"sst CRS already matches eez CRS."</span>)</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section>
@@ -361,15 +357,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Do the CRS match?</span></span>
 <span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="fu">message</span>(<span class="st">"Do the CRS match:"</span>, <span class="fu">crs</span>(avg_sst) <span class="sc">==</span> <span class="fu">crs</span>(depth))</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Do the CRS match:TRUE</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Do the resolutions match (require resampling)? </span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="fu">message</span>(<span class="st">"Do the resolutions match:"</span>, <span class="fu">res</span>(avg_sst) <span class="sc">==</span> <span class="fu">res</span>(depth))</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="do">## Do the resolutions match:TRUETRUE</span></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Do the extents match?</span></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="fu">message</span>(<span class="st">"Do the extents match: "</span>, <span class="fu">ext</span>(avg_sst) <span class="sc">==</span> <span class="fu">ext</span>(depth))</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="do">## Do the extents match: TRUE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Do the resolutions match (require resampling)? </span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="fu">message</span>(<span class="st">"Do the resolutions match:"</span>, <span class="fu">res</span>(avg_sst) <span class="sc">==</span> <span class="fu">res</span>(depth))</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Do the extents match?</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="fu">message</span>(<span class="st">"Do the extents match: "</span>, <span class="fu">ext</span>(avg_sst) <span class="sc">==</span> <span class="fu">ext</span>(depth))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <div class="cell">
@@ -439,13 +432,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Print binary raster </span></span>
 <span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(avg_sst_depth)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="blog_post_aquaculture_suitability_analysis_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
 </div>
 </section>
 <section id="determining-the-most-suitable-eez" class="level3">
@@ -535,13 +521,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Print map</span></span>
 <span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a>oyster_pref_map</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="blog_post_aquaculture_suitability_analysis_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
 </div>
 <p><strong>Map 1. Suitable aquaculture areas within West Coast EEZs for oysters.</strong></p>
 <p>The suitable area for oyster harvesting relative to the total area of each EEZ region was also examined. I created a table using <code>kableExtra</code> to display both the total suitable area and the proportion of each EEZ that is suitable for oyster aquaculture, allowing for comparisons across regions independent of EEZ size.</p>
@@ -577,45 +556,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>                <span class="at">full_width =</span> <span class="cn">FALSE</span>, <span class="co"># Disable full width </span></span>
 <span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>                <span class="at">position =</span> <span class="st">"center"</span>)  <span class="co"># Center labels</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output-display">
-<table class="table table-striped table-hover caption-top table-sm small">
-<caption>Amount of Suitable Areas by EEZ for Oyster Preferences</caption>
-<thead>
-<tr class="header">
-<th style="text-align: left;" data-quarto-table-cell-role="th">Region</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">Suitable Area (km^2)</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">Proportion of Suitable Area in EEZ</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Central California</td>
-<td style="text-align: right;">3656.82</td>
-<td style="text-align: right;">1.8</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Northern California</td>
-<td style="text-align: right;">194.13</td>
-<td style="text-align: right;">0.1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Oregon</td>
-<td style="text-align: right;">1028.90</td>
-<td style="text-align: right;">0.6</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Southern California</td>
-<td style="text-align: right;">3062.20</td>
-<td style="text-align: right;">1.5</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Washington</td>
-<td style="text-align: right;">2435.93</td>
-<td style="text-align: right;">3.6</td>
-</tr>
-</tbody>
-</table>
-</div>
 </div>
 </section>
 </section>
@@ -840,13 +780,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Print map </span></span>
 <span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>species_pref_map</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="blog_post_aquaculture_suitability_analysis_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
 </div>
 <p><strong>Map 2. Suitable aquaculture areas within West Coast EEZs for red abalone.</strong></p>
 </section>

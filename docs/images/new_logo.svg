@@ -1,0 +1,61 @@
+<svg width="900" height="320" viewBox="0 0 900 320" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="waveGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#5EEAD4"/>
+      <stop offset="100%" stop-color="#38BDF8"/>
+    </linearGradient>
+    <linearGradient id="waveGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#22D3EE"/>
+      <stop offset="100%" stop-color="#0EA5E9"/>
+    </linearGradient>
+    <radialGradient id="nodeGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#BAF7EC"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Icon group: ocean waves + data network -->
+  <g transform="translate(40,40)">
+    <!-- data network arcs above the waves, suggesting data flowing over the ocean -->
+    <g stroke="#7DD3FC" stroke-width="2" fill="none" opacity="0.9">
+      <path d="M15,70 Q45,20 75,55" />
+      <path d="M75,55 Q100,30 120,60" />
+      <path d="M45,90 Q70,55 100,80" />
+    </g>
+    <g fill="url(#nodeGrad)" stroke="#0891B2" stroke-width="1.5">
+      <circle cx="15" cy="70" r="6"/>
+      <circle cx="75" cy="55" r="7"/>
+      <circle cx="120" cy="60" r="5"/>
+      <circle cx="45" cy="90" r="5.5"/>
+      <circle cx="100" cy="80" r="6"/>
+    </g>
+
+    <!-- Ocean waves -->
+    <path d="M0,150 
+             C 20,130 40,170 60,150 
+             C 80,130 100,170 120,150 
+             C 140,130 160,170 180,150 
+             L 180,230 L 0,230 Z"
+          fill="url(#waveGrad1)" opacity="0.85"/>
+
+    <path d="M0,175 
+             C 20,158 40,192 60,175 
+             C 80,158 100,192 120,175 
+             C 140,158 160,192 180,175 
+             L 180,230 L 0,230 Z"
+          fill="url(#waveGrad2)" opacity="0.95"/>
+
+    <path d="M0,200 
+             C 20,186 40,214 60,200 
+             C 80,186 100,214 120,200 
+             C 140,186 160,214 180,200 
+             L 180,230 L 0,230 Z"
+          fill="#0C7A94"/>
+  </g>
+
+  <!-- Name text -->
+  <g transform="translate(240,165)">
+    <text x="0" y="0" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="52" font-weight="600" fill="#FFFFFF">Vedika</text>
+    <text x="0" y="60" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="52" font-weight="600" fill="#5EEAD4">Shirtekar</text>
+  </g>
+</svg>
