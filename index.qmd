@@ -1,5 +1,6 @@
 ---
-title: "Vedika Shirtekar"   # This will show up in the navbar
+title: "Vedika Shirtekar"
+subtitle: "Environmental Data Scientist · Climate Tech & Sustainability"
 toc: false
 image: "Vedika_cropped.png"
 about: 
@@ -10,22 +11,26 @@ about:
     - text: LinkedIn
       icon: linkedin
       href: https://www.linkedin.com/in/vedika-shirtekar-b2814b201
-    #  target: _blank
     - text: GitHub
       icon: github 
       href: https://github.com/vedikaS-byte
 ---
 
 <h1 class="typing">
-
 Hello World <img src="images/earth-logo.png" alt="Earth Logo" class="earth-logo"/>
-
 </h1>
+
+<div class="accent-rule"></div>
 
 ::: marquee-text-right
 ### Welcome to my website!
 
-I am an aspiring data scientist looking to pursue a career in climate tech and sustainability consulting. Having recently graduated with a B.S. in Environmental Science and an Applied Statistical Modeling Credential from UT Austin, I’m eager to integrate environmental and data science to develop data driven solutions for addressing climate change.
+I'm an environmental data scientist working at the intersection of climate and data. I hold a Master of Environmental Data Science from UC Santa Barbara, along with a B.S. in Environmental Science and an Applied Statistical Modeling Credential from UT Austin. By combining environmental science with data analytics, I'm passionate about developing data-driven solutions that strengthen emissions accounting, help organizations understand their greenhouse gas emissions, and support corporate sustainability.
+ 
+::: {.skill-badges}
+[R]{.tech-badge} [Python]{.tech-badge} [SQL]{.tech-badge} 
+:::
 
-I am passionate about protecting the planet for future generations by using data science applications to address climate change. I want to help guide other like-minded climate enthusiasts with understanding their emissions and potential reduction solutions.
+[View my work](post.qmd){.btn-cta} [Get in touch](vedika.shirtekar@gmail.com){.btn-outline}
+
 :::

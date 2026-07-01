@@ -1,74 +1,77 @@
 /*-- scss:defaults  --*/
 
+// import google fonts (unchanged)
+//@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
+// fonts (unchanged)
+//$libre: "Libre Baskerville", serif;
 // import google fonts
-@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+// @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&display=swap');
 
 // fonts
-$libre: "Libre Baskerville", serif;
+// $libre: "Libre Baskerville", serif;
+$headingfont: "Space Grotesk", sans-serif;
+$bodyfont: "Inter", sans-serif;
 
+// tell Bootstrap/Quarto to use these everywhere (navbar, base text, etc.)
+$font-family-base: $bodyfont;
+$headings-font-family: $headingfont;
 
-// colors 
-// $deeptealgrey: #5A6E6E;
-// $stormyblue: #8BA0A5;
-// $bluegray: #B8C6C8;
-// $mistgray: #E5ECEC;
-// $purewhite: #FFFFFF;
-// $accentblue: #3A6F8F; // for links & emphasis
+// ============================================================
+// PALETTE - pick ONE option below. Option A is active.
+// To switch: comment out Option A and uncomment Option B.
+// ============================================================
 
-$deeptealgrey: #2C4A44;   // darker, richer — used for body text & headings
-$stormyblue:   #3B6E63;   // deep forest teal — navbar background
-$bluegray:     #B8C6C8;   // unchanged — card borders
-$mistgray:     #FAF9F4;   // warm off-white instead of gray — page background
+// ----- Option A: Modern climate-tech - ACTIVE -----
+$deeptealgrey: #3A4A54;    // body text (slate)
+$stormyblue:   #17242E;    // navbar (ink navy)
+$bluegray:     #C7D0D6;    // card borders (cool)
+$mistgray:     #F5F7F8;    // page background (near-white)
 $purewhite:    #FFFFFF;
-$accentblue:   #C9662F;   // warm coral — links & emphasis (new, high contrast)
+$accentblue:   #17A398;    // links + accent (aqua/teal)
+$headingscolor: #16242E;   // headings
 
-// define quarto variables
-//$body-bg: $mistgray;
-//$navbar-bg: $stormyblue;
-//$navbar-fg: $mistgray;
-//$navbar-hl: $stormyblue;
-//$link-color: $deeptealgrey;
+// ----- Option B: Warm earth - uncomment to use -----
+// $deeptealgrey: #40514A;    // body text
+// $stormyblue:   #3E5C4B;    // navbar (moss)
+// $bluegray:     #D8CDB8;    // card borders (sand)
+// $mistgray:     #F4EEE1;    // page background (sand)
+// $purewhite:    #FFFFFF;
+// $accentblue:   #C67A3E;    // links + accent (terracotta)
+// $headingscolor: #2C4A3B;   // headings
+
+// ============================================================
 
 // Base
 $body-bg: $mistgray;
 $body-color: $deeptealgrey;
 
 // Navbar
-// $navbar-bg: $stormyblue;
-// $navbar-fg: $purewhite;
-// $navbar-hl: $deeptealgrey;
-
 $navbar-bg: $stormyblue;
 $navbar-fg: $purewhite;
 $navbar-hl: $accentblue;
 
 // Links
-// $link-color: $accentblue;
-// $link-hover-color: darken($accentblue, 10%);
-
 $link-color: $accentblue;
 $link-hover-color: darken($accentblue, 10%);
 
 // Headings
-// $headings-color: #2F4F4F;
-$headings-color: #1F3B36;
+$headings-color: $headingscolor;
 
 // Code blocks
-// $code-bg: lighten($mistgray, 3%);
-// $code-color: #2C3E3E;
-
 $code-bg: darken($mistgray, 3%);
 $code-color: #2C3E3E;
 
 .card {
   background-color: $purewhite;
   border: 1px solid $bluegray;
-  // new: subtle hover lift so cards don't look flat against the lighter background
+  // subtle hover lift so cards do not look flat
   transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 .card:hover {
-  box-shadow: 0 4px 14px rgba(44, 74, 68, 0.12);
+  box-shadow: 0 4px 14px rgba($deeptealgrey, 0.12);
   transform: translateY(-2px);
 }
 
@@ -87,10 +90,22 @@ figcaption {
 
 /*-- scss:rules --*/
 
-h3, h4, p {
-  font-family: $libre;
+// h3, h4, p {
+//   font-family: $libre;
+// }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $headingfont;
 }
 
+h1, h2 {
+  letter-spacing: 0.5px;   // Space Grotesk is wider than Raleway, so less tracking needed
+  font-weight: 500;
+}
+
+p, body {
+  font-family: $bodyfont;
+}
 h1, h2 {
   letter-spacing: 1px;
   font-weight: 600;
@@ -307,4 +322,66 @@ h1, h2 {
   .corner-logo {
     display: none;
   }
+}
+
+/* --- Landing page hero enhancements --- */
+
+// accent bar under "Hello World"
+.accent-rule {
+  width: 48px;
+  height: 3px;
+  background: $accentblue;
+  border-radius: 2px;
+  margin: 0.5rem 0 1.25rem;
+}
+
+// skill / tech badges
+.skill-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 1rem 0 1.5rem;
+}
+.skill-badges .tech-badge {
+  background: mix($accentblue, $purewhite, 14%);
+  color: darken($accentblue, 20%);
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 4px 11px;
+  border-radius: 20px;
+}
+
+// call-to-action buttons
+.btn-cta,
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  text-decoration: none;
+  margin: 0.25rem 0.5rem 0.25rem 0;
+  transition: all 0.15s ease;
+}
+.btn-cta {
+  background: $accentblue;
+  color: #fff !important;
+}
+.btn-cta:hover {
+  background: darken($accentblue, 8%);
+  color: #fff !important;
+}
+.btn-outline {
+  border: 1px solid $bluegray;
+  color: $deeptealgrey !important;
+}
+.btn-outline:hover {
+  border-color: $accentblue;
+  color: $accentblue !important;
+}
+
+// subtle accent ring on the headshot
+.about-image {
+  box-shadow: 0 0 0 4px $accentblue;
 }

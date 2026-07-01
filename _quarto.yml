@@ -4,10 +4,10 @@ project:
 
 website:
   title: "Vedika Shirtekar"
-  favicon: images/Professional Logo with Oceanic Theme.png
+  favicon: images/new_logo.png
   navbar:
     title: False
-    logo: images/Professional Logo with Oceanic Theme.png
+    logo: images/new_logo.png
     logo-alt: the name vedika shirtekar with an ocean tech generated icon
     right:
       - href: index.qmd
