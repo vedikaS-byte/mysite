@@ -7,7 +7,7 @@ website:
   favicon: images/new_logo.svg
   navbar:
     title: False
-    logo: images/new_logo.png
+    logo: images/new_logo.svg
     logo-alt: the name vedika shirtekar with an ocean tech generated icon
     right:
       - href: index.qmd
