@@ -27,6 +27,6 @@ Hello World <img src="images/earth-logo.png" alt="Earth Logo" class="earth-logo"
 
 I'm an environmental data scientist working at the intersection of climate and data. I hold a Master of Environmental Data Science from UC Santa Barbara, along with a B.S. in Environmental Science and an Applied Statistical Modeling Credential from UT Austin. By combining environmental science with data analytics, I'm passionate about developing data-driven solutions that strengthen emissions accounting, help organizations understand their greenhouse gas emissions, and support corporate sustainability.
  
-[View my work](post.qmd){.btn-cta} [Get in touch](vedika.shirtekar@gmail.com){.btn-outline}
+[View my work](post.qmd){.btn-cta} [Get in touch](mailto:vedika.shirtekar@gmail.com){.btn-outline}
 
 :::
