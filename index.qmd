@@ -25,7 +25,7 @@ Hello World <img src="images/earth-logo.png" alt="Earth Logo" class="earth-logo"
 ::: marquee-text-right
 ### Welcome to my website! 
 
-I'm a data analyst working at the intersection of climate and data. I build tools and workflows that strengthen emissions accounting and help organizations understand their greenhouse gas footprint. 
+I'm a data analyst working at the intersection of climate and data. I'm passionate about leveraging data science tools to strengthen emissions reporting workflows and help organizations understand their greenhouse gas footprint. 
  
 [View my work](post.qmd){.btn-cta} [Get in touch](mailto:vedika.shirtekar@gmail.com){.btn-outline}
 
