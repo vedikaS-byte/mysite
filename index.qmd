@@ -25,8 +25,37 @@ Hello World <img src="images/earth-logo.png" alt="Earth Logo" class="earth-logo"
 ::: marquee-text-right
 ### Welcome to my website! 
 
-I'm an environmental data scientist working at the intersection of climate and data. I hold a Master of Environmental Data Science from UC Santa Barbara, along with a B.S. in Environmental Science and an Applied Statistical Modeling Credential from UT Austin. By combining environmental science with data analytics, I'm passionate about developing data-driven solutions that strengthen emissions accounting, help organizations understand their greenhouse gas emissions, and support corporate sustainability.
+I'm a data analyst working at the intersection of climate and data. I build tools and workflows that strengthen emissions accounting and help organizations understand their greenhouse gas footprint. 
  
 [View my work](post.qmd){.btn-cta} [Get in touch](mailto:vedika.shirtekar@gmail.com){.btn-outline}
 
 :::
+
+<div class="accent-rule"></div>
+
+::: {.panel-tabset}
+
+## Education
+
+**Master of Environmental Data Science** (June 2026) | UC Santa Barbara  
+Bren School of Environmental Science & Management
+
+**B.S. Environmental Science** (August 2021 - May 2025) | University of Texas at Austin
+
+## Professional Experience
+
+**Emissions Data Associate** | Bright Sky Environmental | Austin, TX | 2026–  
+Supporting client greenhouse gas calculations and building structured 
+reporting and data management workflows.
+
+**Climate Data Analyst** | University of Texas at Austin | 2023–2024  
+Developed a Scope 1-3 GHG inventory using SIMAP in accordance with the 
+GHG Protocol, and presented six emissions reduction strategies to the 
+Dean of the College of Fine Arts.
+
+**Data Analytics Research Assistant** | University of Texas at Austin | 2024  
+Principal component analysis and thematic coding of university survey data.
+:::
+
+
+
