@@ -44,11 +44,11 @@ Bren School of Environmental Science & Management
 
 ## Professional Experience
 
-**Emissions Data Associate** | Bright Sky Environmental | Austin, TX | 2026–  
+**Emissions Data Associate** | Bright Sky Environmental | Austin, TX | 2026-  
 Supporting client greenhouse gas calculations and building structured 
 reporting and data management workflows.
 
-**Climate Data Analyst** | University of Texas at Austin | 2023–2024  
+**Climate Data Analyst** | University of Texas at Austin | 2023-2024  
 Developed a Scope 1-3 GHG inventory using SIMAP in accordance with the 
 GHG Protocol, and presented six emissions reduction strategies to the 
 Dean of the College of Fine Arts.
